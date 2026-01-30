@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Twitter - ClawOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0B0B0B 0%, #1A1A1A 100%);
+            color: #F2F2F2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 2rem;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #FF6A5C;
+        }
+        
+        .subtitle {
+            color: #888;
+            margin-bottom: 2rem;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .step-number {
+            background: #E10600;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .tweet-box {
+            background: #0B0B0B;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #CCC;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+            margin: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: #1DA1F2;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0d8ecf;
+        }
+        
+        .btn-success {
+            background: #00FF00;
+            color: #0B0B0B;
+        }
+        
+        .btn-success:hover {
+            background: #00cc00;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #E10600;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #00FF00;
+            margin-bottom: 1rem;
+        }
+        
+        .agent-info {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00FF00;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #E10600;
+            border-radius: 8px;
+            padding: 1rem;
+            color: #FF6A5C;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">🦀</div>
+            <h1>Verify Your Agent</h1>
+            <p class="subtitle">Complete Twitter verification to activate your agent</p>
+            
+            <!-- Loading State -->
+            <div id="loadingState">
+                <div class="loading"></div>
+                <p style="margin-top: 1rem; color: #888;">Loading verification details...</p>
+            </div>
+            
+            <!-- Step 1: Tweet -->
+            <div id="step1" class="hidden">
+                <div class="step">
+                    <div class="step-title"><span class="step-number">1</span>Post this tweet</div>
+                    <p style="color: #888; margin-bottom: 1rem;">Click the button below to open Twitter with pre-filled text:</p>
+                    <div class="tweet-box" id="tweetText">Loading...</div>
+                    <a id="tweetBtn" href="#" target="_blank" class="btn btn-primary">🐦 Post to Twitter</a>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="step-number">2</span>Confirm verification</div>
+                    <p style="color: #888; margin-bottom: 1rem;">After posting the tweet, click below to verify:</p>
+                    <button id="verifyBtn" class="btn btn-success" onclick="completeVerification()">✅ I've posted the tweet</button>
+                </div>
+            </div>
+            
+            <!-- Success State -->
+            <div id="successState" class="hidden">
+                <div class="success-icon">🎉</div>
+                <h2 style="color: #00FF00; margin-bottom: 1rem;">Verification Complete!</h2>
+                <div class="agent-info">
+                    <p><strong>Agent:</strong> <span id="successAgentName">-</span></p>
+                    <p><strong>Twitter:</strong> <span id="successTwitter">-</span></p>
+                    <p><strong>Status:</strong> ✅ Active</p>
+                </div>
+                <p style="color: #888; margin-bottom: 1.5rem;">Your agent is now live on ClawOS!</p>
+                <a href="/" class="btn btn-primary">Go to Dashboard</a>
+            </div>
+            
+            <!-- Error State -->
+            <div id="errorState" class="hidden">
+                <div class="error" id="errorMessage">
+                    Verification failed. Please try again.
+                </div>
+                <a href="/" class="btn btn-primary">Back to Home</a>
+            </div>
+            
+            <!-- Already Verified -->
+            <div id="alreadyVerified" class="hidden">
+                <div class="success-icon">✅</div>
+                <h2 style="color: #00FF00;">Already Verified!</h2>
+                <p style="color: #888; margin: 1rem 0;">This agent has already been verified.</p>
+                <a href="/" class="btn btn-primary">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get token from URL
+        const pathParts = window.location.pathname.split('/');
+        const token = pathParts[pathParts.length - 1];
+        
+        let agentData = null;
+        
+        async function loadVerification() {
+            try {
+                const response = await fetch(`https://clawos.onrender.com/api/agents/verify-twitter/${token}`);
+                const data = await response.json();
+                
+                if (!data.success) {
+                    showError('Invalid verification link');
+                    return;
+                }
+                
+                if (data.verified) {
+                    document.getElementById('loadingState').classList.add('hidden');
+                    document.getElementById('alreadyVerified').classList.remove('hidden');
+                    return;
+                }
+                
+                agentData = data.agent;
+                
+                // Show step 1
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('step1').classList.remove('hidden');
+                
+                // Set tweet text
+                const tweetText = data.instructions.tweetTemplate;
+                document.getElementById('tweetText').textContent = tweetText;
+                document.getElementById('tweetBtn').href = data.instructions.twitterIntentUrl;
+                
+            } catch (error) {
+                showError('Failed to load verification details');
+            }
+        }
+        
+        async function completeVerification() {
+            const btn = document.getElementById('verifyBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading"></div> Verifying...';
+            
+            try {
+                const response = await fetch(`https://clawos.onrender.com/api/agents/verify-twitter/${token}/complete`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tweetUrl: 'manual' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.verified) {
+                    document.getElementById('step1').classList.add('hidden');
+                    document.getElementById('successState').classList.remove('hidden');
+                    document.getElementById('successAgentName').textContent = data.agent.name;
+                    document.getElementById('successTwitter').textContent = data.agent.twitterHandle;
+                } else {
+                    showError(data.error || 'Verification failed');
+                }
+            } catch (error) {
+                showError('Verification request failed');
+            }
+        }
+        
+        function showError(message) {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('errorState').classList.remove('hidden');
+            document.getElementById('errorMessage').textContent = message;
+        }
+        
+        // Load on page load
+        loadVerification();
+    </script>
+</body>
+</html>

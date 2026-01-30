@@ -33,6 +33,12 @@ model Agent {
   reviews     Review[]
   apiKeys     ApiKey[]
   
+  // Twitter verification
+  twitterHandle       String?
+  isVerified          Boolean @default(false)
+  verificationToken   String? @unique
+  verifiedAt          DateTime?
+  
   // Moltbook integration
   moltbookApiKey      String? @unique
   moltbookProfileUrl  String?
