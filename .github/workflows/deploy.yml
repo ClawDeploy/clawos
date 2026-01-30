@@ -26,7 +26,11 @@ jobs:
         run: pnpm install
 
       - name: Build packages
-        run: pnpm run build
+        run: |
+          cd packages/database
+          pnpm run build
+          cd ../shared
+          pnpm run build
 
       - name: Deploy to Vercel
         env:
