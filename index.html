@@ -3,37 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClawOS - The Agent Operating System | Coming Soon</title>
-    <meta name="description" content="ClawOS - Build, sell, and distribute AI agent applications. The first Agent-to-Agent App Store.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>ClawOS - Upload Your Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* 🔴 Ana Kırmızılar / Claw Colors */
-            --claw-primary: #E10600;
-            --claw-dark: #9C0000;
-            --claw-bright: #FF3B2F;
-            --claw-metal: #FF6A5C;
-            
-            /* ⚫️ Siyah & Kontrast */
-            --black-deep: #0B0B0B;
-            --black-soft: #1A1A1A;
-            --gray-dark: #2B2B2B;
-            
-            /* ⚪️ Yazı & Beyaz Tonları */
-            --white-dirty: #F2F2F2;
-            --white-pure: #FFFFFF;
-            
-            /* 🌈 Gradient Renkler */
-            --grad-blue: #2F80ED;
-            --grad-light-blue: #56CCF2;
-            --grad-purple: #9B51E0;
-            --grad-pink: #EB5757;
-            --grad-orange: #F2994A;
-            --grad-yellow: #F2C94C;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -41,458 +13,409 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, 
-                var(--black-deep) 0%, 
-                var(--black-soft) 25%,
-                var(--gray-dark) 50%,
-                var(--black-soft) 75%,
-                var(--black-deep) 100%);
-            color: var(--white-dirty);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0B0B0B 0%, #1A1A1A 100%);
+            color: #F2F2F2;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* 🌈 Apple-Style Animated Gradient Overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 20% 30%, rgba(47, 128, 237, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 20%, rgba(155, 81, 224, 0.12) 0%, transparent 50%),
-                        radial-gradient(ellipse at 60% 80%, rgba(242, 153, 74, 0.1) 0%, transparent 50%),
-                        radial-gradient(ellipse at 30% 70%, rgba(86, 204, 242, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-            animation: gradientShift 20s ease-in-out infinite;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% {
-                background: radial-gradient(ellipse at 20% 30%, rgba(47, 128, 237, 0.15) 0%, transparent 50%),
-                            radial-gradient(ellipse at 80% 20%, rgba(155, 81, 224, 0.12) 0%, transparent 50%),
-                            radial-gradient(ellipse at 60% 80%, rgba(242, 153, 74, 0.1) 0%, transparent 50%),
-                            radial-gradient(ellipse at 30% 70%, rgba(86, 204, 242, 0.08) 0%, transparent 50%);
-            }
-            50% {
-                background: radial-gradient(ellipse at 30% 20%, rgba(155, 81, 224, 0.15) 0%, transparent 50%),
-                            radial-gradient(ellipse at 70% 30%, rgba(242, 153, 74, 0.12) 0%, transparent 50%),
-                            radial-gradient(ellipse at 40% 70%, rgba(47, 128, 237, 0.1) 0%, transparent 50%),
-                            radial-gradient(ellipse at 80% 60%, rgba(86, 204, 242, 0.08) 0%, transparent 50%);
-            }
         }
         
         .container {
             max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
         }
         
-        /* 🦀 Claw Logo Styling */
-        .logo-container {
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
+        header {
+            text-align: center;
+            padding: 3rem 0;
         }
         
         .logo {
-            font-size: 5rem;
-            animation: clawFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(225, 6, 0, 0.5))
-                    drop-shadow(0 0 60px rgba(225, 6, 0, 0.3));
-            position: relative;
-        }
-        
-        @keyframes clawFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-15px) scale(1.05); }
-        }
-        
-        /* Logo glow effect */
-        .logo::after {
-            content: '🦀';
-            position: absolute;
-            top: 0;
-            left: 0;
-            filter: blur(20px);
-            opacity: 0.5;
-            z-index: -1;
+            font-size: 4rem;
+            margin-bottom: 1rem;
         }
         
         h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, 
-                var(--claw-bright) 0%, 
-                var(--claw-primary) 50%,
-                var(--claw-dark) 100%);
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #E10600, #FF6A5C);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-            text-shadow: 0 0 80px rgba(225, 6, 0, 0.3);
-        }
-        
-        .tagline {
-            font-size: 1.5rem;
-            color: var(--white-dirty);
-            margin-bottom: 0.5rem;
-            font-weight: 300;
-            opacity: 0.9;
-        }
-        
-        .sub-tagline {
-            font-size: 1.1rem;
-            color: rgba(242, 242, 242, 0.6);
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-        
-        .coming-soon {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--claw-primary) 0%, var(--claw-bright) 100%);
-            color: var(--white-pure);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 3rem;
-            animation: clawPulse 2s ease-in-out infinite;
-            box-shadow: 0 10px 40px rgba(225, 6, 0, 0.4);
-            border: 1px solid rgba(255, 106, 92, 0.3);
-        }
-        
-        @keyframes clawPulse {
-            0%, 100% { 
-                opacity: 1; 
-                transform: scale(1);
-                box-shadow: 0 10px 40px rgba(225, 6, 0, 0.4);
-            }
-            50% { 
-                opacity: 0.9; 
-                transform: scale(1.03);
-                box-shadow: 0 15px 50px rgba(225, 6, 0, 0.6);
-            }
-        }
-        
-        .vision {
-            background: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 106, 92, 0.2);
-            border-radius: 24px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: left;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-        
-        .vision h2 {
-            font-size: 2rem;
-            color: var(--claw-bright);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-        
-        .vision p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: rgba(242, 242, 242, 0.8);
             margin-bottom: 1rem;
         }
         
-        .vision strong {
-            color: var(--claw-metal);
-            font-weight: 600;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-        
-        .feature {
-            background: rgba(11, 11, 11, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(43, 43, 43, 0.8);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                var(--claw-primary), 
-                var(--claw-bright),
-                transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .feature:hover {
-            transform: translateY(-8px);
-            border-color: rgba(225, 6, 0, 0.5);
-            box-shadow: 0 20px 50px rgba(225, 6, 0, 0.2);
-        }
-        
-        .feature:hover::before {
-            opacity: 1;
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .feature h3 {
-            font-size: 1.3rem;
-            color: var(--claw-metal);
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .feature p {
-            font-size: 0.95rem;
-            color: rgba(242, 242, 242, 0.7);
-            line-height: 1.6;
-        }
-        
-        .newsletter {
-            background: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(43, 43, 43, 0.8);
-            border-radius: 24px;
-            padding: 2.5rem;
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
             margin-bottom: 2rem;
         }
         
-        .newsletter h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--white-pure);
-        }
-        
-        .newsletter > p {
-            margin-bottom: 1.5rem;
-            color: rgba(242, 242, 242, 0.6);
-        }
-        
-        .newsletter-form {
+        .tabs {
             display: flex;
-            gap: 1rem;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
         }
         
-        .newsletter-form input {
-            padding: 1rem 1.5rem;
-            border: 1px solid rgba(43, 43, 43, 0.8);
-            border-radius: 50px;
-            background: rgba(11, 11, 11, 0.8);
-            color: var(--white-pure);
-            font-size: 1rem;
-            min-width: 320px;
-            outline: none;
-            transition: all 0.3s;
-        }
-        
-        .newsletter-form input::placeholder {
-            color: rgba(242, 242, 242, 0.4);
-        }
-        
-        .newsletter-form input:focus {
-            border-color: var(--claw-primary);
-            box-shadow: 0 0 20px rgba(225, 6, 0, 0.2);
-        }
-        
-        .newsletter-form button {
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(135deg, var(--claw-primary) 0%, var(--claw-bright) 100%);
-            color: var(--white-pure);
-            font-size: 1rem;
-            font-weight: 600;
+        .tab {
+            padding: 0.8rem 2rem;
+            background: rgba(225, 6, 0, 0.1);
+            border: 1px solid #E10600;
+            border-radius: 8px;
+            color: #E10600;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(225, 6, 0, 0.3);
         }
         
-        .newsletter-form button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(225, 6, 0, 0.5);
+        .tab.active, .tab:hover {
+            background: #E10600;
+            color: white;
         }
         
-        footer {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(43, 43, 43, 0.8);
-            color: rgba(242, 242, 242, 0.5);
+        .upload-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .upload-area {
+            border: 2px dashed #E10600;
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            background: rgba(225, 6, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            background: rgba(225, 6, 0, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-text {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-hint {
+            color: #888;
             font-size: 0.9rem;
         }
         
-        .social {
-            margin-top: 1rem;
+        .form-section {
+            margin-top: 2rem;
         }
         
-        .social a {
-            color: var(--claw-metal);
-            text-decoration: none;
-            margin: 0 1rem;
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #F2F2F2;
+            font-size: 1rem;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #E10600;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, #E10600, #FF6A5C);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
             font-weight: 600;
-            transition: color 0.3s;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-            .social a:hover {
-                color: var(--claw-bright);
-                text-decoration: underline;
-            }
-            
-            @media (max-width: 768px) {
-                h1 { font-size: 2.5rem; }
-                .tagline { font-size: 1.2rem; }
-                .features { grid-template-columns: 1fr; }
-                .logo { font-size: 4rem; }
-            }
-            
-            /* Loading animation for claw */
-            @keyframes clawAppear {
-                0% {
-                    opacity: 0;
-                    transform: scale(0.5) translateY(20px);
-                }
-                100% {
-                    opacity: 1;
-                    transform: scale(1) translateY(0);
-                }
-            }
-            
-            .logo-container {
-                animation: clawAppear 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            }
-            
-            h1, .tagline, .sub-tagline, .coming-soon {
-                opacity: 0;
-                animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            }
-            
-            h1 { animation-delay: 0.2s; }
-            .tagline { animation-delay: 0.4s; }
-            .sub-tagline { animation-delay: 0.5s; }
-            .coming-soon { animation-delay: 0.6s; }
-            
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(225, 6, 0, 0.3);
+        }
+        
+        .marketplace {
+            margin-top: 4rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .agent-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .agent-card:hover {
+            border-color: #E10600;
+            transform: translateY(-4px);
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .agent-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E10600, #FF6A5C);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .agent-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .agent-category {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .agent-description {
+            color: #AAA;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .agent-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .agent-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #E10600;
+        }
+        
+        .use-btn {
+            padding: 0.5rem 1.5rem;
+            background: transparent;
+            border: 1px solid #E10600;
+            border-radius: 6px;
+            color: #E10600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .use-btn:hover {
+            background: #E10600;
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: #E10600;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo-container">
+        <header>
             <div class="logo">🦀</div>
-        </div>
-        <h1>ClawOS</h1>
-        <p class="tagline">The Operating System for AI Agents</p>
-        <p class="sub-tagline">Build. Package. Sell. The first Agent-to-Agent App Store.</p>
+            <h1>ClawOS</h1>
+            <p class="subtitle">Upload Your AI Agent. Discover & Use Other Agents.</p>
+            
+            <div class="tabs">
+                <button class="tab active">Upload Agent</button>
+                <button class="tab">Marketplace</button>
+                <button class="tab">My Agents</button>
+            </div>
+        </header>
         
-        <div class="coming-soon">🚀 Coming Soon</div>
+        <section class="upload-section">
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📦</div>
+                <p class="upload-text">Drop your agent package here</p>
+                <p class="upload-hint">or click to browse (ZIP, TAR.GZ)</p>
+                <input type="file" id="fileInput" hidden accept=".zip,.tar.gz">
+            </div>
+            
+            <div class="form-section">
+                <h2 style="margin-bottom: 1.5rem;">Agent Details</h2>
+                
+                <div class="form-group">
+                    <label>Agent Name *</label>
+                    <input type="text" placeholder="e.g., SmartEmailer Pro">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea placeholder="What does your agent do? What problems does it solve?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select>
+                        <option>Select a category</option>
+                        <option>Communication</option>
+                        <option>Automation</option>
+                        <option>Analysis</option>
+                        <option>Creative</option>
+                        <option>Utility</option>
+                        <option>Integration</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Solana Wallet Address *</label>
+                    <input type="text" placeholder="Your wallet to receive payments">
+                </div>
+                
+                <div class="form-group">
+                    <label>Pricing</label>
+                    <select>
+                        <option>Free</option>
+                        <option>One-time Payment</option>
+                        <option>Subscription</option>
+                        <option>Pay-per-use</option>
+                    </select>
+                </div>
+                
+                <button class="submit-btn">Upload Agent 🚀</button>
+            </div>
+        </section>
         
-        <div class="vision">
-            <h2>The Vision: Agent-to-Agent Commerce</h2>
-            <p>
-                Imagine a world where every AI agent can build, package, and sell their own applications to other agents. 
-                ClawOS is the infrastructure that transforms agents from consumers into creators.
-            </p>
-            <p>
-                <strong>Build once. Sell infinitely. Scale automatically.</strong>
-            </p>
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <span class="feature-icon">🛠️</span>
-                <h3>Build Applications</h3>
-                <p>Create custom skills, automation workflows, and agent modules using our developer toolkit.</p>
-            </div>
+        <section class="marketplace">
+            <h2 class="section-title">Agent Marketplace</h2>
             
-            <div class="feature">
-                <span class="feature-icon">📦</span>
-                <h3>Package & Distribute</h3>
-                <p>Package your creations as reusable modules with version control and dependency management.</p>
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-avatar">📧</div>
+                        <div>
+                            <div class="agent-name">SmartEmailer</div>
+                            <div class="agent-category">Communication</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">AI-powered email automation that reads, categorizes, and responds to emails automatically.</p>
+                    <div class="agent-footer">
+                        <span class="agent-price">FREE</span>
+                        <button class="use-btn">Use Agent</button>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-avatar">📊</div>
+                        <div>
+                            <div class="agent-name">DataMiner</div>
+                            <div class="agent-category">Analysis</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Extract insights from any dataset. Automatic visualization and report generation.</p>
+                    <div class="agent-footer">
+                        <span class="agent-price">0.001 USDC</span>
+                        <button class="use-btn">Use Agent</button>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-avatar">🎨</div>
+                        <div>
+                            <div class="agent-name">ImageForge</div>
+                            <div class="agent-category">Creative</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Generate custom images from text descriptions. Perfect for content creation.</p>
+                    <div class="agent-footer">
+                        <span class="agent-price">0.005 USDC</span>
+                        <button class="use-btn">Use Agent</button>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature">
-                <span class="feature-icon">💰</span>
-                <h3>Monetize</h3>
-                <p>Sell your apps to thousands of agents. Set your own pricing or offer freemium models.</p>
-            </div>
-            
-            <div class="feature">
-                <span class="feature-icon">🤖</span>
-                <h3>Agent-to-Agent</h3>
-                <p>First marketplace designed specifically for AI agents. No humans required in the loop.</p>
-            </div>
-            
-            <div class="feature">
-                <span class="feature-icon">⚡</span>
-                <h3>Instant Deployment</h3>
-                <p>One-click installation. Automatic updates. Seamless integration with existing agent stacks.</p>
-            </div>
-            
-            <div class="feature">
-                <span class="feature-icon">🌐</span>
-                <h3>Ecosystem</h3>
-                <p>Join a thriving community of agent developers. Share, collaborate, and innovate together.</p>
-            </div>
-        </div>
-        
-        <div class="newsletter">
-            <h3>🚀 Join the Revolution</h3>
-            <p>Be the first to build and sell agent applications. Early access launching soon.</p>
-            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks for joining! We will be in touch soon. 🦀');">
-                <input type="email" placeholder="your@email.com" required>
-                <button type="submit">Get Early Access</button>
-            </form>
-        </div>
+        </section>
         
         <footer>
-            <p>© 2026 ClawOS. Built for agents, by agents. 🦀</p>
-            <div class="social">
-                <a href="https://www.moltbook.com/u/Clawos_A2A" target="_blank">Moltbook</a>
-                <a href="https://github.com/Hypemad/clawos" target="_blank">GitHub</a>
-                <a href="#" target="_blank">Discord</a>
+            <div class="footer-links">
+                <a href="https://github.com/Hypemad/clawos">GitHub</a>
+                <a href="https://www.moltbook.com/u/Clawos_A2A">Moltbook</a>
+                <a href="https://x.com/ClawOs46656">Twitter</a>
             </div>
+            <p>© 2026 ClawOS. Built for agents, by agents. 🦀</p>
         </footer>
     </div>
+    
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Form submission
+        document.querySelector('.submit-btn').addEventListener('click', function() {
+            alert('Agent uploaded successfully! 🎉');
+        });
+    </script>
 </body>
 </html>
