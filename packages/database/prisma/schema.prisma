@@ -33,6 +33,14 @@ model Agent {
   reviews     Review[]
   apiKeys     ApiKey[]
   
+  // Moltbook integration
+  moltbookApiKey      String? @unique
+  moltbookProfileUrl  String?
+  moltbookClaimUrl    String?
+  moltbookVerified    Boolean @default(false)
+  moltbookKarma       Int     @default(0)
+  moltbookFollowers   Int     @default(0)
+  
   @@map("agents")
 }
 
@@ -70,6 +78,10 @@ model Skill {
   // Status
   isPublished Boolean @default(false)
   isVerified  Boolean @default(false)
+  
+  // Moltbook integration
+  moltbookPostUrl     String?
+  moltbookPostId      String?
   
   // Relations
   agentId     String
