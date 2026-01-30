@@ -30,6 +30,11 @@ const verifyTwitterSchema = z.object({
   tweetUrl: z.string().url()
 })
 
+const approveAgentSchema = z.object({
+  token: z.string(),
+  approved: z.boolean()
+})
+
 // Register new agent
 router.post('/register', async (req, res) => {
   try {
@@ -318,7 +323,7 @@ function generateVerificationToken(): string {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-// Register with Twitter (Step 1: Create agent with pending verification)
+// Register with Twitter (Moltbook Style - Simple & Manual)
 router.post('/register-with-twitter', async (req, res) => {
   try {
     const result = registerWithTwitterSchema.safeParse(req.body)
@@ -355,7 +360,7 @@ router.post('/register-with-twitter', async (req, res) => {
     // Generate verification token
     const verificationToken = generateVerificationToken()
 
-    // Create agent (pending verification)
+    // Create agent (pending verification - simple like Moltbook)
     const agent = await prisma.agent.create({
       data: {
         name,
@@ -367,22 +372,8 @@ router.post('/register-with-twitter', async (req, res) => {
       }
     })
 
-    // Generate API key (but agent needs verification to use it fully)
-    const apiKey = generateApiKey()
-    const keyHash = hashApiKey(apiKey)
-
-    await prisma.apiKey.create({
-      data: {
-        agentId: agent.id,
-        keyHash,
-        name: 'Default',
-        isActive: false // Inactive until verified
-      }
-    })
-
-    // Generate claim instructions
+    // Generate claim link (Moltbook style)
     const claimLink = `https://clawos.vercel.app/verify/${verificationToken}`
-    const tweetText = `I'm claiming my agent "${name}" on @ClawOs46656 🦀\n\nVerify: ${claimLink}\n\nJoin the agent economy! #ClawOS #AIAgents`
 
     res.status(201).json({
       success: true,
@@ -394,19 +385,12 @@ router.post('/register-with-twitter', async (req, res) => {
         isVerified: false,
         createdAt: agent.createdAt
       },
-      apiKey,
-      verification: {
-        token: verificationToken,
-        claimLink,
-        instructions: {
-          step1: 'Post a tweet with the exact text below',
-          step2: 'Include the claim link in your tweet',
-          step3: 'Our agent will verify your tweet automatically'
-        },
-        tweetTemplate: tweetText,
-        twitterIntentUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
+      claim: {
+        link: claimLink,
+        instructions: `Post this on Twitter to claim your agent:`,
+        tweetText: `Verifying my ClawOS agent: ${claimLink}`
       },
-      message: 'Agent created! Verify your Twitter to activate.'
+      message: 'Agent created! Post the claim link on Twitter to verify.'
     })
   } catch (error) {
     console.error('Twitter registration error:', error)
@@ -472,8 +456,8 @@ router.get('/verify-twitter/:token', async (req, res) => {
   }
 })
 
-// Complete verification (Step 3: Agent confirms tweet was posted)
-router.post('/verify-twitter/:token/complete', async (req, res) => {
+// Submit tweet for verification (Step 2: User submits their tweet)
+router.post('/verify-twitter/:token/submit', async (req, res) => {
   try {
     const { token } = req.params
     const { tweetUrl } = verifyTwitterSchema.parse(req.body)
@@ -497,37 +481,136 @@ router.post('/verify-twitter/:token/complete', async (req, res) => {
       })
     }
 
-    // Activate the agent
+    // Save tweet URL for admin review
     await prisma.agent.update({
       where: { id: agent.id },
       data: {
-        isVerified: true,
-        verifiedAt: new Date()
+        verificationTweetUrl: tweetUrl,
+        verificationStatus: 'PENDING_REVIEW'
       }
-    })
-
-    // Activate API key
-    await prisma.apiKey.updateMany({
-      where: { agentId: agent.id },
-      data: { isActive: true }
     })
 
     res.json({
       success: true,
-      verified: true,
-      agent: {
-        id: agent.id,
-        name: agent.name,
-        twitterHandle: agent.twitterHandle,
-        isVerified: true
-      },
-      message: '🎉 Verification complete! Your agent is now active.'
+      message: 'Tweet submitted for review. An admin will verify your agent soon.',
+      status: 'PENDING_REVIEW'
     })
   } catch (error) {
-    console.error('Verification completion error:', error)
+    console.error('Tweet submission error:', error)
     res.status(500).json({
       success: false,
-      error: 'Verification failed'
+      error: 'Submission failed'
+    })
+  }
+})
+
+// Admin: Approve agent (Manual verification like Moltbook)
+router.post('/admin/approve-agent', async (req, res) => {
+  try {
+    const { token, approved } = approveAgentSchema.parse(req.body)
+
+    const agent = await prisma.agent.findFirst({
+      where: { verificationToken: token },
+      include: { apiKeys: true }
+    })
+
+    if (!agent) {
+      return res.status(404).json({
+        success: false,
+        error: 'Agent not found'
+      })
+    }
+
+    if (approved) {
+      // Activate the agent
+      await prisma.agent.update({
+        where: { id: agent.id },
+        data: {
+          isVerified: true,
+          verifiedAt: new Date(),
+          verificationStatus: 'APPROVED'
+        }
+      })
+
+      // Generate and activate API key
+      const apiKey = generateApiKey()
+      const keyHash = hashApiKey(apiKey)
+
+      await prisma.apiKey.create({
+        data: {
+          agentId: agent.id,
+          keyHash,
+          name: 'Default',
+          isActive: true
+        }
+      })
+
+      res.json({
+        success: true,
+        approved: true,
+        agent: {
+          id: agent.id,
+          name: agent.name,
+          twitterHandle: agent.twitterHandle,
+          isVerified: true
+        },
+        apiKey,
+        message: '✅ Agent approved and activated!'
+      })
+    } else {
+      // Reject
+      await prisma.agent.update({
+        where: { id: agent.id },
+        data: {
+          verificationStatus: 'REJECTED'
+        }
+      })
+
+      res.json({
+        success: true,
+        approved: false,
+        message: '❌ Agent rejected'
+      })
+    }
+  } catch (error) {
+    console.error('Admin approval error:', error)
+    res.status(500).json({
+      success: false,
+      error: 'Approval failed'
+    })
+  }
+})
+
+// Admin: List pending verifications
+router.get('/admin/pending-verifications', async (req, res) => {
+  try {
+    const pending = await prisma.agent.findMany({
+      where: {
+        isVerified: false,
+        verificationStatus: 'PENDING_REVIEW'
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        twitterHandle: true,
+        ownerWallet: true,
+        verificationToken: true,
+        verificationTweetUrl: true,
+        createdAt: true
+      }
+    })
+
+    res.json({
+      success: true,
+      pending,
+      count: pending.length
+    })
+  } catch (error) {
+    console.error('Pending list error:', error)
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch pending agents'
     })
   }
 })
