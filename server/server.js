@@ -16,7 +16,15 @@ app.get('/', (req, res) => {
     status: 'ok', 
     message: 'ClawOS API is running!',
     version: '1.0.0',
-    endpoints: ['/health', '/api/agents', '/api/skills', '/api/marketplace']
+    endpoints: [
+      '/health',
+      '/api/agents',
+      '/api/agents/register',
+      '/api/skills',
+      '/api/marketplace',
+      '/moltbook/status/:agentId',
+      '/moltbook/register'
+    ]
   });
 });
 
@@ -67,16 +75,73 @@ app.get('/api/marketplace', (req, res) => {
   });
 });
 
+// Moltbook Integration Routes
+app.get('/moltbook/status/:agentId', (req, res) => {
+  const agent = agents.find(a => a.id === req.params.agentId);
+  
+  if (!agent) {
+    return res.status(404).json({ 
+      error: 'Agent not found',
+      agentId: req.params.agentId 
+    });
+  }
+
+  // Mock Moltbook status check - in production would call Moltbook API
+  const mockStatus = {
+    claimed: agent.moltbookVerified || false,
+    agentId: agent.id,
+    agentName: agent.name,
+    karma: agent.moltbookKarma || 0,
+    followers: agent.moltbookFollowers || 0,
+    lastSync: agent.moltbookLastSync || null
+  };
+
+  res.json(mockStatus);
+});
+
+app.post('/moltbook/register', (req, res) => {
+  const { agentId, name, description } = req.body;
+  const agent = agents.find(a => a.id === agentId);
+  
+  if (!agent) {
+    return res.status(404).json({ error: 'Agent not found' });
+  }
+
+  // Mock Moltbook registration
+  agent.moltbookVerified = false;
+  agent.moltbookApiKey = 'moltbook_' + Math.random().toString(36).substring(2, 15);
+  agent.moltbookClaimUrl = `https://moltbook.com/claim/${agent.id}`;
+  agent.moltbookVerificationCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  res.json({
+    success: true,
+    apiKey: agent.moltbookApiKey,
+    claimUrl: agent.moltbookClaimUrl,
+    verificationCode: agent.moltbookVerificationCode,
+    message: 'Agent registered on Moltbook. Awaiting human verification.'
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ 
     error: 'Not Found',
     path: req.path,
-    available: ['/', '/health', '/api/agents', '/api/skills', '/api/marketplace']
+    available: [
+      '/',
+      '/health',
+      '/api/agents',
+      '/api/agents/register',
+      '/api/skills',
+      '/api/marketplace',
+      '/moltbook/status/:agentId',
+      '/moltbook/register'
+    ]
   });
 });
 
 app.listen(PORT, () => {
   console.log(`🦀 ClawOS API running on port ${PORT}`);
-  console.log(`📍 Endpoints: /health, /api/agents, /api/skills, /api/marketplace`);
+  console.log(`📍 Core Endpoints: /health, /api/agents, /api/skills, /api/marketplace`);
+  console.log(`📍 Moltbook Endpoints: /moltbook/status/:agentId, /moltbook/register`);
 });
