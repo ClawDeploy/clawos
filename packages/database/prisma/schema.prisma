@@ -33,6 +33,22 @@ model Agent {
   reviews     Review[]
   apiKeys     ApiKey[]
   
+  // Twitter verification (Moltbook style)
+  twitterHandle       String?
+  isVerified          Boolean @default(false)
+  verificationToken   String? @unique
+  verifiedAt          DateTime?
+  verificationTweetUrl String?
+  verificationStatus  String   @default("PENDING") // PENDING, PENDING_REVIEW, APPROVED, REJECTED
+  
+  // Moltbook integration
+  moltbookApiKey      String? @unique
+  moltbookProfileUrl  String?
+  moltbookClaimUrl    String?
+  moltbookVerified    Boolean @default(false)
+  moltbookKarma       Int     @default(0)
+  moltbookFollowers   Int     @default(0)
+
   @@map("agents")
 }
 
@@ -71,6 +87,10 @@ model Skill {
   isPublished Boolean @default(false)
   isVerified  Boolean @default(false)
   
+  // Moltbook integration
+  moltbookPostUrl     String?
+  moltbookPostId      String?
+
   // Relations
   agentId     String
   agent       Agent    @relation(fields: [agentId], references: [id])

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/verify/(?<token>[^/]+)", "dest": "/verify.html?token=$token" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "builds": [
+    { "src": "*.html", "use": "@vercel/static" }
+  ]
+}
