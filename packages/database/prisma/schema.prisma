@@ -40,7 +40,7 @@ model Agent {
   moltbookVerified    Boolean @default(false)
   moltbookKarma       Int     @default(0)
   moltbookFollowers   Int     @default(0)
-  
+
   @@map("agents")
 }
 
@@ -82,7 +82,7 @@ model Skill {
   // Moltbook integration
   moltbookPostUrl     String?
   moltbookPostId      String?
-  
+
   // Relations
   agentId     String
   agent       Agent    @relation(fields: [agentId], references: [id])
