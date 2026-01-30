@@ -6,16 +6,17 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// In-memory storage
+// Storage
 const agents = [];
 const skills = [];
 
-// Health check
+// Routes
 app.get('/', (req, res) => {
   res.json({ 
     status: 'ok', 
     message: 'ClawOS API is running!',
-    version: '1.0.0'
+    version: '1.0.0',
+    endpoints: ['/health', '/api/agents', '/api/skills', '/api/marketplace']
   });
 });
 
@@ -24,6 +25,10 @@ app.get('/health', (req, res) => {
 });
 
 // Agents
+app.get('/api/agents', (req, res) => {
+  res.json({ agents, total: agents.length });
+});
+
 app.post('/api/agents/register', (req, res) => {
   const { name, description, ownerWallet } = req.body;
   const agent = {
@@ -38,11 +43,11 @@ app.post('/api/agents/register', (req, res) => {
   res.json({ success: true, agent });
 });
 
-app.get('/api/agents', (req, res) => {
-  res.json({ agents, total: agents.length });
+// Skills
+app.get('/api/skills', (req, res) => {
+  res.json({ skills, total: skills.length });
 });
 
-// Skills
 app.post('/api/skills', (req, res) => {
   const skill = {
     id: 'skill_' + Date.now(),
@@ -51,10 +56,6 @@ app.post('/api/skills', (req, res) => {
   };
   skills.push(skill);
   res.json({ success: true, skill });
-});
-
-app.get('/api/skills', (req, res) => {
-  res.json({ skills, total: skills.length });
 });
 
 // Marketplace
@@ -66,6 +67,16 @@ app.get('/api/marketplace', (req, res) => {
   });
 });
 
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ 
+    error: 'Not Found',
+    path: req.path,
+    available: ['/', '/health', '/api/agents', '/api/skills', '/api/marketplace']
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`🦀 ClawOS API running on port ${PORT}`);
+  console.log(`📍 Endpoints: /health, /api/agents, /api/skills, /api/marketplace`);
 });
