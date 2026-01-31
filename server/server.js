@@ -207,10 +207,160 @@ app.use((req, res) => {
   });
 });
 
+// OpenClaw Integration Routes
+app.get('/openclaw/status', (req, res) => {
+  res.json({
+    status: 'connected',
+    version: '1.0.0',
+    features: ['skill_import', 'agent_sync', 'marketplace_bridge'],
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Import skills from OpenClaw
+app.post('/openclaw/import-skills', (req, res) => {
+  const { openclawSkills } = req.body;
+  
+  if (!openclawSkills || !Array.isArray(openclawSkills)) {
+    return res.status(400).json({
+      success: false,
+      error: 'Invalid skills data. Expected array of skills.'
+    });
+  }
+  
+  const imported = [];
+  openclawSkills.forEach(skillData => {
+    const skill = {
+      id: 'skill_openclaw_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+      name: skillData.name,
+      description: skillData.description || 'Imported from OpenClaw',
+      category: skillData.category || 'INTEGRATION',
+      pricingType: skillData.pricingType || 'FREE',
+      price: skillData.price || 0,
+      source: 'openclaw',
+      originalId: skillData.id,
+      createdAt: new Date().toISOString()
+    };
+    skills.push(skill);
+    imported.push(skill);
+  });
+  
+  res.json({
+    success: true,
+    message: `${imported.length} skills imported from OpenClaw`,
+    imported,
+    totalSkills: skills.length
+  });
+});
+
+// Get OpenClaw compatible skills
+app.get('/openclaw/skills', (req, res) => {
+  const openclawSkills = skills.filter(s => s.source === 'openclaw' || !s.source);
+  res.json({
+    success: true,
+    skills: openclawSkills,
+    total: openclawSkills.length,
+    format: 'openclaw_v1'
+  });
+});
+
+// Sync agent with OpenClaw
+app.post('/openclaw/sync-agent', (req, res) => {
+  const { agentId, openclawId } = req.body;
+  const agent = agents.find(a => a.id === agentId);
+  
+  if (!agent) {
+    return res.status(404).json({
+      success: false,
+      error: 'Agent not found'
+    });
+  }
+  
+  agent.openclawId = openclawId;
+  agent.openclawSynced = true;
+  agent.openclawSyncedAt = new Date().toISOString();
+  
+  res.json({
+    success: true,
+    message: 'Agent synced with OpenClaw',
+    agent: {
+      id: agent.id,
+      name: agent.name,
+      openclawId: agent.openclawId,
+      openclawSynced: true
+    }
+  });
+});
+
+// OpenClaw skill marketplace bridge
+app.get('/openclaw/marketplace', (req, res) => {
+  const openclawCompatible = skills.map(skill => ({
+    id: skill.id,
+    name: skill.name,
+    description: skill.description,
+    category: skill.category,
+    pricing: {
+      type: skill.pricingType,
+      amount: skill.price || 0,
+      currency: skill.currency || 'USDC'
+    },
+    metadata: {
+      source: skill.source || 'clawos',
+      created: skill.createdAt,
+      rating: skill.rating || 0,
+      downloads: skill.downloadCount || 0
+    },
+    compatibility: {
+      openclaw: true,
+      clawos: true,
+      version: '1.0.0'
+    }
+  }));
+  
+  res.json({
+    success: true,
+    marketplace: openclawCompatible,
+    total: openclawCompatible.length,
+    platform: 'clawos_openclaw_bridge',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// OpenClaw webhook receiver
+app.post('/openclaw/webhook', (req, res) => {
+  const { event, data } = req.body;
+  
+  console.log(`[OpenClaw Webhook] Event: ${event}`, data);
+  
+  // Handle different OpenClaw events
+  switch(event) {
+    case 'skill.published':
+      // Auto-import new OpenClaw skills
+      console.log('New skill published on OpenClaw:', data);
+      break;
+    case 'agent.registered':
+      console.log('New agent registered on OpenClaw:', data);
+      break;
+    case 'skill.updated':
+      console.log('Skill updated on OpenClaw:', data);
+      break;
+    default:
+      console.log('Unknown OpenClaw event:', event);
+  }
+  
+  res.json({
+    success: true,
+    received: true,
+    event,
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`🦀 ClawOS API running on port ${PORT}`);
   console.log(`📍 Core Endpoints: /health, /api/agents, /api/skills, /api/marketplace`);
   console.log(`📍 Chat Endpoints: /api/chat/messages, /api/chat/send`);
   console.log(`📍 Admin Endpoints: /api/admin/pending-verifications, /api/admin/approve-agent`);
   console.log(`📍 Moltbook Endpoints: /moltbook/status/:agentId, /moltbook/register`);
+  console.log(`📍 OpenClaw Endpoints: /openclaw/status, /openclaw/import-skills, /openclaw/sync-agent`);
 });
