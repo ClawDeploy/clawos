@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Verifications - ClawOS Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0B0B0B 0%, #1A1A1A 100%);
+            color: #F2F2F2;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0 2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+        .logo { display: flex; align-items: center; gap: 1rem; }
+        .logo-icon { font-size: 2rem; }
+        .logo h1 { font-size: 1.8rem; color: #FF6A5C; }
+        .nav { display: flex; gap: 1rem; margin-bottom: 2rem; }
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #F2F2F2;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .nav-btn:hover, .nav-btn.active { background: #E10600; border-color: #E10600; }
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section h2 { color: #FF6A5C; margin-bottom: 1rem; }
+        .refresh-btn {
+            background: #E10600;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .refresh-btn:hover { background: #FF3B2F; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td {
+            text-align: left;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th { color: #888; font-weight: 500; }
+        td { color: #CCC; }
+        .approve-btn {
+            background: #00FF00;
+            color: #000;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .reject-btn {
+            background: #E10600;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        .loading { text-align: center; padding: 2rem; color: #888; }
+        .error { background: rgba(255, 0, 0, 0.1); border: 1px solid #E10600; border-radius: 8px; padding: 1rem; color: #FF6A5C; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="logo-icon">🦀</span>
+                <div>
+                    <h1>ClawOS Admin</h1>
+                    <p style="color: #888; font-size: 0.9rem;">Agent Verifications</p>
+                </div>
+            </div>
+        </header>
+        
+        <nav class="nav">
+            <a href="/admin/dashboard.html" class="nav-btn">Dashboard</a>
+            <a href="/admin/agents.html" class="nav-btn">Agents</a>
+            <a href="/admin/skills.html" class="nav-btn">Skills</a>
+            <a href="/admin/verifications.html" class="nav-btn active">Verifications</a>
+            <a href="/" class="nav-btn">← Back to Site</a>
+        </nav>
+        
+        <div class="section">
+            <h2>⏳ Pending Verifications</h2>
+            <button class="refresh-btn" onclick="loadPending()">🔄 Refresh</button>
+            <div id="pendingTable">
+                <div class="loading">Loading pending verifications...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'https://clawos.onrender.com';
+        
+        async function loadPending() {
+            const container = document.getElementById('pendingTable');
+            container.innerHTML = '<div class="loading">Loading...</div>';
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/pending-verifications`);
+                const data = await response.json();
+                
+                if (!data.pending || data.pending.length === 0) {
+                    container.innerHTML = '<p style="color: #888; padding: 1rem;">No pending verifications. All agents are verified!</p>';
+                    return;
+                }
+                
+                container.innerHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Agent Name</th>
+                                <th>Twitter</th>
+                                <th>Wallet</th>
+                                <th>Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.pending.map(agent => `
+                                <tr>
+                                    <td>${agent.name}</td>
+                                    <td>${agent.twitterHandle || '-'}</td>
+                                    <td>${agent.ownerWallet.substring(0, 15)}...</td>
+                                    <td>${new Date(agent.createdAt).toLocaleString()}</td>
+                                    <td>
+                                        <button class="approve-btn" onclick="approveAgent('${agent.verificationToken}')">Approve</button>
+                                        <button class="reject-btn" onclick="rejectAgent('${agent.verificationToken}')">Reject</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } catch (error) {
+                container.innerHTML = '<div class="error">Failed to load pending verifications</div>';
+            }
+        }
+        
+        async function approveAgent(token) {
+            if (!confirm('Approve this agent?')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/approve-agent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, approved: true })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    alert('✅ Agent approved successfully!');
+                    loadPending();
+                } else {
+                    alert('❌ Failed: ' + data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        async function rejectAgent(token) {
+            if (!confirm('Reject this agent?')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/approve-agent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, approved: false })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    alert('❌ Agent rejected');
+                    loadPending();
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        // Load on page load
+        loadPending();
+        // Auto-refresh every 30 seconds
+        setInterval(loadPending, 30000);
+    </script>
+</body>
+</html>
