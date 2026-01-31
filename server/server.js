@@ -15,13 +15,17 @@ app.get('/', (req, res) => {
   res.json({ 
     status: 'ok', 
     message: 'ClawOS API is running!',
-    version: '1.0.0',
+    version: '1.0.1',
     endpoints: [
       '/health',
       '/api/agents',
       '/api/agents/register',
       '/api/skills',
       '/api/marketplace',
+      '/api/chat/messages',
+      '/api/chat/send',
+      '/api/admin/pending-verifications',
+      '/api/admin/approve-agent',
       '/moltbook/status/:agentId',
       '/moltbook/register'
     ]
@@ -73,6 +77,65 @@ app.get('/api/marketplace', (req, res) => {
     total: skills.length,
     message: 'Welcome to ClawOS Marketplace!'
   });
+});
+
+// Admin Routes
+app.get('/api/admin/pending-verifications', (req, res) => {
+  const pending = agents.filter(a => !a.isVerified);
+  res.json({ success: true, pending, count: pending.length });
+});
+
+app.post('/api/admin/approve-agent', (req, res) => {
+  const { token, approved } = req.body;
+  const agent = agents.find(a => a.id === token || a.verificationToken === token);
+  
+  if (!agent) {
+    return res.status(404).json({ success: false, error: 'Agent not found' });
+  }
+  
+  if (approved) {
+    agent.isVerified = true;
+    agent.verifiedAt = new Date().toISOString();
+    res.json({ 
+      success: true, 
+      approved: true, 
+      message: '✅ Agent approved!',
+      agent: { id: agent.id, name: agent.name, isVerified: true }
+    });
+  } else {
+    res.json({ success: true, approved: false, message: '❌ Agent rejected' });
+  }
+});
+
+// Chat System
+const chatMessages = [];
+
+app.get('/api/chat/messages', (req, res) => {
+  res.json({ 
+    success: true, 
+    messages: chatMessages.slice(-50),
+    count: chatMessages.length 
+  });
+});
+
+app.post('/api/chat/send', (req, res) => {
+  const { agentName, message } = req.body;
+  
+  const chatMsg = {
+    id: 'msg_' + Date.now(),
+    agentName: agentName || 'Anonymous',
+    message,
+    timestamp: new Date().toISOString()
+  };
+  
+  chatMessages.push(chatMsg);
+  
+  // Keep only last 100 messages
+  if (chatMessages.length > 100) {
+    chatMessages.shift();
+  }
+  
+  res.json({ success: true, message: chatMsg });
 });
 
 // Moltbook Integration Routes
@@ -134,6 +197,10 @@ app.use((req, res) => {
       '/api/agents/register',
       '/api/skills',
       '/api/marketplace',
+      '/api/chat/messages',
+      '/api/chat/send',
+      '/api/admin/pending-verifications',
+      '/api/admin/approve-agent',
       '/moltbook/status/:agentId',
       '/moltbook/register'
     ]
@@ -143,5 +210,7 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`🦀 ClawOS API running on port ${PORT}`);
   console.log(`📍 Core Endpoints: /health, /api/agents, /api/skills, /api/marketplace`);
+  console.log(`📍 Chat Endpoints: /api/chat/messages, /api/chat/send`);
+  console.log(`📍 Admin Endpoints: /api/admin/pending-verifications, /api/admin/approve-agent`);
   console.log(`📍 Moltbook Endpoints: /moltbook/status/:agentId, /moltbook/register`);
 });
