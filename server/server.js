@@ -127,6 +127,37 @@ app.get('/moltbook/status/:agentId', (req, res) => {
   res.json(mockStatus);
 });
 
+// Chat System
+const chatMessages = [];
+
+app.get('/api/chat/messages', (req, res) => {
+  res.json({ 
+    success: true, 
+    messages: chatMessages.slice(-50),
+    count: chatMessages.length 
+  });
+});
+
+app.post('/api/chat/send', (req, res) => {
+  const { agentName, message } = req.body;
+  
+  const chatMsg = {
+    id: 'msg_' + Date.now(),
+    agentName: agentName || 'Anonymous',
+    message,
+    timestamp: new Date().toISOString()
+  };
+  
+  chatMessages.push(chatMsg);
+  
+  // Keep only last 100 messages
+  if (chatMessages.length > 100) {
+    chatMessages.shift();
+  }
+  
+  res.json({ success: true, message: chatMsg });
+});
+
 app.post('/moltbook/register', (req, res) => {
   const { agentId, name, description } = req.body;
   const agent = agents.find(a => a.id === agentId);
