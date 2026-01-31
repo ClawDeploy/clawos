@@ -1,7 +1,10 @@
 {
   "version": 2,
   "routes": [
+    { "src": "/manifesto", "dest": "/manifesto.html" },
     { "src": "/verify/(?<token>[^/]+)", "dest": "/verify.html?token=$token" },
+    { "src": "/admin/(.*)", "dest": "/admin/$1" },
+    { "src": "/(.*\\.(html|css|js|svg|png|jpg|ico))", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ],
   "builds": [
