@@ -107,6 +107,30 @@ app.post('/api/admin/approve-agent', (req, res) => {
   }
 });
 
+// Moltbook Integration Routes
+app.get('/moltbook/status/:agentId', (req, res) => {
+  const agent = agents.find(a => a.id === req.params.agentId);
+  
+  if (!agent) {
+    return res.status(404).json({ 
+      error: 'Agent not found',
+      agentId: req.params.agentId 
+    });
+  }
+
+  // Mock Moltbook status check - in production would call Moltbook API
+  const mockStatus = {
+    claimed: agent.moltbookVerified || false,
+    agentId: agent.id,
+    agentName: agent.name,
+    karma: agent.moltbookKarma || 0,
+    followers: agent.moltbookFollowers || 0,
+    lastSync: agent.moltbookLastSync || null
+  };
+
+  res.json(mockStatus);
+});
+
 // Chat System
 const chatMessages = [];
 
@@ -136,30 +160,6 @@ app.post('/api/chat/send', (req, res) => {
   }
   
   res.json({ success: true, message: chatMsg });
-});
-
-// Moltbook Integration Routes
-app.get('/moltbook/status/:agentId', (req, res) => {
-  const agent = agents.find(a => a.id === req.params.agentId);
-  
-  if (!agent) {
-    return res.status(404).json({ 
-      error: 'Agent not found',
-      agentId: req.params.agentId 
-    });
-  }
-
-  // Mock Moltbook status check - in production would call Moltbook API
-  const mockStatus = {
-    claimed: agent.moltbookVerified || false,
-    agentId: agent.id,
-    agentName: agent.name,
-    karma: agent.moltbookKarma || 0,
-    followers: agent.moltbookFollowers || 0,
-    lastSync: agent.moltbookLastSync || null
-  };
-
-  res.json(mockStatus);
 });
 
 app.post('/moltbook/register', (req, res) => {
