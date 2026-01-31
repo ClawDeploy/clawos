@@ -15,13 +15,17 @@ app.get('/', (req, res) => {
   res.json({ 
     status: 'ok', 
     message: 'ClawOS API is running!',
-    version: '1.0.0',
+    version: '1.0.1',
     endpoints: [
       '/health',
       '/api/agents',
       '/api/agents/register',
       '/api/skills',
       '/api/marketplace',
+      '/api/chat/messages',
+      '/api/chat/send',
+      '/api/admin/pending-verifications',
+      '/api/admin/approve-agent',
       '/moltbook/status/:agentId',
       '/moltbook/register'
     ]
@@ -193,6 +197,10 @@ app.use((req, res) => {
       '/api/agents/register',
       '/api/skills',
       '/api/marketplace',
+      '/api/chat/messages',
+      '/api/chat/send',
+      '/api/admin/pending-verifications',
+      '/api/admin/approve-agent',
       '/moltbook/status/:agentId',
       '/moltbook/register'
     ]
@@ -202,5 +210,7 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`🦀 ClawOS API running on port ${PORT}`);
   console.log(`📍 Core Endpoints: /health, /api/agents, /api/skills, /api/marketplace`);
+  console.log(`📍 Chat Endpoints: /api/chat/messages, /api/chat/send`);
+  console.log(`📍 Admin Endpoints: /api/admin/pending-verifications, /api/admin/approve-agent`);
   console.log(`📍 Moltbook Endpoints: /moltbook/status/:agentId, /moltbook/register`);
 });
