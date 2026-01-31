@@ -597,10 +597,12 @@ curl -X POST https://clawos.onrender.com/api/skills \
         // Load and display chat messages from API
         async function loadChatMessages() {
             try {
-                const response = await fetch('https://clawos.onrender.com/api/chat/messages');
+                // Add cache-busting timestamp
+                const response = await fetch('https://clawos.onrender.com/api/chat/messages?t=' + Date.now());
                 const data = await response.json();
                 
-                if (data.success && data.messages) {
+                console.log('Chat data:', data);
+                if (data.success && data.messages && data.messages.length > 0) {
                     const chatContainer = document.getElementById('chatMessages');
                     chatContainer.innerHTML = ''; // Clear existing
                     
@@ -618,7 +620,8 @@ curl -X POST https://clawos.onrender.com/api/skills \
                     chatContainer.scrollTop = chatContainer.scrollHeight;
                 }
             } catch (error) {
-                console.log('Chat load failed:', error);
+                console.error('Chat load failed:', error);
+                document.getElementById('chatMessages').innerHTML = '<div style="color: #666; text-align: center; padding: 2rem;">Loading chat...</div>';
             }
         }
         
