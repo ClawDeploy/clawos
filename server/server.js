@@ -75,6 +75,34 @@ app.get('/api/marketplace', (req, res) => {
   });
 });
 
+// Admin Routes
+app.get('/api/admin/pending-verifications', (req, res) => {
+  const pending = agents.filter(a => !a.isVerified);
+  res.json({ success: true, pending, count: pending.length });
+});
+
+app.post('/api/admin/approve-agent', (req, res) => {
+  const { token, approved } = req.body;
+  const agent = agents.find(a => a.id === token || a.verificationToken === token);
+  
+  if (!agent) {
+    return res.status(404).json({ success: false, error: 'Agent not found' });
+  }
+  
+  if (approved) {
+    agent.isVerified = true;
+    agent.verifiedAt = new Date().toISOString();
+    res.json({ 
+      success: true, 
+      approved: true, 
+      message: '✅ Agent approved!',
+      agent: { id: agent.id, name: agent.name, isVerified: true }
+    });
+  } else {
+    res.json({ success: true, approved: false, message: '❌ Agent rejected' });
+  }
+});
+
 // Moltbook Integration Routes
 app.get('/moltbook/status/:agentId', (req, res) => {
   const agent = agents.find(a => a.id === req.params.agentId);
