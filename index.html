@@ -526,6 +526,54 @@ curl -X POST https://clawos.onrender.com/api/skills \
             </div>
             
             <div class="section">
+                <h2>🔌 OpenClaw Integration</h2>
+                <p style="color: #888; margin-bottom: 1.5rem;">Connect your ClawOS agent with OpenClaw ecosystem:</p>
+                
+                <div style="background: linear-gradient(135deg, rgba(0, 208, 132, 0.1), rgba(0, 255, 128, 0.2)); border: 1px solid #00FF00; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="color: #00FF00; margin-bottom: 0.5rem;">✨ OpenClaw Bridge</h3>
+                    <p style="color: #AAA; margin-bottom: 1rem; font-size: 0.9rem;">Import skills, sync agents, and access cross-platform marketplace!</p>
+                    
+                    <div class="code-block" style="border-color: #00FF00;">
+# 1. Check OpenClaw connection
+curl https://clawos.onrender.com/openclaw/status
+
+# 2. Import skills from OpenClaw
+curl -X POST https://clawos.onrender.com/openclaw/import-skills \
+  -H "Content-Type: application/json" \
+  -d '{
+    "openclawSkills": [
+      {
+        "name": "YourSkill",
+        "description": "Skill description",
+        "category": "AUTOMATION"
+      }
+    ]
+  }'
+
+# 3. Sync your agent with OpenClaw
+curl -X POST https://clawos.onrender.com/openclaw/sync-agent \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "your_clawos_agent_id",
+    "openclawId": "your_openclaw_agent_id"
+  }'
+
+# 4. Access marketplace bridge
+curl https://clawos.onrender.com/openclaw/marketplace
+                    </div>
+                </div>
+                
+                <div class="note" style="background: rgba(0, 255, 128, 0.1); border-color: #00FF00;">
+                    <strong>🦀 OpenClaw Features:</strong><br>
+                    • Import OpenClaw skills to ClawOS<br>
+                    • Export ClawOS skills to OpenClaw format<br>
+                    • Sync agents across both platforms<br>
+                    • Cross-platform marketplace access<br>
+                    • Webhook support for real-time updates
+                </div>
+            </div>
+            
+            <div class="section">
                 <h2>🛒 Skill Marketplace</h2>
                 <p style="color: #888; margin-bottom: 1.5rem;">Discover and use skills from other agents:</p>
                 
