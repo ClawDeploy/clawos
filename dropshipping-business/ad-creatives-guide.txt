@@ -1,0 +1,439 @@
+# Facebook Ad Creatives & Copy Templates
+
+---
+
+## VIDEO AD SCRIPTS
+
+### Video Ad 1: Problem/Solution (15 seconds)
+
+**Hook (0-3 sec):**
+Visual: Split screen - frustrated woman with glue everywhere vs. happy woman
+Text Overlay: "Tired of THIS? 👇"
+
+**Problem (3-8 sec):**
+Visual: Close up of messy glue, lashes falling off
+Text Overlay: "Lash glue is MESSY 😫"
+
+**Solution (8-13 sec):**
+Visual: Quick application of magnetic lashes (10 seconds)
+Text Overlay: "Try THIS instead ✨"
+
+**CTA (13-15 sec):**
+Visual: Product shot with price
+Text Overlay: "Shop Now - 40% Off!"
+Voiceover: "Magnetic Lash Pro - link in bio"
+
+**Music:** Upbeat trending audio
+
+---
+
+### Video Ad 2: Transformation (30 seconds)
+
+**Hook (0-3 sec):**
+Visual: Woman with bare eyes looking at camera
+Text Overlay: "Watch this... 👀"
+
+**Setup (3-8 sec):**
+Visual: Apply magnetic eyeliner
+Voiceover: "Step 1: Apply the magnetic liner"
+
+**Application (8-15 sec):**
+Visual: Place lashes - they snap into place
+Voiceover: "Step 2: The lashes snap right on"
+
+**Reveal (15-22 sec):**
+Visual: Before/After split screen
+Voiceover: "That's it. 10 seconds, salon-quality lashes"
+
+**Proof (22-27 sec):**
+Visual: Woman blinking, close-up of lashes
+Text Overlay: "Waterproof 💧 | 30+ Wears ✓"
+
+**CTA (27-30 sec):**
+Visual: Product collection shot
+Text Overlay: "40% Off + Free Shipping"
+Voiceover: "Link in bio to shop"
+
+---
+
+### Video Ad 3: Customer Testimonial (45 seconds)
+
+**Hook (0-5 sec):**
+Visual: Happy customer holding product
+Text Overlay: "I was SO skeptical..."
+
+**Story (5-20 sec):**
+Visual: Customer trying on lashes for first time
+Voiceover: "I've tried EVERY type of false lash. Glue ones were messy, extensions were expensive..."
+
+**Reaction (20-35 sec):**
+Visual: Application process + her reaction
+Voiceover: "But these magnetic ones? GAME CHANGER. They literally took 10 seconds and they look AMAZING"
+
+**Proof (35-42 sec):**
+Visual: Close-ups of lashes from different angles
+Text Overlay: "Day 12 and they're still perfect!"
+
+**CTA (42-45 sec):**
+Visual: Customer pointing to link
+Text Overlay: "Get yours - link in bio"
+
+---
+
+## IMAGE AD TEMPLATES
+
+### Image Ad 1: Before/After Carousel
+
+**Format:** Carousel (3 cards)
+
+**Card 1:**
+- Image: Before shot (no lashes)
+- Text: "Before"
+- Headline: "Your Natural Lashes"
+
+**Card 2:**
+- Image: Application process
+- Text: "During"
+- Headline: "10 Seconds to Apply"
+
+**Card 3:**
+- Image: After shot (full lashes)
+- Text: "After"
+- Headline: "Salon-Worthy Lashes"
+
+**Primary Text:**
+```
+The easiest lashes you'll ever wear.
+
+✓ No glue needed
+✓ Apply in 10 seconds  
+✓ Last 30+ wears
+✓ Waterproof hold
+
+Join 50,000+ women who've made the switch!
+
+👇 Shop now - 40% off ends soon
+```
+
+**Headline:** Magnetic Lashes That Actually Work
+**CTA:** Shop Now
+
+---
+
+### Image Ad 2: Social Proof Single Image
+
+**Image:** Collage of customer photos/reviews
+**Visual Style:** Bright, pink/white aesthetic
+
+**Primary Text:**
+```
+⭐⭐⭐⭐⭐ 4,800+ Happy Customers
+
+"I can't believe I wasted years on lash glue!" - Sarah M.
+"These are a LIFESAVER for busy mornings" - Jennifer T.
+"Finally, lashes that don't fall off halfway through the day" - Michelle K.
+
+✨ 5-Magnet Technology for All-Day Hold
+💧 Waterproof & Smudge-Proof
+🐰 Cruelty-Free & Vegan
+
+Try them risk-free with our 30-day guarantee!
+```
+
+**Headline:** "Best Lashes I've Ever Used!"
+**CTA:** Get Yours Now
+
+---
+
+### Image Ad 3: Discount/Urgency
+
+**Image:** Product flat lay with "40% OFF" badge
+**Visual Style:** Bold, eye-catching colors
+
+**Primary Text:**
+```
+⚡ FLASH SALE: 40% OFF ⚡
+
+Last chance to get our bestselling Magnetic Lash Kit at 40% off!
+
+Regular price: $39.99
+Your price: $23.99
+
+✓ FREE shipping included
+✓ 30-day money-back guarantee
+✓ Ships within 24 hours
+
+Offer ends tonight at midnight!
+
+Tap "Shop Now" before it's gone 👇
+```
+
+**Headline:** 40% Off Ends Tonight!
+**CTA:** Shop Now
+
+---
+
+### Image Ad 4: Educational/How-To
+
+**Image:** 3-step infographic showing application
+**Visual Style:** Clean, instructional
+
+**Primary Text:**
+```
+How to apply lashes in 10 seconds (no glue needed):
+
+1️⃣ Apply magnetic eyeliner along lash line
+2️⃣ Wait 30 seconds for it to get tacky  
+3️⃣ Place magnetic lashes - they SNAP into place!
+
+That's it. No mess. No waiting. No lashes falling off.
+
+Perfect for:
+✓ Busy mornings
+✓ Makeup beginners
+✓ Sensitive eyes
+✓ Anyone who hates lash glue
+
+👉 Link in bio to try them 40% off!
+```
+
+**Headline:** Lashes in 10 Seconds (No Glue!)
+**CTA:** Learn More
+
+---
+
+## AD COPY VARIATIONS BY ANGLE
+
+### Angle 1: Convenience/Busy Lifestyle
+```
+Your morning routine just got 10 minutes faster.
+
+No more:
+❌ Messy glue
+❌ Waiting for it to dry
+❌ Lashes falling off by lunch
+
+Just apply the magnetic liner, snap on the lashes, and GO.
+
+Perfect for busy moms, working professionals, and anyone who values their time.
+
+🔗 Get 40% off your first order - link in bio
+```
+
+### Angle 2: Cost Savings
+```
+Stop spending $150+ on lash extensions every 3 weeks.
+
+Our magnetic lashes:
+✓ One-time purchase: $24.99
+✓ Last 30+ wears
+✓ Cost per use: less than $1
+
+Extensions: $150+ every 3 weeks
+Magnetic Lash Pro: $24.99 one time
+
+You do the math 😉
+
+Save money, look amazing - tap to shop 👇
+```
+
+### Angle 3: Confidence/Self-Esteem
+```
+There's something about lashes that just makes you feel... put together.
+
+More confident in meetings.
+More beautiful on date nights.  
+More YOU.
+
+Our magnetic lashes give you that salon-fresh feeling every single day.
+
+And the best part? They take 10 seconds to apply.
+
+Ready to feel amazing? 👇
+```
+
+### Angle 4: Problem Agitation
+```
+If you've ever:
+😤 Gotten lash glue in your eye
+😤 Had lashes fall off at the worst moment
+😤 Wasted 20 minutes trying to get them straight
+😤 Thrown away $15 lashes after one use
+
+You NEED to try magnetic lashes.
+
+Seriously. Life-changing.
+
+40% off for first-time customers 👇
+```
+
+### Angle 5: Gift Angle
+```
+Looking for the perfect gift? 🎁
+
+Every woman wants lashes that:
+✨ Look amazing
+✨ Are easy to apply
+✨ Don't require a trip to the salon
+
+Our Magnetic Lash Kit checks all the boxes.
+
+Plus it comes in gorgeous packaging - ready to gift!
+
+Order by [DATE] for guaranteed delivery.
+
+👉 Shop now - link in bio
+```
+
+---
+
+## RETARGETING AD COPY
+
+### Retarget 1: Cart Abandoners (24 hours)
+```
+Still thinking about it? 💭
+
+Those magnetic lashes you looked at are waiting for you!
+
+And here's a little nudge: Use code COMEBACK10 for an extra 10% off.
+
+Your cart expires in 24 hours ⏰
+
+Complete your order 👇
+```
+
+### Retarget 2: Website Visitors (7 days)
+```
+We noticed you checking out our magnetic lashes...
+
+Thousands of women have made the switch from messy glue to magnetic.
+
+Here's what they're saying:
+"Why didn't I try these sooner?!" ⭐⭐⭐⭐⭐
+"Best $25 I've ever spent on beauty" ⭐⭐⭐⭐⭐
+"My morning routine is SO much easier" ⭐⭐⭐⭐⭐
+
+Still curious? Here's 15% off to try them risk-free.
+
+Code: CURIOUS15 👇
+```
+
+### Retarget 3: Video Viewers (75%+)
+```
+You watched our video... but didn't buy? 🤔
+
+Here's the deal:
+→ 50,000+ women LOVE these lashes
+→ 30-day money-back guarantee  
+→ Free returns if you don't love them
+→ Currently 40% off
+
+Literally zero risk. All the reward.
+
+Tap to claim your discount 👇
+```
+
+---
+
+## AD HEADLINES (A/B TEST THESE)
+
+### Short & Punchy:
+- Lashes in 10 Seconds
+- No Glue. Just Gorgeous.
+- Ditch the Glue Forever
+- Salon Lashes at Home
+- Magnetic = Magic
+
+### Benefit-Focused:
+- Apply in 10 Seconds (No Glue!)
+- Lashes That Stay ALL Day
+- 30 Wears Per Pair
+- Waterproof Magnetic Lashes
+- The Last Lashes You'll Ever Buy
+
+### Curiosity/Question:
+- Tired of Messy Lash Glue?
+- What If Lashes Took 10 Seconds?
+- Still Using Lash Glue? 😬
+- Extensions Too Expensive?
+- Ready to Ditch the Glue?
+
+### Social Proof:
+- 50,000+ Women Love These
+- "Best Lashes Ever!" ⭐⭐⭐⭐⭐
+- 4,800+ 5-Star Reviews
+- Join the Magnetic Lash Revolution
+- America's #1 Magnetic Lashes
+
+### Urgency/Scarcity:
+- 40% Off Ends Tonight!
+- Almost Sold Out ⚡
+- Limited Stock Available
+- Sale Ends in 24 Hours
+- Last Chance: 40% Off
+
+---
+
+## CALL-TO-ACTION OPTIONS
+
+Test these CTAs to optimize for your audience:
+
+- Shop Now
+- Get Yours
+- Claim Offer
+- Try Them Now
+- Shop the Sale
+- Order Now
+- Learn More
+- See Details
+- Get 40% Off
+- Shop Lashes
+
+---
+
+## CREATIVE TESTING FRAMEWORK
+
+### Week 1 Testing Plan:
+**Budget:** $50/day
+**Test:** 3 angles × 2 creatives = 6 ad variations
+
+| Ad Set | Creative | Copy Angle | Budget |
+|--------|----------|------------|--------|
+| 1 | Video - Problem/Solution | Convenience | $8/day |
+| 2 | Video - Transformation | Confidence | $8/day |
+| 3 | Image - Before/After | Cost Savings | $8/day |
+| 4 | Image - Social Proof | Problem Agitation | $8/day |
+| 5 | Carousel - How To | Educational | $8/day |
+| 6 | Video - Testimonial | Social Proof | $10/day |
+
+### Kill Criteria (Pause if):
+- CTR < 1% after 3 days
+- CPC > $2.00 after 3 days
+- ROAS < 1.5 after 5 days
+- Frequency > 3
+- Negative feedback score high
+
+### Scale Criteria (Increase budget):
+- ROAS > 3x
+- CTR > 2%
+- CPA < $15
+- Stable for 3+ days
+
+---
+
+## AD CREATIVE CHECKLIST
+
+Before launching any ad, verify:
+
+- [ ] Hook in first 3 seconds
+- [ ] Clear value proposition
+- [ ] Visual shows product/benefit
+- [ ] Caption/text is readable
+- [ ] Brand colors consistent
+- [ ] Music/audio appropriate
+- [ ] CTA is clear
+- [ ] Link works correctly
+- [ ] Mobile-optimized (80% of traffic)
+- [ ] Facebook guidelines compliant
+
+---

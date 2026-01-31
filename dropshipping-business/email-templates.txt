@@ -1,0 +1,520 @@
+# Email Marketing Templates (Klaviyo)
+
+---
+
+## WELCOME SERIES (5 Emails)
+
+### Email 1: Welcome + First Purchase Discount
+
+**Subject Lines (A/B Test):**
+- Welcome to Magnetic Lash Pro! Here's 10% off 🎉
+- Your lashes are waiting... (+ a little gift)
+- Welcome! Here's how to get started 💕
+
+**Preview Text:**
+Your exclusive 10% discount is inside!
+
+**Email Body:**
+```html
+<h1>Welcome to the family, {{first_name|default:"Beautiful"}}! 💕</h1>
+
+<p>Thanks for joining thousands of women who've discovered the easiest way to gorgeous lashes.</p>
+
+<p>At Magnetic Lash Pro, we believe everyone deserves to feel confident and beautiful - without the hassle of traditional false lashes.</p>
+
+<h2>Here's what makes us different:</h2>
+<ul>
+  <li>✨ 10-second application (seriously!)</li>
+  <li>✨ No messy glue needed</li>
+  <li>✨ 30+ wears per pair</li>
+  <li>✨ Waterproof & smudge-proof</li>
+</ul>
+
+<div style="background: #fce4ec; padding: 20px; text-align: center; margin: 20px 0;">
+  <h2>Your Welcome Gift 🎁</h2>
+  <p>Use code <strong>WELCOME10</strong> for 10% off your first order</p>
+  <p><small>Valid for 7 days</small></p>
+  <a href="https://yourstore.com/collections/all" style="background: #e91e63; color: white; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px;">SHOP NOW</a>
+</div>
+
+<p>Need help choosing? Reply to this email - we read every single one!</p>
+
+<p>XOXO,<br>
+The Magnetic Lash Pro Team</p>
+
+<p><small>P.S. Follow us on Instagram @magneticlashpro for tutorials and inspo!</small></p>
+```
+
+**Timing:** Immediate after signup
+**Goal:** First purchase conversion
+
+---
+
+### Email 2: How-To Guide
+
+**Subject Lines:**
+- How to apply lashes in 10 seconds (video inside)
+- Watch: The EASIEST lash application ever
+- Your step-by-step lash guide 📹
+
+**Email Body:**
+```html
+<h1>Hey {{first_name|default:"there"}}! 👋</h1>
+
+<p>Yesterday you joined our community - today I want to show you exactly how easy magnetic lashes are to apply.</p>
+
+<p>Most people think it's complicated... until they try it.</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="[VIDEO_LINK]">
+    <img src="[THUMBNAIL_IMAGE]" alt="How to Apply Magnetic Lashes" style="max-width: 100%; border-radius: 10px;">
+  </a>
+  <p><em>Click to watch the 60-second tutorial</em></p>
+</div>
+
+<h2>The 3-Step Process:</h2>
+
+<h3>Step 1: Apply the Magnetic Liner</h3>
+<p>Shake well and draw a line along your upper lash line, just like regular eyeliner.</p>
+
+<h3>Step 2: Wait 30 Seconds</h3>
+<p>Let the liner get tacky (this is the secret!).</p>
+
+<h3>Step 3: Snap On the Lashes</h3>
+<p>Place the magnetic lashes onto the liner - they'll literally SNAP into place!</p>
+
+<div style="background: #f3e5f5; padding: 20px; margin: 20px 0; border-left: 4px solid #9c27b0;">
+  <p><strong>Pro Tip:</strong> Start with the outer corner and work your way in for easiest placement!</p>
+</div>
+
+<p>Questions? Just hit reply!</p>
+
+<p>Talk soon,<br>
+Sarah from Magnetic Lash Pro</p>
+
+<p><a href="https://yourstore.com/collections/all" style="color: #e91e63;">Ready to try them? Shop now →</a></p>
+```
+
+**Timing:** Day 1 after signup
+**Goal:** Education + consideration
+
+---
+
+### Email 3: Social Proof
+
+**Subject Lines:**
+- "Best $25 I've ever spent!" ⭐⭐⭐⭐⭐
+- See what our customers are saying...
+- 50,000+ happy lash wearers 💕
+
+**Email Body:**
+```html
+<h1>Don't just take our word for it...</h1>
+
+<p>Hi {{first_name|default:"there"}},</p>
+
+<p>We could tell you all day how amazing our magnetic lashes are, but we think our customers say it better:</p>
+
+<div style="background: #fff8e1; padding: 20px; margin: 15px 0; border-radius: 10px;">
+  <p>⭐⭐⭐⭐⭐</p>
+  <p><em>"I was SO skeptical but these changed my life. I used to spend $200 on extensions every month. Now I get compliments on my lashes daily and it costs me less than $1 per wear!"</em></p>
+  <p><strong>- Jennifer M., Verified Buyer</strong></p>
+</div>
+
+<div style="background: #e8f5e9; padding: 20px; margin: 15px 0; border-radius: 10px;">
+  <p>⭐⭐⭐⭐⭐</p>
+  <p><em>"As a busy mom of 3, I don't have time for complicated makeup. These take literally 10 seconds and I feel put together even on my most chaotic mornings."</em></p>
+  <p><strong>- Michelle T., Verified Buyer</strong></p>
+</div>
+
+<div style="background: #e3f2fd; padding: 20px; margin: 15px 0; border-radius: 10px;">
+  <p>⭐⭐⭐⭐⭐</p>
+  <p><em>"Finally! Lashes that don't fall off halfway through my workday. The magnetic hold is incredible - I've even worn these swimming!"</em></p>
+  <p><strong>- Amanda K., Verified Buyer</strong></p>
+</div>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="https://yourstore.com/collections/all" style="background: #e91e63; color: white; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px;">JOIN THEM - SHOP NOW</a>
+</div>
+
+<p><small>P.S. Every order comes with our 30-day money-back guarantee. Love them or get a full refund!</small></p>
+```
+
+**Timing:** Day 2 after signup
+**Goal:** Social proof + conversion
+
+---
+
+### Email 4: FAQ / Objection Handling
+
+**Subject Lines:**
+- Your magnetic lash questions, answered
+- "Will they stay on?" + other FAQs
+- Everything you wanted to know 💭
+
+**Email Body:**
+```html
+<h1>Questions? We got answers! 💡</h1>
+
+<p>Hey {{first_name|default:"there"}},</p>
+
+<p>We've helped over 50,000 women switch to magnetic lashes, so we've heard pretty much every question!</p>
+
+<p>Here are the most common ones:</p>
+
+<h3>❓ "Will they actually stay on all day?"</h3>
+<p><strong>YES!</strong> Our 5-magnet technology creates a hold so secure, you can wear them through work, workouts, and even swimming. The waterproof formula means they won't budge.</p>
+
+<h3>❓ "Are they hard to apply?"</h3>
+<p><strong>Not at all!</strong> Most customers are shocked at how easy it is. Apply liner → wait 30 seconds → place lashes. Done! It takes most people 10 seconds after their first try.</p>
+
+<h3>❓ "Will they damage my natural lashes?"</h3>
+<p><strong>Actually, they're gentler!</strong> Unlike glue lashes that pull on your natural lashes during removal, magnetic lashes simply lift off. Many customers say their natural lashes have actually grown stronger since switching.</p>
+
+<h3>❓ "What if I don't like them?"</h3>
+<p><strong>Full refund!</strong> We have a 30-day money-back guarantee. If you don't absolutely love them, return for a full refund. No questions asked.</p>
+
+<div style="background: #fce4ec; padding: 20px; text-align: center; margin: 30px 0;">
+  <p>Still have questions? Just reply to this email!</p>
+  <a href="https://yourstore.com/collections/all" style="background: #e91e63; color: white; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px; margin-top: 10px;">SHOP MAGNETIC LASHES</a>
+</div>
+
+<p>Cheers,<br>
+The Magnetic Lash Pro Team</p>
+```
+
+**Timing:** Day 4 after signup
+**Goal:** Overcome objections
+
+---
+
+### Email 5: Limited Time Offer
+
+**Subject Lines:**
+- Last chance: Your 10% off expires tonight ⏰
+- Don't let this expire on you...
+- {{first_name|default:"Hey"}}, your code expires soon!
+
+**Email Body:**
+```html
+<h1>⏰ Your Welcome Code Expires Tonight!</h1>
+
+<p>Hi {{first_name|default:"there"}},</p>
+
+<p>This is just a friendly reminder that your exclusive 10% welcome discount expires at midnight tonight.</p>
+
+<p>Code: <strong style="font-size: 24px; color: #e91e63;">WELCOME10</strong></p>
+
+<div style="background: #ffebee; border: 2px solid #e91e63; padding: 20px; text-align: center; margin: 30px 0;">
+  <h2>Why thousands choose Magnetic Lash Pro:</h2>
+  <ul style="list-style: none; padding: 0;">
+    <li>✓ 10-second application</li>
+    <li>✓ 30+ wears per pair</li>
+    <li>✓ Waterproof & smudge-proof</li>
+    <li>✓ 30-day money-back guarantee</li>
+    <li>✓ Free shipping over $35</li>
+  </ul>
+</div>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="https://yourstore.com/collections/all" style="background: #e91e63; color: white; padding: 20px 40px; text-decoration: none; display: inline-block; border-radius: 5px; font-size: 18px;">CLAIM MY 10% OFF</a>
+</div>
+
+<p>Don't miss out - this is the best discount we offer new customers!</p>
+
+<p>XOXO,<br>
+Magnetic Lash Pro</p>
+
+<p><small>P.S. If you're not ready to buy, no worries! But fair warning: this code won't work after midnight.</small></p>
+```
+
+**Timing:** Day 6 after signup
+**Goal:** Urgency conversion
+
+---
+
+## ABANDONED CART SERIES (3 Emails)
+
+### Abandoned Cart Email 1: Friendly Reminder (1 hour)
+
+**Subject Lines:**
+- Did something go wrong? 🤔
+- You left something behind...
+- Your lashes are waiting for you!
+
+**Email Body:**
+```html
+<h1>Hey {{first_name|default:"there"}}! 👋</h1>
+
+<p>I noticed you were checking out our magnetic lashes but didn't complete your order.</p>
+
+<p>Did something go wrong? Need help deciding?</p>
+
+<p>Here's what you left behind:</p>
+
+<div style="background: #f5f5f5; padding: 20px; margin: 20px 0;">
+  {{event.Items}}
+</div>
+
+<p><strong>No worries if you changed your mind!</strong> But if you just got distracted (happens to the best of us), you can complete your order here:</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{event.URL}}" style="background: #e91e63; color: white; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px;">COMPLETE MY ORDER</a>
+</div>
+
+<p>Questions? Just reply!</p>
+
+<p>XOXO,<br>
+Sarah from Magnetic Lash Pro</p>
+```
+
+**Timing:** 1 hour after abandonment
+**Goal:** Recover cart
+
+---
+
+### Abandoned Cart Email 2: Incentive (24 hours)
+
+**Subject Lines:**
+- Still thinking about it? Here's 10% off 💕
+- Your cart + a little gift...
+- Get 10% off your lashes! 🎁
+
+**Email Body:**
+```html
+<h1>Still interested in your lashes? 💭</h1>
+
+<p>Hi {{first_name|default:"there"}},</p>
+
+<p>I saw you were looking at our magnetic lash kit yesterday. I get it - sometimes you need a little nudge to try something new!</p>
+
+<p>So here's a little nudge... plus a little gift 🎁</p>
+
+<div style="background: #fce4ec; padding: 30px; text-align: center; margin: 30px 0;">
+  <h2>Use code SAVE10 for 10% off</h2>
+  <p>Valid for the next 24 hours only</p>
+  <a href="{{event.URL}}" style="background: #e91e63; color: white; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px; margin-top: 10px;">APPLY MY DISCOUNT</a>
+</div>
+
+<p>Remember, every order comes with:</p>
+<ul>
+  <li>✓ Free shipping over $35</li>
+  <li>✓ 30-day money-back guarantee</li>
+  <li>✓ Quick customer support</li>
+</ul>
+
+<p>No pressure at all - just wanted to make sure you didn't miss out!</p>
+
+<p>Talk soon,<br>
+The Magnetic Lash Pro Team</p>
+```
+
+**Timing:** 24 hours after abandonment
+**Goal:** Convert with discount
+
+---
+
+### Abandoned Cart Email 3: Last Chance (72 hours)
+
+**Subject Lines:**
+- Last call for your cart ⏰
+- Your cart expires soon...
+- {{first_name|default:"Hey"}}, one last thing!
+
+**Email Body:**
+```html
+<h1>One last thing... 💕</h1>
+
+<p>Hey {{first_name|default:"there"}},</p>
+
+<p>I wanted to reach out one last time about the items you left in your cart.</p>
+
+<p>In a few hours, we'll need to release your items back to inventory (our system does this automatically).</p>
+
+<p>If you're still interested, now's the time!</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{event.URL}}" style="background: #e91e63; color: white; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px;">SAVE MY CART</a>
+</div>
+
+<p>If you're not interested anymore, no hard feelings! Just let this email expire and I won't bug you about it again.</p>
+
+<p>Thanks for considering us!</p>
+
+<p>XOXO,<br>
+Magnetic Lash Pro</p>
+```
+
+**Timing:** 72 hours after abandonment
+**Goal:** Final recovery attempt
+
+---
+
+## POST-PURCHASE SERIES
+
+### Email 1: Order Confirmation + Usage Tips
+
+**Subject Lines:**
+- Your order is confirmed! 🎉
+- Get ready for gorgeous lashes!
+- Order #{{event.OrderNumber}} confirmed
+
+**Email Body:**
+```html
+<h1>Yay! Your lashes are on their way! 🎉</h1>
+
+<p>Hi {{first_name|default:"there"}},</p>
+
+<p>We're so excited for you to try your magnetic lashes!</p>
+
+<div style="background: #e8f5e9; padding: 20px; margin: 20px 0;">
+  <h3>Order Summary:</h3>
+  <p>Order #: {{event.OrderNumber}}</p>
+  <p>{{event.Items}}</p>
+  <p><strong>Total: {{event.Total}}</strong></p>
+</div>
+
+<p>We'll send you tracking info within 24 hours once your order ships.</p>
+
+<h2>While you wait, here's how to get the best results:</h2>
+
+<h3>✨ First Time Tips:</h3>
+<ul>
+  <li>Start with clean, dry eyelids</li>
+  <li>Apply the magnetic liner thick enough (think sharpie, not pen)</li>
+  <li>Wait the full 30 seconds before applying lashes</li>
+  <li>Start from the outer corner and work inward</li>
+</ul>
+
+<h3>📹 Watch Our Tutorial:</h3>
+<p><a href="[VIDEO_LINK]">Click here for a 60-second application guide</a></p>
+
+<p>Questions before your order arrives? Just reply to this email!</p>
+
+<p>XOXO,<br>
+The Magnetic Lash Pro Team</p>
+
+<p><small>P.S. Follow us @magneticlashpro for tips and inspiration!</small></p>
+```
+
+**Timing:** Immediate after purchase
+**Goal:** Set expectations, reduce returns
+
+---
+
+### Email 2: Review Request + Referral (14 days after delivery)
+
+**Subject Lines:**
+- How are you loving your lashes? 💕
+- Quick favor? 🙏
+- Love your lashes? Share the love!
+
+**Email Body:**
+```html
+<h1>How are your lashes treating you? 💕</h1>
+
+<p>Hi {{first_name|default:"there"}},</p>
+
+<p>It's been about two weeks since your magnetic lashes arrived!</p>
+
+<p>I hope you're loving them as much as we hoped you would 💕</p>
+
+<div style="background: #fff8e1; padding: 20px; margin: 20px 0; text-align: center;">
+  <h3>Quick Favor?</h3>
+  <p>If you have 30 seconds, would you mind leaving a quick review?</p>
+  <p>Your feedback helps other women discover magnetic lashes!</p>
+  <a href="[REVIEW_LINK]" style="background: #ffc107; color: black; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px; margin-top: 10px;">LEAVE A REVIEW</a>
+</div>
+
+<h3>Want to earn $10? 💰</h3>
+<p>Share your unique referral code with friends and earn $10 store credit when they make their first purchase!</p>
+
+<p><strong>Your code: {{referral_code}}</strong></p>
+
+<p>Share this link: {{referral_link}}</p>
+
+<p>Thanks for being an amazing customer!</p>
+
+<p>XOXO,<br>
+The Magnetic Lash Pro Team</p>
+```
+
+**Timing:** 14 days after delivery
+**Goal:** Reviews + referrals
+
+---
+
+## WIN-BACK SERIES
+
+### Win-Back Email: We Miss You! (60 days)
+
+**Subject Lines:**
+- We miss you! 💕
+- {{first_name|default:"Hey"}}, come back!
+- 20% off just for you...
+
+**Email Body:**
+```html
+<h1>We miss you! 💕</h1>
+
+<p>Hi {{first_name|default:"there"}},</p>
+
+<p>It's been a while since we've seen you around!</p>
+
+<p>We noticed it's been a couple months since your last order, and we wanted to check in.</p>
+
+<p>Did you run out of lashes? Looking for something new? Or just taking a break?</p>
+
+<p>Whatever the reason, we wanted to make it worth your while to come back:</p>
+
+<div style="background: #f3e5f5; padding: 30px; text-align: center; margin: 30px 0;">
+  <h2>20% Off Your Next Order</h2>
+  <p style="font-size: 24px; color: #7b1fa2;"><strong>Code: COMEBACK20</strong></p>
+  <p>Valid for 7 days</p>
+  <a href="https://yourstore.com/collections/all" style="background: #7b1fa2; color: white; padding: 15px 30px; text-decoration: none; display: inline-block; border-radius: 5px; margin-top: 10px;">SHOP NOW</a>
+</div>
+
+<p>We've also launched some new styles since you last visited - check them out!</p>
+
+<p>No pressure if you're not interested, but the door's always open 💕</p>
+
+<p>XOXO,<br>
+The Magnetic Lash Pro Team</p>
+```
+
+**Timing:** 60 days since last purchase
+**Goal:** Re-activation
+
+---
+
+## EMAIL BEST PRACTICES
+
+### Subject Line Tips:
+- Keep under 50 characters
+- Use emojis sparingly (1-2 max)
+- Personalize with first name when possible
+- Create curiosity or urgency
+- A/B test everything!
+
+### Email Design Tips:
+- Single column layout (mobile-friendly)
+- Large, tappable buttons
+- Plenty of white space
+- Clear hierarchy with headings
+- Brand colors consistent
+- Images optimized for fast loading
+
+### Send Time Optimization:
+- Tuesday-Thursday typically best
+- 10am or 2pm local time
+- Test different times for your audience
+- Avoid Mondays and weekends (usually)
+
+### Metrics to Track:
+- Open Rate: Target 20%+
+- Click Rate: Target 3%+
+- Conversion Rate: Track per email
+- Revenue per Recipient
+- Unsubscribe Rate: Keep under 0.5%
+
+---

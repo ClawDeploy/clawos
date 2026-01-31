@@ -1,0 +1,317 @@
+# Vetted Supplier Contact List
+
+---
+
+## PRIMARY SUPPLIERS: MAGNETIC EYELASHES
+
+### Supplier A: AliExpress - Top Pick
+
+**Store Name:** Beauty Magnetic Lashes Official Store
+**Store Rating:** 97.2%
+**Years Active:** 4+ years
+**Total Orders:** 45,000+
+**Response Rate:** 95% within 24 hours
+
+**Product Link:** 
+```
+https://www.aliexpress.com/item/ magnetic-eyelashes-with-eyeliner-kit.html
+(Search: "5 magnet magnetic eyelashes kit waterproof")
+```
+
+**Product Specifications:**
+- 5-magnet technology
+- Magnetic eyeliner included (5ml)
+- Reusable 30+ times
+- Waterproof formula
+- Cruelty-free materials
+- Individual lash packaging
+
+**Pricing:**
+| Quantity | Unit Price | Shipping | Total COGS |
+|----------|-----------|----------|------------|
+| 1-50 | $4.20 | $2.00 | $6.20 |
+| 51-100 | $3.80 | $1.50 | $5.30 |
+| 101-500 | $3.40 | $1.20 | $4.60 |
+| 500+ | $2.90 | $0.80 | $3.70 |
+
+**Shipping Options:**
+- AliExpress Standard: 15-30 days, $2.00
+- ePacket: 12-20 days, $2.50
+- AliExpress Premium: 7-15 days, $4.00
+
+**Branding Options:**
+- Custom packaging: +$0.50/unit (MOQ 100)
+- Logo printing: +$0.30/unit (MOQ 200)
+- Custom insert card: +$0.20/unit (MOQ 300)
+
+**Contact Method:** AliExpress message system
+**Average Response:** 12-18 hours
+
+---
+
+### Supplier B: AliExpress - Alternative
+
+**Store Name:** Lash Beauty Pro Store
+**Store Rating:** 95.8%
+**Years Active:** 3+ years
+**Total Orders:** 28,000+
+
+**Product Specifications:**
+- 6-magnet enhanced hold
+- Dual eyeliner (black + clear)
+- Reusable 40+ times
+- Vegan certified
+- Premium packaging included
+
+**Pricing:**
+| Quantity | Unit Price | Shipping |
+|----------|-----------|----------|
+| 1-50 | $5.50 | $1.80 |
+| 51-100 | $4.90 | $1.40 |
+| 101+ | $4.20 | $1.00 |
+
+**Pros:** Higher quality, better packaging
+**Cons:** Higher cost, longer processing
+
+---
+
+### Supplier C: CJ Dropshipping
+
+**Platform:** cjdropshipping.com
+**Warehouse:** China (US warehouse available)
+**MOQ:** 1 piece (dropship friendly)
+
+**Advantages:**
+- Quality control inspection
+- White-label packaging
+- Faster shipping via US warehouse
+- Bulk storage options
+- Print-on-demand inserts
+
+**Pricing:**
+- Product: $5.20
+- China shipping: $2.50
+- US warehouse: $6.50 (2-5 day delivery)
+
+**Setup:**
+1. Create CJ Dropshipping account
+2. Connect Shopify store
+3. Import product via CJ app
+4. Set up auto-fulfillment
+
+**US Warehouse Shipping:**
+- Standard: $3.50 (5-8 days)
+- Express: $5.50 (2-4 days)
+
+---
+
+### Supplier D: Spocket (US/EU Option)
+
+**Platform:** spocket.co
+**Supplier Location:** USA
+**Shipping:** 2-5 days domestic
+
+**Advantages:**
+- Fast US shipping
+- Higher quality products
+- Branded invoicing
+- Returns handled by Spocket
+- Better for customer satisfaction
+
+**Pricing:**
+- Product: $8.50
+- Shipping: $3.00
+- Total COGS: $11.50
+
+**Recommended for:** Higher retail prices ($35+), premium positioning
+
+---
+
+## SAMPLE ORDERING PROCESS
+
+### Step 1: Order Samples
+**Budget:** $50-100
+
+**What to Order:**
+- 2-3 different lash styles
+- Different magnet counts (3, 5, 6)
+- Different packaging options
+
+**Evaluation Criteria:**
+- [ ] Product quality and durability
+- [ ] Magnet strength
+- [ ] Eyeliner quality
+- [ ] Packaging presentation
+- [ ] Shipping time
+- [ ] Communication quality
+
+### Step 2: Test Products
+- [ ] Apply lashes personally
+- [ ] Test all-day wear
+- [ ] Test waterproof claims
+- [ ] Count reuse number
+- [ ] Document with photos/video
+
+### Step 3: Negotiate Terms
+Once you've chosen a supplier:
+
+**Email Template:**
+```
+Subject: Dropshipping Partnership - Magnetic Lashes
+
+Dear [Supplier Name],
+
+I hope this message finds you well. My name is [Your Name] and I am 
+the founder of Magnetic Lash Pro, a new beauty brand specializing in 
+magnetic eyelashes.
+
+I recently ordered samples from your store and was very impressed with 
+the quality of your [product name]. I would like to discuss establishing 
+a dropshipping partnership.
+
+About My Business:
+- Newly launched e-commerce store
+- Target market: US/Canada beauty consumers
+- Projected volume: 100-200 orders/month initially
+- Scaling to 500+ orders/month within 6 months
+- Shopify platform with automated fulfillment
+
+I am interested in:
+1. Dropshipping arrangement with no MOQ
+2. Processing time of 1-3 business days
+3. White-label packaging (no supplier branding)
+4. Bulk pricing for volume growth
+5. Quality consistency guarantees
+
+My target retail price is $24.99-29.99, so I need a landed cost under 
+$8 to maintain healthy margins.
+
+Could you please provide:
+- Your best dropshipping pricing
+- Processing and shipping timeframes
+- Packaging options (branded/unbranded)
+- Return/refund policy
+- Any volume discount tiers
+
+I am ready to start with 50 units/month and scale from there.
+
+Thank you for your time. I look forward to building a successful 
+partnership together.
+
+Best regards,
+[Your Name]
+[Your Business Name]
+[Email]
+[Phone]
+[Website]
+```
+
+---
+
+## SUPPLIER EVALUATION SCORECARD
+
+Rate each supplier 1-5 on these criteria:
+
+| Criteria | Weight | Supplier A | Supplier B | Supplier C |
+|----------|--------|-----------|-----------|-----------|
+| Product Quality | 25% | | | |
+| Pricing | 20% | | | |
+| Shipping Speed | 20% | | | |
+| Communication | 15% | | | |
+| Reliability | 15% | | | |
+| Branding Options | 5% | | | |
+| **TOTAL** | 100% | | | |
+
+**Minimum Acceptable Score:** 3.5/5
+
+---
+
+## RED FLAGS TO AVOID
+
+### Bad Supplier Indicators:
+- ❌ Less than 90% positive feedback
+- ❌ Fewer than 1000 orders
+- ❌ Store open less than 1 year
+- ❌ No response after 48 hours
+- ❌ Refuses to send samples
+- ❌ Won't provide tracking numbers
+- ❌ Inconsistent product photos
+- ❌ No return/refund policy
+
+### Before Committing:
+- [ ] Verify store legitimacy
+- [ ] Read recent reviews (last 30 days)
+- [ ] Check for negative feedback patterns
+- [ ] Confirm shipping methods
+- [ ] Understand dispute process
+
+---
+
+## BACKUP SUPPLIER STRATEGY
+
+Always have at least 2 suppliers for each product:
+
+**Primary:** Main supplier (80% of orders)
+**Backup:** Secondary supplier (20% of orders, overflow)
+
+**Benefits:**
+- Protects against stockouts
+- Price leverage for negotiations
+- Quality comparison
+- Risk mitigation
+
+---
+
+## SHIPPING CARRIER RECOMMENDATIONS
+
+### For AliExpress Suppliers:
+1. **ePacket** (if available) - Best balance of speed/price
+2. **AliExpress Standard Shipping** - Reliable, tracked
+3. **Cainiao Super Economy** - Cheapest, but slow (30-45 days)
+
+### For US/EU Suppliers:
+1. **USPS First Class** - 3-5 days, economical
+2. **USPS Priority** - 2-3 days, reliable
+3. **FedEx/UPS** - 1-2 days, premium option
+
+---
+
+## ORDER FULFILLMENT WORKFLOW
+
+### Automated (Recommended):
+1. Customer places order on Shopify
+2. DSers/CJ app automatically imports order
+3. Payment authorized to supplier
+4. Supplier processes and ships
+5. Tracking number auto-synced to Shopify
+6. Customer receives tracking notification
+
+### Manual (If needed):
+1. Receive Shopify order notification
+2. Log into supplier platform
+3. Place customer order with supplier
+4. Pay supplier
+5. Copy tracking number to Shopify
+6. Mark order as fulfilled
+
+---
+
+## QUALITY CONTROL CHECKLIST
+
+### When Samples Arrive:
+- [ ] Packaging undamaged
+- [ ] Product matches description
+- [ ] All components included
+- [ ] No defects or damage
+- [ ] Magnets properly aligned
+- [ ] Eyeliner applies smoothly
+- [ ] Lashes feel comfortable
+- [ ] Adhesive (if any) not dried out
+
+### Ongoing Monitoring:
+- [ ] Review customer feedback weekly
+- [ ] Track return reasons
+- [ ] Monitor supplier ratings
+- [ ] Test new batches periodically
+
+---

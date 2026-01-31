@@ -1,0 +1,5 @@
+{
+  "gateway_url": "http://localhost:3000",
+  "token": "your-gateway-token-here",
+  "comment": "Edit this file with your Clawdbot gateway URL and token"
+}

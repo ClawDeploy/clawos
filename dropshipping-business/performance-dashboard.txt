@@ -1,0 +1,418 @@
+# Performance Metrics Dashboard & Optimization Report
+
+---
+
+## EXECUTIVE DASHBOARD
+
+### Key Metrics at a Glance
+
+| Metric | Current | Target | Status | vs Last Week |
+|--------|---------|--------|--------|--------------|
+| **Revenue** | $_____ | $10,000/mo | 🟡/🟢/🔴 | +/- ____% |
+| **ROAS** | ____x | >3x | 🟡/🟢/🔴 | +/- ____x |
+| **CPA** | $____ | <$15 | 🟡/🟢/🔴 | +/- $____ |
+| **Conversion Rate** | ____% | >3% | 🟡/🟢/🔴 | +/- ____% |
+| **AOV** | $____ | >$35 | 🟡/🟢/🔴 | +/- $____ |
+| **Profit Margin** | ____% | >50% | 🟡/🟢/🔴 | +/- ____% |
+
+**Status Legend:**
+- 🟢 On/Above Target
+- 🟡 Within 20% of Target
+- 🔴 Below Target
+
+---
+
+## WEEKLY PERFORMANCE REPORT
+
+### Week of: [DATE]
+
+---
+
+## 1. SALES PERFORMANCE
+
+### Revenue Breakdown
+
+| Source | Revenue | Orders | AOV | % of Total |
+|--------|---------|--------|-----|------------|
+| Direct Traffic | $_____ | ___ | $___ | ___% |
+| Facebook Ads | $_____ | ___ | $___ | ___% |
+| Instagram | $_____ | ___ | $___ | ___% |
+| Organic Search | $_____ | ___ | $___ | ___% |
+| Email Marketing | $_____ | ___ | $___ | ___% |
+| Referrals | $_____ | ___ | $___ | ___% |
+| **TOTAL** | **$_____** | **___** | **$___** | **100%** |
+
+### Product Performance
+
+| Product | Units Sold | Revenue | Return Rate | Profit Margin |
+|---------|-----------|---------|-------------|---------------|
+| Natural Lash Kit | ____ | $____ | ___% | ___% |
+| Dramatic Lash Kit | ____ | $____ | ___% | ___% |
+| Complete Collection | ____ | $____ | ___% | ___% |
+| Applicator Tool | ____ | $____ | ___% | ___% |
+| Lash Care Kit | ____ | $____ | ___% | ___% |
+
+---
+
+## 2. ADVERTISING PERFORMANCE (FACEBOOK)
+
+### Campaign Summary
+
+| Campaign | Spend | Revenue | ROAS | CPC | CTR | CPA |
+|----------|-------|---------|------|-----|-----|-----|
+| Video Views (Awareness) | $____ | $____ | ____x | $___ | ___% | $___ |
+| Conversions - Cold | $____ | $____ | ____x | $___ | ___% | $___ |
+| Conversions - LAL | $____ | $____ | ____x | $___ | ___% | $___ |
+| Retargeting | $____ | $____ | ____x | $___ | ___% | $___ |
+| **TOTAL** | **$____** | **$____** | **____x** | **$___** | **___%** | **$___** |
+
+### Top Performing Ad Sets
+
+1. **Ad Set Name:** ________________
+   - ROAS: ____x
+   - Spend: $____
+   - Scaling Action: ⬆️ Maintain / ⬆️ Scale / ⬇️ Reduce / ❌ Pause
+
+2. **Ad Set Name:** ________________
+   - ROAS: ____x
+   - Spend: $____
+   - Scaling Action: ⬆️ Maintain / ⬆️ Scale / ⬇️ Reduce / ❌ Pause
+
+3. **Ad Set Name:** ________________
+   - ROAS: ____x
+   - Spend: $____
+   - Scaling Action: ⬆️ Maintain / ⬆️ Scale / ⬇️ Reduce / ❌ Pause
+
+### Underperforming Ad Sets (ROAS < 2x)
+
+| Ad Set | ROAS | Action Taken |
+|--------|------|--------------|
+| ________ | ____x | Paused / Reduced / Testing |
+| ________ | ____x | Paused / Reduced / Testing |
+
+### Creative Performance
+
+| Creative | Impressions | CTR | CPC | Conv Rate | ROAS |
+|----------|-------------|-----|-----|-----------|------|
+| Video - Problem/Solution | _____ | ___% | $___ | ___% | ____x |
+| Video - Transformation | _____ | ___% | $___ | ___% | ____x |
+| Image - Social Proof | _____ | ___% | $___ | ___% | ____x |
+| Carousel - How To | _____ | ___% | $___ | ___% | ____x |
+
+---
+
+## 3. WEBSITE ANALYTICS
+
+### Traffic Sources
+
+| Source | Sessions | % New | Bounce Rate | Conv Rate |
+|--------|----------|-------|-------------|-----------|
+| Facebook | ____ | ___% | ___% | ___% |
+| Instagram | ____ | ___% | ___% | ___% |
+| Google (Organic) | ____ | ___% | ___% | ___% |
+| Google (Paid) | ____ | ___% | ___% | ___% |
+| Direct | ____ | ___% | ___% | ___% |
+| Email | ____ | ___% | ___% | ___% |
+
+### Page Performance
+
+| Page | Views | Avg Time | Bounce Rate | Exit Rate |
+|------|-------|----------|-------------|-----------|
+| Homepage | ____ | ___:__ | ___% | ___% |
+| Product Page | ____ | ___:__ | ___% | ___% |
+| Collection Page | ____ | ___:__ | ___% | ___% |
+| Cart | ____ | ___:__ | ___% | ___% |
+| Checkout | ____ | ___:__ | ___% | ___% |
+
+### Funnel Analysis
+
+| Stage | Visitors | Drop-off | Conversion |
+|-------|----------|----------|------------|
+| Landing Page | _____ | - | - |
+| Product View | _____ | ___% | ___% |
+| Add to Cart | _____ | ___% | ___% |
+| Checkout | _____ | ___% | ___% |
+| Purchase | _____ | ___% | ___% |
+
+### Cart Abandonment
+
+- **Abandonment Rate:** ___%
+- **Abandoned Carts:** ____
+- **Recovered via Email:** ____ (___%)
+- **Revenue Recovered:** $____
+
+---
+
+## 4. EMAIL MARKETING (KLAVIYO)
+
+### List Growth
+
+| Metric | Current | New This Week | Growth Rate |
+|--------|---------|---------------|-------------|
+| Total Subscribers | _____ | +____ | ___% |
+| Active Profiles | _____ | +____ | ___% |
+| Unsubscribes | _____ | +____ | ___% |
+
+### Email Performance
+
+| Flow/Campaign | Sent | Open Rate | Click Rate | Revenue |
+|---------------|------|-----------|------------|---------|
+| Welcome Email 1 | ____ | ___% | ___% | $____ |
+| Welcome Email 2 | ____ | ___% | ___% | $____ |
+| Abandoned Cart 1 | ____ | ___% | ___% | $____ |
+| Abandoned Cart 2 | ____ | ___% | ___% | $____ |
+| Post-Purchase | ____ | ___% | ___% | $____ |
+| Weekly Newsletter | ____ | ___% | ___% | $____ |
+
+### Email Revenue Attribution
+
+- **Total Email Revenue:** $____
+- **% of Total Revenue:** ___%
+- **Revenue per Recipient:** $____
+
+---
+
+## 5. CUSTOMER METRICS
+
+### Customer Acquisition
+
+| Metric | This Week | This Month | Total |
+|--------|-----------|------------|-------|
+| New Customers | ____ | ____ | ____ |
+| Returning Customers | ____ | ____ | ____ |
+| Customer Return Rate | ___% | ___% | ___% |
+
+### Customer Lifetime Value (LTV)
+
+- **Average LTV:** $____
+- **LTV:CAC Ratio:** ____x
+- **Target Ratio:** >3x
+
+### Customer Satisfaction
+
+| Metric | Score | Trend |
+|--------|-------|-------|
+| Product Reviews | ___/5⭐ | ↑/↓/→ |
+| NPS Score | ___ | ↑/↓/→ |
+| Return Rate | ___% | ↑/↓/→ |
+| Customer Complaints | ___ | ↑/↓/→ |
+
+---
+
+## 6. FINANCIAL SUMMARY
+
+### Profit & Loss
+
+| Category | Amount | % of Revenue |
+|----------|--------|--------------|
+| **Revenue** | $_____ | 100% |
+| Cost of Goods | ($_____) | ___% |
+| Payment Processing | ($_____) | ___% |
+| Shipping Costs | ($_____) | ___% |
+| Refunds | ($_____) | ___% |
+| **Gross Profit** | **$_____** | **___%** |
+| | | |
+| Facebook Ads | ($_____) | ___% |
+| Email (Klaviyo) | ($_____) | ___% |
+| Shopify Fees | ($_____) | ___% |
+| App Subscriptions | ($_____) | ___% |
+| **Total Expenses** | **($_____)** | **___%** |
+| | | |
+| **NET PROFIT** | **$_____** | **___%** |
+
+### Break-Even Analysis
+
+- **Break-Even ROAS:** ____x
+- **Current ROAS:** ____x
+- **Margin of Safety:** ____x
+
+---
+
+## 7. OPTIMIZATION ACTIONS
+
+### Completed This Week
+
+| Action | Impact | Status |
+|--------|--------|--------|
+| ________ | _____ | ✅ Complete |
+| ________ | _____ | ✅ Complete |
+| ________ | _____ | ✅ Complete |
+
+### Planned for Next Week
+
+| Priority | Action | Expected Impact | Owner |
+|----------|--------|-----------------|-------|
+| 1 | ________ | +___% conv | _____ |
+| 2 | ________ | +___% ROAS | _____ |
+| 3 | ________ | +___% AOV | _____ |
+| 4 | ________ | -___% CPA | _____ |
+
+---
+
+## 8. TESTING & EXPERIMENTS
+
+### Active Tests
+
+| Test | Variation A | Variation B | Start Date | Significance |
+|------|-------------|-------------|------------|--------------|
+| ________ | ________ | ________ | ________ | ___% |
+| ________ | ________ | ________ | ________ | ___% |
+
+### Test Results (Completed)
+
+| Test | Winner | Lift | Implemented |
+|------|--------|------|-------------|
+| ________ | ________ | +___% | Yes/No |
+| ________ | ________ | +___% | Yes/No |
+
+---
+
+## 9. COMPETITIVE INTELLIGENCE
+
+### Competitor Activity Observed
+
+| Competitor | Action | Our Response |
+|------------|--------|--------------|
+| ________ | ________ | ________ |
+| ________ | ________ | ________ |
+
+### Market Trends
+
+- [ ] New product features emerging
+- [ ] Pricing changes in market
+- [ ] New advertising angles
+- [ ] Influencer partnerships
+
+---
+
+## 10. GOALS & FORECAST
+
+### Next Week Goals
+
+| Goal | Target | Current | Gap |
+|------|--------|---------|-----|
+| Revenue | $_____ | $_____ | $_____ |
+| ROAS | ____x | ____x | ____x |
+| New Customers | ____ | ____ | ____ |
+| Email Subscribers | ____ | ____ | ____ |
+
+### 30-Day Forecast
+
+Based on current trends:
+- **Projected Revenue:** $_____
+- **Projected ROAS:** ____x
+- **Projected Profit:** $_____
+
+---
+
+## APPENDIX: DAILY TRACKING SHEET
+
+### Monday
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| Ad Spend | $____ | |
+| Revenue | $____ | |
+| ROAS | ____x | |
+| Orders | ____ | |
+| New Subscribers | ____ | |
+| Issues | | |
+
+### Tuesday
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| Ad Spend | $____ | |
+| Revenue | $____ | |
+| ROAS | ____x | |
+| Orders | ____ | |
+| New Subscribers | ____ | |
+| Issues | | |
+
+### Wednesday
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| Ad Spend | $____ | |
+| Revenue | $____ | |
+| ROAS | ____x | |
+| Orders | ____ | |
+| New Subscribers | ____ | |
+| Issues | | |
+
+### Thursday
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| Ad Spend | $____ | |
+| Revenue | $____ | |
+| ROAS | ____x | |
+| Orders | ____ | |
+| New Subscribers | ____ | |
+| Issues | | |
+
+### Friday
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| Ad Spend | $____ | |
+| Revenue | $____ | |
+| ROAS | ____x | |
+| Orders | ____ | |
+| New Subscribers | ____ | |
+| Issues | | |
+
+### Weekend
+
+| Metric | Sat | Sun | Notes |
+|--------|-----|-----|-------|
+| Ad Spend | $____ | $____ | |
+| Revenue | $____ | $____ | |
+| ROAS | ____x | ____x | |
+| Orders | ____ | ____ | |
+
+---
+
+## OPTIMIZATION PLAYBOOK
+
+### When ROAS is Low (<2x):
+1. Pause underperforming ad sets
+2. Check frequency (if >3, refresh creative)
+3. Narrow audience targeting
+4. Increase creative testing
+5. Review landing page conversion
+
+### When CPA is High (>$20):
+1. Test new audiences
+2. Improve ad creative/offer
+3. Add retargeting campaigns
+4. Optimize for add-to-cart first
+5. Check for bot traffic
+
+### When Conversion Rate is Low (<2%):
+1. Add trust badges
+2. Improve product page images
+3. Add social proof (reviews)
+4. Simplify checkout process
+5. Add urgency elements
+6. Test different pricing
+
+### When AOV is Low (<$30):
+1. Introduce bundles
+2. Add post-purchase upsells
+3. Set free shipping threshold
+4. Create "complete the look" recommendations
+5. Offer volume discounts
+
+### When Email Open Rates are Low (<15%):
+1. Test new subject lines
+2. Clean email list
+3. Adjust send times
+4. Segment audience
+5. Personalize sender name
+
+---
+
+**Report Prepared By:** ________________
+**Date:** ________________
+**Next Review:** ________________
