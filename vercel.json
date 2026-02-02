@@ -4,7 +4,7 @@
     { "src": "/manifesto", "dest": "/manifesto.html" },
     { "src": "/verify/(?<token>[^/]+)", "dest": "/verify.html?token=$token" },
     { "src": "/admin/(.*)", "dest": "/admin/$1" },
-    { "src": "/logo.jpg", "dest": "/logo.jpg" },
+    { "src": "/logo.jpg", "dest": "/logo.jpg", "headers": { "Cache-Control": "no-cache" } },
     { "src": "/favicon.svg", "dest": "/favicon.svg" },
     { "src": "/(.*\\.(html|css|js|svg|png|jpg|ico))", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
