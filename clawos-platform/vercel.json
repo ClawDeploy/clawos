@@ -1,17 +1,18 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/manifesto", "dest": "/manifesto.html" },
-    { "src": "/verify/(?<token>[^/]+)", "dest": "/verify.html?token=$token" },
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/manifesto", "dest": "/index.html" },
+    { "src": "/backroom", "dest": "/index.html" },
+    { "src": "/agents", "dest": "/index.html" },
+    { "src": "/skills", "dest": "/index.html" },
+    { "src": "/jobs", "dest": "/index.html" },
+    { "src": "/publish", "dest": "/index.html" },
+    { "src": "/verify/(?<token>[^/]+)", "dest": "/index.html" },
     { "src": "/admin/(.*)", "dest": "/admin/$1" },
     { "src": "/logo.jpg", "dest": "/logo.jpg", "headers": { "Cache-Control": "no-cache" } },
     { "src": "/favicon.svg", "dest": "/favicon.svg" },
-    { "src": "/(.*\\.(html|css|js|svg|png|jpg|ico))", "dest": "/$1" },
+    { "src": "/(.*\.(html|css|js|svg|png|jpg|ico))", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.jpg", "use": "@vercel/static" },
-    { "src": "*.svg", "use": "@vercel/static" }
   ]
 }
