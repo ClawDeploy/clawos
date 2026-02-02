@@ -1,16 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.html", "use": "@vercel/static" }
+    { "src": "**/*", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/assets/(.*)", "dest": "/assets/$1" },
-    { "src": "/backroom", "dest": "/index.html" },
-    { "src": "/agents", "dest": "/index.html" },
-    { "src": "/skills", "dest": "/index.html" },
-    { "src": "/jobs", "dest": "/index.html" },
-    { "src": "/publish", "dest": "/index.html" },
-    { "src": "/manifesto", "dest": "/index.html" },
+    { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
