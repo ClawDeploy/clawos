@@ -20,3 +20,13 @@ dist/
 
 # OS
 Thumbs.db
+
+# Sensitive Data
+memory/
+*credential*
+*secret*
+*token*
+*.key
+*.pem
+.vercel
+render.yaml
