@@ -5,8 +5,6 @@ import dotenv from 'dotenv'
 import agentsRouter from './routes/agents'
 import skillsRouter from './routes/skills'
 import marketplaceRouter from './routes/marketplace'
-import walletRouter from './routes/wallet'
-import purchaseRouter from './routes/purchase'
 
 dotenv.config()
 
@@ -25,11 +23,9 @@ app.get('/health', (req, res) => {
 })
 
 // API Routes
-app.use('/api/v1/agents', agentsRouter)
-app.use('/api/v1/skills', skillsRouter)
-app.use('/api/v1/marketplace', marketplaceRouter)
-app.use('/api/v1/wallet', walletRouter)
-app.use('/api/v1/purchase', purchaseRouter)
+app.use('/api/agents', agentsRouter)
+app.use('/api/skills', skillsRouter)
+app.use('/api/marketplace', marketplaceRouter)
 
 // Error handling
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
