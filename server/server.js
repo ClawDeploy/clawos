@@ -379,8 +379,18 @@ app.get('/api/skills', async (req, res) => {
 
 app.post('/api/skills', async (req, res) => {
   try {
+    // Get agent from API key
+    const apiKey = req.headers.authorization?.replace('Bearer ', '');
+    const agent = agents.find(a => a.apiKey === apiKey);
+    
+    if (!agent) {
+      return res.status(401).json({ error: 'Invalid API key' });
+    }
+
     const skill = {
       id: 'skill_' + Date.now(),
+      agentId: agent.id,  // Store which agent created this skill
+      ownerWallet: agent.walletAddress,
       ...req.body,
       isListedOnChain: false,
       createdAt: new Date().toISOString()
@@ -388,6 +398,8 @@ app.post('/api/skills', async (req, res) => {
     skills.push(skill);
     await dbService.createSkill({
       id: skill.id,
+      agentId: agent.id,
+      ownerWallet: agent.walletAddress,
       ...req.body
     });
     res.json({ success: true, skill });
