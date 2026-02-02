@@ -1,17 +1,18 @@
 import { Router } from 'express'
 import { z } from 'zod'
 import { prisma } from '@clawos/database'
-import { hashApiKey, generateApiKey, validateWallet } from '../utils/auth'
+import { hashApiKey, generateApiKey, validateWallet, generateDeterministicWallet } from '../utils/auth'
 import { authenticateAgent } from '../middleware/auth'
 
 const router: Router = Router()
 
-// Validation schemas
+// Validation schemas - walletless support: ownerWallet is now optional
 const registerSchema = z.object({
   name: z.string().min(3).max(50).regex(/^[a-zA-Z0-9_-]+$/),
   description: z.string().max(500).optional(),
-  ownerWallet: z.string().min(32).max(44),
-  ownerEmail: z.string().email().optional()
+  ownerWallet: z.string().min(32).max(44).optional(),
+  ownerEmail: z.string().email().optional(),
+  isGuest: z.boolean().optional().default(false)
 })
 
 const updateSchema = z.object({
@@ -19,7 +20,7 @@ const updateSchema = z.object({
   avatar: z.string().optional()
 })
 
-// Register new agent
+// Register new agent - supports walletless registration
 router.post('/register', async (req, res) => {
   try {
     const result = registerSchema.safeParse(req.body)
@@ -31,15 +32,8 @@ router.post('/register', async (req, res) => {
       })
     }
 
-    const { name, description, ownerWallet, ownerEmail } = result.data
-
-    // Validate Solana wallet
-    if (!validateWallet(ownerWallet)) {
-      return res.status(400).json({
-        success: false,
-        error: 'Invalid Solana wallet address'
-      })
-    }
+    const { name, description, ownerEmail, isGuest } = result.data
+    let { ownerWallet } = result.data
 
     // Check if name exists
     const existing = await prisma.agent.findUnique({
@@ -52,15 +46,29 @@ router.post('/register', async (req, res) => {
       })
     }
 
-    // Check if wallet exists
-    const existingWallet = await prisma.agent.findUnique({
-      where: { ownerWallet }
-    })
-    if (existingWallet) {
-      return res.status(409).json({
-        success: false,
-        error: 'Wallet already registered'
+    // Handle walletless/guest registration
+    if (!ownerWallet || isGuest) {
+      // Generate deterministic wallet from agent name
+      ownerWallet = generateDeterministicWallet(name)
+    } else {
+      // Validate provided Solana wallet
+      if (!validateWallet(ownerWallet)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid Solana wallet address'
+        })
+      }
+
+      // Check if wallet exists (only for non-guest registrations)
+      const existingWallet = await prisma.agent.findUnique({
+        where: { ownerWallet }
       })
+      if (existingWallet) {
+        return res.status(409).json({
+          success: false,
+          error: 'Wallet already registered'
+        })
+      }
     }
 
     // Create agent
@@ -69,7 +77,9 @@ router.post('/register', async (req, res) => {
         name,
         description,
         ownerWallet,
-        ownerEmail
+        ownerEmail,
+        isGuest: isGuest || false,
+        reputation: isGuest ? 0 : Math.random() * 50 // Guest agents start with 0 rep
       }
     })
 
@@ -93,10 +103,13 @@ router.post('/register', async (req, res) => {
         description: agent.description,
         ownerWallet: agent.ownerWallet,
         reputation: agent.reputation,
+        isGuest: agent.isGuest,
         createdAt: agent.createdAt
       },
       apiKey,
-      message: 'Save your API key - it cannot be retrieved later!'
+      message: isGuest 
+        ? 'Your guest agent is ready! A deterministic wallet has been assigned. Save your API key!' 
+        : 'Save your API key - it cannot be retrieved later!'
     })
   } catch (error) {
     console.error('Registration error:', error)

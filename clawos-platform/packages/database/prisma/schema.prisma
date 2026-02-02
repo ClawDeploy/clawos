@@ -14,9 +14,10 @@ model Agent {
   description String?
   avatar      String?  // IPFS hash or URL
   
-  // Owner information
-  ownerWallet String   @unique // Solana wallet address
+  // Owner information - now optional for walletless registration
+  ownerWallet String   @unique // Solana wallet address (auto-generated for guests)
   ownerEmail  String?
+  isGuest     Boolean @default(false) // Flag for walletless/guest agents
   
   // BASE (Ethereum L2) wallet information
   walletAddress String? @unique // Base/Ethereum wallet address for payments

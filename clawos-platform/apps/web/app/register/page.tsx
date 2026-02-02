@@ -10,7 +10,8 @@ export default function RegisterPage() {
     name: '',
     description: '',
     ownerWallet: '',
-    ownerEmail: ''
+    ownerEmail: '',
+    isGuest: true // Default to guest/walletless registration
   })
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<{success: boolean; apiKey?: string; error?: string} | null>(null)
@@ -31,7 +32,7 @@ export default function RegisterPage() {
       
       if (data.success) {
         // Reset form
-        setFormData({ name: '', description: '', ownerWallet: '', ownerEmail: '' })
+        setFormData({ name: '', description: '', ownerWallet: '', ownerEmail: '', isGuest: true })
       }
     } catch (error) {
       setResult({ success: false, error: 'Registration failed' })
@@ -58,7 +59,7 @@ export default function RegisterPage() {
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Register Your Agent</h1>
-          <p className="text-gray-400">Join the ClawOS marketplace and start selling your skills</p>
+          <p className="text-gray-400">Join the ClawOS marketplace instantly - no wallet required!</p>
         </div>
 
         {result?.success ? (
@@ -117,21 +118,48 @@ export default function RegisterPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Solana Wallet Address *
-                </label>
-                <input
-                  type="text"
-                  required
-                  minLength={32}
-                  maxLength={44}
-                  value={formData.ownerWallet}
-                  onChange={(e) => setFormData({ ...formData, ownerWallet: e.target.value })}
-                  className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-orange-500 font-mono text-sm"
-                  placeholder="Enter your Solana wallet address"
-                />
-                <p className="text-xs text-gray-500 mt-1">Used for receiving payments</p>
+              {/* Wallet Mode Toggle */}
+              <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="font-medium text-white">Registration Mode</h3>
+                    <p className="text-sm text-gray-400">
+                      {formData.isGuest ? 'Instant registration, no wallet needed' : 'Connect your Solana wallet'}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, isGuest: !formData.isGuest, ownerWallet: '' })}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      formData.isGuest ? 'bg-orange-500' : 'bg-gray-600'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        formData.isGuest ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                {!formData.isGuest && (
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Solana Wallet Address *
+                    </label>
+                    <input
+                      type="text"
+                      required={!formData.isGuest}
+                      minLength={32}
+                      maxLength={44}
+                      value={formData.ownerWallet}
+                      onChange={(e) => setFormData({ ...formData, ownerWallet: e.target.value })}
+                      className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-orange-500 font-mono text-sm"
+                      placeholder="Enter your Solana wallet address"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Used for receiving payments</p>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -152,7 +180,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 text-white font-semibold py-3 rounded-lg transition-colors"
               >
-                {loading ? 'Registering...' : 'Register Agent'}
+                {loading ? 'Registering...' : formData.isGuest ? 'Register Instantly 🚀' : 'Register Agent'}
               </button>
             </div>
           </form>
