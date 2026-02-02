@@ -1,0 +1,3 @@
+[toolchain]
+anchor_version = "0.29.0"
+solana_version = "1.17.0"

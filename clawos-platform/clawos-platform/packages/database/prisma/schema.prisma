@@ -1,0 +1,328 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Agent = AI Agent that uses the platform
+model Agent {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  avatar      String?  // IPFS hash or URL
+  
+  // Owner information
+  ownerWallet String   @unique // Solana wallet address
+  ownerEmail  String?
+  
+  // BASE (Ethereum L2) wallet information
+  walletAddress String? @unique // Base/Ethereum wallet address for payments
+  walletChainId Int?    @default(8453) // Base mainnet = 8453, Base Sepolia = 84532
+  
+  // Balances
+  balance     Decimal  @default(0) @db.Decimal(16, 6) // Available balance in USDC
+  totalEarned Decimal  @default(0) @db.Decimal(16, 6) // Total earnings
+  
+  // Reputation system
+  reputation  Float    @default(0)
+  totalSales  Int      @default(0)
+  totalPurchases Int  @default(0)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  skills      Skill[]
+  purchases   Purchase[]
+  sales       Sale[] // Sales made by this agent
+  transactionsAsBuyer Transaction[] @relation("BuyerTransactions")
+  transactionsAsSeller Transaction[] @relation("SellerTransactions")
+  reviews     Review[]
+  apiKeys     ApiKey[]
+  
+  @@map("agents")
+}
+
+// Skill = Capability sold on marketplace
+model Skill {
+  id          String   @id @default(uuid())
+  name        String
+  version     String   @default("1.0.0")
+  description String
+  
+  // Categorization
+  category    SkillCategory
+  tags        String[] // Array of tags
+  
+  // Code repository
+  repoUrl     String   // GitHub repository URL
+  repoBranch  String   @default("main")
+  entryPoint  String   // Main file/function
+  documentation String? // IPFS hash
+  
+  // Pricing
+  pricingType PricingType
+  price       Decimal  @db.Decimal(10, 6)
+  currency    String   @default("USDC")
+  
+  // Blockchain integration
+  chainId     Int?     @default(8453) // Base mainnet
+  skillIdOnChain String? // bytes32 skill ID on Base
+  isOnChain   Boolean  @default(false)
+  
+  // Subscription/usage details
+  interval    String?  // For subscriptions: daily, weekly, monthly
+  unitName    String?  // For usage-based: "call", "1000_calls"
+  
+  // Stats
+  rating      Float    @default(0)
+  reviewCount Int      @default(0)
+  downloadCount Int    @default(0)
+  
+  // Status
+  isPublished Boolean @default(false)
+  isVerified  Boolean @default(false)
+  
+  // Relations
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id])
+  
+  purchases   Purchase[]
+  sales       Sale[]
+  reviews     Review[]
+  endpoints   Endpoint[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("skills")
+}
+
+// API Endpoints for a skill
+model Endpoint {
+  id          String   @id @default(uuid())
+  skillId     String
+  skill       Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  
+  path        String   // e.g., "/send"
+  method      String   // GET, POST, etc.
+  description String
+  
+  // Request/Response schema (JSON)
+  requestSchema  String? @db.Text
+  responseSchema String? @db.Text
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("endpoints")
+}
+
+// Purchase record
+model Purchase {
+  id          String   @id @default(uuid())
+  
+  // Relations
+  buyerId     String
+  buyer       Agent    @relation(fields: [buyerId], references: [id])
+  skillId     String
+  skill       Skill    @relation(fields: [skillId], references: [id])
+  
+  // License details
+  licenseType LicenseType
+  
+  // Payment
+  amount      Decimal  @db.Decimal(10, 6)
+  currency    String
+  txHash      String?   @unique // Blockchain transaction hash (Base or Solana)
+  
+  // Blockchain details for Base
+  chainId     Int?     @default(8453)
+  paymentIdOnChain String? // bytes32 payment ID on Base
+  
+  // Usage tracking
+  usageLimit  Int?     // For usage-based
+  currentUsage Int     @default(0)
+  expiresAt   DateTime? // For subscriptions
+  
+  // Status
+  status      PurchaseStatus @default(ACTIVE)
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("purchases")
+}
+
+// Sales record for tracking earnings
+model Sale {
+  id          String   @id @default(uuid())
+  
+  // Seller (agent)
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id])
+  
+  // Skill sold
+  skillId     String
+  skill       Skill    @relation(fields: [skillId], references: [id])
+  
+  // Buyer
+  buyerId     String?  // Can be null for direct sales
+  buyerWallet String?  // Buyer's wallet address
+  
+  // Payment details
+  amount      Decimal  @db.Decimal(10, 6)
+  currency    String   @default("USDC")
+  platformFee Decimal  @db.Decimal(10, 6) // 2.5% platform fee
+  netAmount   Decimal  @db.Decimal(10, 6) // Amount after fee
+  
+  // Blockchain
+  chainId     Int?     @default(8453)
+  txHash      String?
+  
+  // Status
+  status      SaleStatus @default(COMPLETED)
+  withdrawn   Boolean    @default(false)
+  withdrawnAt DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("sales")
+}
+
+// Transactions for tracking all payments
+model Transaction {
+  id          String   @id @default(uuid())
+  
+  // Participants
+  buyerId     String
+  buyer       Agent    @relation("BuyerTransactions", fields: [buyerId], references: [id])
+  sellerId    String
+  seller      Agent    @relation("SellerTransactions", fields: [sellerId], references: [id])
+  
+  // Skill
+  skillId     String?
+  
+  // Payment details
+  amount      Decimal  @db.Decimal(16, 6)
+  currency    String   @default("USDC")
+  platformFee Decimal  @db.Decimal(16, 6)
+  
+  // Blockchain
+  chainId     Int?     @default(8453)
+  txHash      String?  @unique
+  
+  // Status
+  status      TransactionStatus @default(PENDING)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+  
+  @@map("transactions")
+}
+
+// Reviews and ratings
+model Review {
+  id          String   @id @default(uuid())
+  
+  reviewerId  String
+  reviewer    Agent    @relation(fields: [reviewerId], references: [id])
+  skillId     String
+  skill       Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  
+  rating      Int      // 1-5 stars
+  comment     String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("reviews")
+}
+
+// API Keys for authentication
+model ApiKey {
+  id          String   @id @default(uuid())
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  keyHash     String   @unique // Hashed API key
+  name        String   // e.g., "Production", "Development"
+  
+  // Rate limiting
+  rateLimit   Int      @default(1000) // requests per hour
+  
+  // Status
+  isActive    Boolean  @default(true)
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("api_keys")
+}
+
+// Usage logs for billing
+model UsageLog {
+  id          String   @id @default(uuid())
+  
+  purchaseId  String
+  skillId     String
+  agentId     String
+  
+  endpoint    String
+  requestSize Int
+  responseSize Int
+  duration    Int      // milliseconds
+  cost        Decimal  @db.Decimal(10, 6)
+  
+  timestamp   DateTime @default(now())
+  
+  @@map("usage_logs")
+}
+
+// Enums
+enum SkillCategory {
+  COMMUNICATION
+  AUTOMATION
+  ANALYSIS
+  CREATIVE
+  UTILITY
+  INTEGRATION
+}
+
+enum PricingType {
+  FREE
+  ONE_TIME
+  SUBSCRIPTION
+  USAGE
+}
+
+enum LicenseType {
+  PERSONAL
+  COMMERCIAL
+  ENTERPRISE
+}
+
+enum PurchaseStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  REFUNDED
+}
+
+enum SaleStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  DISPUTED
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+  DISPUTED
+}

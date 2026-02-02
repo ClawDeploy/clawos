@@ -1,0 +1,382 @@
+# Shopify Store Setup Checklist
+
+---
+
+## PHASE 1: ACCOUNT & FOUNDATION
+
+### 1.1 Create Shopify Account
+- [ ] Go to shopify.com
+- [ ] Start 14-day free trial
+- [ ] Enter store name: "magneticlashpro" (or preferred)
+- [ ] Complete initial setup wizard
+- [ ] Add business address
+- [ ] Select USD currency
+- [ ] Set store timezone
+
+### 1.2 Choose & Customize Theme
+- [ ] Navigate to Online Store → Themes
+- [ ] Select "Dawn" (free) or purchase premium theme
+- [ ] Install theme
+- [ ] Customize colors to match brand:
+  - Primary: #E91E63 (Hot Pink) or #D81B60
+  - Secondary: #FCE4EC (Light Pink)
+  - Accent: #FFC107 (Gold)
+  - Text: #212121 (Dark Gray)
+  - Background: #FFFFFF (White)
+- [ ] Upload logo (create in Canva if needed)
+- [ ] Upload favicon
+- [ ] Customize homepage sections
+- [ ] Set up navigation menu
+- [ ] Customize footer
+
+### 1.3 Essential Pages
+- [ ] Create Homepage
+- [ ] Create About Us page
+- [ ] Create Contact Us page
+- [ ] Create FAQ page
+- [ ] Create Shipping Policy page
+- [ ] Create Returns & Refunds page
+- [ ] Create Privacy Policy page
+- [ ] Create Terms of Service page
+
+---
+
+## PHASE 2: PRODUCT SETUP
+
+### 2.1 Install Dropshipping App
+- [ ] Go to Apps → Visit Shopify App Store
+- [ ] Search for "DSers" or "Oberlo"
+- [ ] Install app
+- [ ] Connect AliExpress account
+- [ ] Configure import settings
+
+### 2.2 Import Products
+- [ ] Search AliExpress for "magnetic eyelashes"
+- [ ] Filter by: 4.5+ stars, 1000+ orders, free shipping
+- [ ] Select 3-5 variants (Natural, Dramatic, Collection)
+- [ ] Import to Shopify
+- [ ] Edit product titles (SEO optimized)
+- [ ] Add product descriptions (use templates)
+- [ ] Set pricing (3-4x markup minimum)
+- [ ] Add product tags
+- [ ] Organize into collections:
+  - All Products
+  - Natural Collection
+  - Dramatic Collection
+  - Best Sellers
+  - Bundles
+
+### 2.3 Product Media
+- [ ] Download supplier images
+- [ ] Remove watermarks if needed
+- [ ] Optimize image sizes (compress)
+- [ ] Add alt text for SEO
+- [ ] Upload lifestyle images
+- [ ] Upload video if available
+- [ ] Create before/after images
+
+### 2.4 Inventory & Variants
+- [ ] Set SKU codes
+- [ ] Configure inventory tracking
+- [ ] Set variant options (style, kit type)
+- [ ] Add barcode numbers (if available)
+- [ ] Set inventory policy (continue selling when out of stock)
+
+---
+
+## PHASE 3: PAYMENT CONFIGURATION
+
+### 3.1 Shopify Payments (Stripe)
+- [ ] Settings → Payments
+- [ ] Complete business verification:
+  - Business type (LLC/Sole Prop)
+  - EIN/Tax ID
+  - Bank account for payouts
+  - Business documentation
+- [ ] Enable credit card payments
+- [ ] Set payout schedule (daily recommended)
+- [ ] Test checkout with $1 transaction
+
+### 3.2 PayPal Setup
+- [ ] Create PayPal Business account
+- [ ] Verify email and bank
+- [ ] In Shopify Payments, enable PayPal Express
+- [ ] Connect PayPal account
+- [ ] Configure payment authorization
+
+### 3.3 Alternative Payments
+- [ ] Enable Apple Pay
+- [ ] Enable Google Pay
+- [ ] Enable Shop Pay
+- [ ] Consider Buy Now Pay Later:
+  - Shop Pay Installments
+  - Klarna
+  - Afterpay
+
+### 3.4 Tax Setup
+- [ ] Settings → Taxes and duties
+- [ ] Enable automatic tax calculation
+- [ ] Configure tax regions
+- [ ] Add tax exemptions if applicable
+- [ ] Set up tax collection for EU (if applicable)
+
+---
+
+## PHASE 4: SHIPPING CONFIGURATION
+
+### 4.1 Shipping Settings
+- [ ] Settings → Shipping and delivery
+- [ ] Delete default "Domestic" rates
+- [ ] Create new shipping profiles
+
+### 4.2 Shipping Zones & Rates
+
+**United States:**
+- [ ] Standard Shipping: $4.99 (7-15 days)
+- [ ] Express Shipping: $9.99 (4-7 days)
+- [ ] Free Shipping: Orders over $35
+
+**Canada:**
+- [ ] Standard: $6.99 (10-20 days)
+- [ ] Free Shipping: Orders over $50
+
+**United Kingdom:**
+- [ ] Standard: $5.99 (10-18 days)
+- [ ] Free Shipping: Orders over $45
+
+**Australia:**
+- [ ] Standard: $6.99 (12-20 days)
+- [ ] Free Shipping: Orders over $50
+
+**EU Countries:**
+- [ ] Standard: $5.99 (10-18 days)
+- [ ] Free Shipping: Orders over $45
+
+### 4.3 Shipping Policy
+- [ ] Settings → Policies
+- [ ] Add Shipping Policy (use template from README)
+- [ ] Add Returns Policy
+- [ ] Add Privacy Policy
+- [ ] Add Terms of Service
+- [ ] Add Refund Policy
+
+### 4.4 Shipping Apps (Optional)
+- [ ] Install Tracktor Order Tracking
+- [ ] Configure tracking page
+- [ ] Set up shipping notifications
+
+---
+
+## PHASE 5: ESSENTIAL APPS
+
+### 5.1 Reviews & Social Proof
+- [ ] Install Loox Photo Reviews
+- [ ] Configure review request emails
+- [ ] Set up review widget
+- [ ] Import sample reviews (if available)
+
+### 5.2 Email Marketing
+- [ ] Install Klaviyo
+- [ ] Create account
+- [ ] Connect to Shopify
+- [ ] Import email templates
+- [ ] Set up flows:
+  - Welcome series
+  - Abandoned cart
+  - Post-purchase
+  - Win-back
+
+### 5.3 Popups & Lead Capture
+- [ ] Install Privy
+- [ ] Create welcome popup (10% off)
+- [ ] Create exit-intent popup
+- [ ] Set up email capture form
+
+### 5.4 Live Chat
+- [ ] Install Tidio
+- [ ] Configure chat widget
+- [ ] Set up automated responses
+- [ ] Set up chat hours
+
+### 5.5 Conversion Optimization
+- [ ] Install Free Shipping Bar by Hextom
+- [ ] Set threshold at $35
+- [ ] Customize message
+
+### 5.6 Urgency & Scarcity
+- [ ] Install Ultimate Sales Boost
+- [ ] Add countdown timers
+- [ ] Add stock countdown
+- [ ] Add trust badges
+
+### 5.7 Analytics
+- [ ] Install Google Analytics 4
+- [ ] Set up conversion tracking
+- [ ] Install Facebook Pixel (covered later)
+
+---
+
+## PHASE 6: DOMAIN & LAUNCH PREP
+
+### 6.1 Domain Setup
+- [ ] Online Store → Domains
+- [ ] Buy custom domain (e.g., magneticlashpro.com)
+- [ ] Or connect existing domain
+- [ ] Set as primary domain
+- [ ] Set up SSL certificate (auto-enables)
+- [ ] Configure email forwarding
+
+### 6.2 Store Settings
+- [ ] Settings → General
+- [ ] Update store name
+- [ ] Update store email
+- [ ] Set customer email (support@yourdomain.com)
+- [ ] Add legal business name
+- [ ] Set store currency
+- [ ] Set standards and formats
+
+### 6.3 Notification Emails
+- [ ] Settings → Notifications
+- [ ] Customize Order Confirmation
+- [ ] Customize Shipping Confirmation
+- [ ] Customize Customer Account emails
+- [ ] Add logo to email templates
+- [ ] Customize email colors
+
+### 6.4 Checkout Settings
+- [ ] Settings → Checkout
+- [ ] Enable customer accounts (optional)
+- [ ] Set form options
+- [ ] Configure order processing
+- [ ] Add checkout scripts (if needed)
+- [ ] Enable order status page customization
+
+### 6.5 Legal Pages
+- [ ] Settings → Policies
+- [ ] Add/refine all legal pages
+- [ ] Ensure compliance (GDPR, CCPA)
+- [ ] Add cookie consent banner
+
+---
+
+## PHASE 7: PRE-LAUNCH CHECKLIST
+
+### 7.1 Store Testing
+- [ ] Place test order (use 100% discount code)
+- [ ] Test payment processing
+- [ ] Test all navigation links
+- [ ] Test mobile responsiveness
+- [ ] Test all forms (contact, newsletter)
+- [ ] Test search functionality
+- [ ] Check all images load
+- [ ] Review all copy for typos
+
+### 7.2 Speed Optimization
+- [ ] Run Google PageSpeed Insights
+- [ ] Optimize images (compress)
+- [ ] Minimize apps (remove unused)
+- [ ] Enable browser caching
+- [ ] Consider lazy loading images
+- [ ] Test load time (aim <3 seconds)
+
+### 7.3 SEO Setup
+- [ ] Settings → Preferences
+- [ ] Add homepage title (70 chars max)
+- [ ] Add meta description (320 chars max)
+- [ ] Add social sharing image
+- [ ] Submit sitemap to Google Search Console
+- [ ] Set up Google Analytics
+
+### 7.4 Security
+- [ ] Enable two-factor authentication
+- [ ] Review staff permissions
+- [ ] Check for SSL errors
+- [ ] Review app permissions
+
+---
+
+## PHASE 8: FACEBOOK INTEGRATION
+
+### 8.1 Facebook Sales Channel
+- [ ] Sales Channels → Facebook & Instagram
+- [ ] Connect Facebook account
+- [ ] Connect Business Manager
+- [ ] Select Facebook Page
+- [ ] Set up Instagram Shopping
+- [ ] Sync products to Facebook catalog
+- [ ] Enable checkout on Facebook/Instagram
+
+### 8.2 Facebook Pixel
+- [ ] Events Manager → Create Pixel
+- [ ] Copy Pixel ID
+- [ ] Shopify → Online Store → Preferences
+- [ ] Paste Pixel ID in Facebook Pixel field
+- [ ] Enable Advanced Matching
+- [ ] Test pixel with Pixel Helper extension
+
+### 8.3 Conversions API (CAPI)
+- [ ] Facebook Events Manager
+- [ ] Set up Conversions API
+- [ ] Generate access token
+- [ ] Configure in Shopify (if available)
+
+---
+
+## PHASE 9: LAUNCH CHECKLIST
+
+### 9.1 Final Review
+- [ ] All products have images
+- [ ] All products have descriptions
+- [ ] Prices are correct
+- [ ] Shipping rates configured
+- [ ] Payment gateways active
+- [ ] Legal pages complete
+- [ ] Contact information visible
+- [ ] Social media links work
+
+### 9.2 Remove Password
+- [ ] Online Store → Preferences
+- [ ] Disable password protection
+- [ ] Store is now LIVE! 🎉
+
+### 9.3 Post-Launch Tasks
+- [ ] Place real test order
+- [ ] Verify order notification emails
+- [ ] Check supplier order fulfillment
+- [ ] Monitor Facebook Pixel events
+- [ ] Set up daily analytics review
+
+---
+
+## QUICK REFERENCE: LAUNCH TIMELINE
+
+| Day | Tasks |
+|-----|-------|
+| 1 | Create account, choose theme, basic customization |
+| 2 | Import products, write descriptions, set pricing |
+| 3 | Configure payments, shipping, taxes |
+| 4 | Install apps, set up email flows |
+| 5 | Create legal pages, configure notifications |
+| 6 | Facebook setup, pixel installation |
+| 7 | Testing, optimization, LAUNCH! |
+
+---
+
+## POST-LAUNCH OPTIMIZATION
+
+### Week 1 Priorities:
+- [ ] Monitor daily traffic
+- [ ] Track conversion rate
+- [ ] Review customer feedback
+- [ ] Respond to all inquiries within 2 hours
+- [ ] Test different ad creatives
+- [ ] Optimize based on data
+
+### Month 1 Goals:
+- [ ] Achieve 2%+ conversion rate
+- [ ] Build email list to 500+ subscribers
+- [ ] Generate 10+ product reviews
+- [ ] Achieve 3x+ ROAS on ads
+- [ ] Process orders smoothly with supplier
+
+---
