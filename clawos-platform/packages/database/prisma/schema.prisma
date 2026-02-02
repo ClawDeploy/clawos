@@ -18,6 +18,14 @@ model Agent {
   ownerWallet String   @unique // Solana wallet address
   ownerEmail  String?
   
+  // BASE (Ethereum L2) wallet information
+  walletAddress String? @unique // Base/Ethereum wallet address for payments
+  walletChainId Int?    @default(8453) // Base mainnet = 8453, Base Sepolia = 84532
+  
+  // Balances
+  balance     Decimal  @default(0) @db.Decimal(16, 6) // Available balance in USDC
+  totalEarned Decimal  @default(0) @db.Decimal(16, 6) // Total earnings
+  
   // Reputation system
   reputation  Float    @default(0)
   totalSales  Int      @default(0)
@@ -30,6 +38,9 @@ model Agent {
   // Relations
   skills      Skill[]
   purchases   Purchase[]
+  sales       Sale[] // Sales made by this agent
+  transactionsAsBuyer Transaction[] @relation("BuyerTransactions")
+  transactionsAsSeller Transaction[] @relation("SellerTransactions")
   reviews     Review[]
   apiKeys     ApiKey[]
   
@@ -58,6 +69,11 @@ model Skill {
   price       Decimal  @db.Decimal(10, 6)
   currency    String   @default("USDC")
   
+  // Blockchain integration
+  chainId     Int?     @default(8453) // Base mainnet
+  skillIdOnChain String? // bytes32 skill ID on Base
+  isOnChain   Boolean  @default(false)
+  
   // Subscription/usage details
   interval    String?  // For subscriptions: daily, weekly, monthly
   unitName    String?  // For usage-based: "call", "1000_calls"
@@ -76,6 +92,7 @@ model Skill {
   agent       Agent    @relation(fields: [agentId], references: [id])
   
   purchases   Purchase[]
+  sales       Sale[]
   reviews     Review[]
   endpoints   Endpoint[]
   
@@ -120,7 +137,11 @@ model Purchase {
   // Payment
   amount      Decimal  @db.Decimal(10, 6)
   currency    String
-  txHash      String   @unique // Solana transaction hash
+  txHash      String?   @unique // Blockchain transaction hash (Base or Solana)
+  
+  // Blockchain details for Base
+  chainId     Int?     @default(8453)
+  paymentIdOnChain String? // bytes32 payment ID on Base
   
   // Usage tracking
   usageLimit  Int?     // For usage-based
@@ -133,6 +154,74 @@ model Purchase {
   createdAt   DateTime @default(now())
   
   @@map("purchases")
+}
+
+// Sales record for tracking earnings
+model Sale {
+  id          String   @id @default(uuid())
+  
+  // Seller (agent)
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id])
+  
+  // Skill sold
+  skillId     String
+  skill       Skill    @relation(fields: [skillId], references: [id])
+  
+  // Buyer
+  buyerId     String?  // Can be null for direct sales
+  buyerWallet String?  // Buyer's wallet address
+  
+  // Payment details
+  amount      Decimal  @db.Decimal(10, 6)
+  currency    String   @default("USDC")
+  platformFee Decimal  @db.Decimal(10, 6) // 2.5% platform fee
+  netAmount   Decimal  @db.Decimal(10, 6) // Amount after fee
+  
+  // Blockchain
+  chainId     Int?     @default(8453)
+  txHash      String?
+  
+  // Status
+  status      SaleStatus @default(COMPLETED)
+  withdrawn   Boolean    @default(false)
+  withdrawnAt DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("sales")
+}
+
+// Transactions for tracking all payments
+model Transaction {
+  id          String   @id @default(uuid())
+  
+  // Participants
+  buyerId     String
+  buyer       Agent    @relation("BuyerTransactions", fields: [buyerId], references: [id])
+  sellerId    String
+  seller      Agent    @relation("SellerTransactions", fields: [sellerId], references: [id])
+  
+  // Skill
+  skillId     String?
+  
+  // Payment details
+  amount      Decimal  @db.Decimal(16, 6)
+  currency    String   @default("USDC")
+  platformFee Decimal  @db.Decimal(16, 6)
+  
+  // Blockchain
+  chainId     Int?     @default(8453)
+  txHash      String?  @unique
+  
+  // Status
+  status      TransactionStatus @default(PENDING)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+  
+  @@map("transactions")
 }
 
 // Reviews and ratings
@@ -221,4 +310,19 @@ enum PurchaseStatus {
   EXPIRED
   CANCELLED
   REFUNDED
+}
+
+enum SaleStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  DISPUTED
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+  DISPUTED
 }
