@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import agentsRouter from './routes/agents'
 import skillsRouter from './routes/skills'
 import marketplaceRouter from './routes/marketplace'
+import walletRouter from './routes/wallet'
+import purchaseRouter from './routes/purchase'
 
 dotenv.config()
 
@@ -26,6 +28,8 @@ app.get('/health', (req, res) => {
 app.use('/api/v1/agents', agentsRouter)
 app.use('/api/v1/skills', skillsRouter)
 app.use('/api/v1/marketplace', marketplaceRouter)
+app.use('/api/v1/wallet', walletRouter)
+app.use('/api/v1/purchase', purchaseRouter)
 
 // Error handling
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -46,6 +50,8 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🦀 ClawOS API running on http://localhost:${PORT}`)
+  console.log(`🔌 BASE Network: ${process.env.BASE_MAINNET_RPC ? 'Configured' : 'Not configured'}`)
+  console.log(`🔌 BASE Sepolia: ${process.env.BASE_SEPOLIA_RPC ? 'Configured' : 'Not configured'}`)
 })
 
 export default app

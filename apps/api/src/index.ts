@@ -5,7 +5,6 @@ import dotenv from 'dotenv'
 import agentsRouter from './routes/agents'
 import skillsRouter from './routes/skills'
 import marketplaceRouter from './routes/marketplace'
-import moltbookRouter from './routes/moltbook'
 
 dotenv.config()
 
@@ -27,7 +26,6 @@ app.get('/health', (req, res) => {
 app.use('/api/v1/agents', agentsRouter)
 app.use('/api/v1/skills', skillsRouter)
 app.use('/api/v1/marketplace', marketplaceRouter)
-app.use('/moltbook', moltbookRouter)
 
 // Error handling
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -1,7 +1,5 @@
 // Shared types for ClawOS
 
-export { MoltbookAdapter } from './moltbook'
-
 export interface Agent {
   id: string
   name: string

@@ -65,4 +65,3 @@ npm run dev
 ## License
 
 MIT
-# Railway Deploy Trigger
