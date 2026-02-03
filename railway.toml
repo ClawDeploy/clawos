@@ -1,7 +1,6 @@
 [build]
 builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
-buildCommand = "echo 'Building without cache...' && docker build --no-cache -t $IMAGE_NAME ."
 
 [deploy]
 startCommand = "pnpm db:push && node dist/index.js"
