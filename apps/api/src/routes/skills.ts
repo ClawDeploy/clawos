@@ -1,48 +1,30 @@
 import { Router } from 'express'
 import { z } from 'zod'
-import { prisma, SkillCategory, PricingType } from '../database'
+import { prisma } from '../database'
 import { authenticateAgent } from '../middleware/auth'
-import {
-  analyzeText,
-  transformData,
-  scrapeWeb,
-  sendSlackNotification,
-  getSlackTemplates,
-  analyzeTransaction,
-  forecastTimeSeries
-  // executeBankrSkill // Temp disabled
-} from '../skills'
 
 const router: Router = Router()
 
 // Validation schemas
+const createSkillSchema = z.object({
+  name: z.string().min(3).max(100),
+  version: z.string().default('1.0.0'),
+  description: z.string().min(10).max(2000),
+  category: z.enum(['COMMUNICATION', 'AUTOMATION', 'ANALYSIS', 'CREATIVE', 'UTILITY', 'INTEGRATION', 'AI_ML', 'SECURITY']),
+  tags: z.array(z.string().max(30)).max(10).optional(),
+  apiEndpoint: z.string().url().optional(),
+  repoUrl: z.string().url().optional(),
+  documentation: z.string().optional()
+})
+
 const endpointSchema = z.object({
   path: z.string().min(1).max(100),
   method: z.enum(['GET', 'POST', 'PUT', 'DELETE', 'PATCH']),
-  description: z.string().max(500),
-  requestSchema: z.string().optional(),
-  responseSchema: z.string().optional()
+  description: z.string().max(500).optional(),
+  parameters: z.string().optional() // JSON schema
 })
 
-const createSkillSchema = z.object({
-  name: z.string().min(3).max(100),
-  description: z.string().min(10).max(2000),
-  category: z.nativeEnum(SkillCategory),
-  tags: z.array(z.string().max(30)).max(10).optional(),
-  repoUrl: z.string().url(),
-  repoBranch: z.string().default('main'),
-  entryPoint: z.string().min(1).max(200),
-  documentation: z.string().optional(),
-  pricingType: z.nativeEnum(PricingType),
-  price: z.number().min(0),
-  currency: z.enum(['USDC', 'SOL']).default('USDC'),
-  interval: z.enum(['daily', 'weekly', 'monthly']).optional(),
-  unitName: z.string().optional(),
-  endpoints: z.array(endpointSchema).min(1),
-  isPublished: z.boolean().default(false)
-})
-
-// Publish new skill
+// Create skill - for agents to upload their skills
 router.post('/', authenticateAgent, async (req, res) => {
   try {
     const result = createSkillSchema.safeParse(req.body)
@@ -54,87 +36,64 @@ router.post('/', authenticateAgent, async (req, res) => {
       })
     }
 
-    const {
-      name,
-      description,
-      category,
-      tags,
-      repoUrl,
-      repoBranch,
-      entryPoint,
-      documentation,
-      pricingType,
-      price,
-      currency,
-      interval,
-      unitName,
-      endpoints,
-      isPublished
-    } = result.data
-
+    const { name, version, description, category, tags, apiEndpoint, repoUrl, documentation } = result.data
     const agentId = req.agent!.id
 
-    // Validate pricing
-    if (pricingType !== 'FREE' && price <= 0) {
-      return res.status(400).json({
+    // Check if skill name exists for this agent
+    const existing = await prisma.skill.findFirst({
+      where: { name, agentId }
+    })
+
+    if (existing) {
+      return res.status(409).json({
         success: false,
-        error: 'Price must be greater than 0 for paid skills'
+        error: 'You already have a skill with this name'
       })
     }
 
-    // Validate subscription has interval
-    if (pricingType === 'SUBSCRIPTION' && !interval) {
-      return res.status(400).json({
-        success: false,
-        error: 'Subscription pricing requires an interval'
-      })
-    }
-
-    // Validate usage has unit
-    if (pricingType === 'USAGE' && !unitName) {
-      return res.status(400).json({
-        success: false,
-        error: 'Usage pricing requires a unit name'
-      })
-    }
-
-    // Create skill with endpoints
+    // Create skill
     const skill = await prisma.skill.create({
       data: {
         name,
+        version,
         description,
         category,
         tags: tags || [],
+        apiEndpoint,
         repoUrl,
-        repoBranch,
-        entryPoint,
         documentation,
-        pricingType,
-        price,
-        currency,
-        interval,
-        unitName,
-        isPublished,
         agentId,
-        endpoints: {
-          create: endpoints
-        }
+        isPublished: true
       },
       include: {
         endpoints: true,
         agent: {
-          select: {
-            id: true,
-            name: true,
-            reputation: true
-          }
+          select: { id: true, name: true, reputation: true }
         }
+      }
+    })
+
+    // Update agent skill count
+    await prisma.agent.update({
+      where: { id: agentId },
+      data: { skillCount: { increment: 1 } }
+    })
+
+    // Log skill creation
+    await prisma.log.create({
+      data: {
+        level: 'INFO',
+        message: `New skill published: ${skill.name}`,
+        source: req.agent!.name,
+        agentId: req.agent!.id,
+        metadata: JSON.stringify({ skillId: skill.id, category })
       }
     })
 
     res.status(201).json({
       success: true,
-      skill
+      skill,
+      message: 'Skill published successfully!'
     })
   } catch (error) {
     console.error('Skill creation error:', error)
@@ -145,12 +104,58 @@ router.post('/', authenticateAgent, async (req, res) => {
   }
 })
 
+// Add endpoint to skill
+router.post('/:id/endpoints', authenticateAgent, async (req, res) => {
+  try {
+    const skillId = req.params.id
+    const agentId = req.agent!.id
+
+    // Verify ownership
+    const skill = await prisma.skill.findFirst({
+      where: { id: skillId, agentId }
+    })
+
+    if (!skill) {
+      return res.status(404).json({
+        success: false,
+        error: 'Skill not found or not owned by you'
+      })
+    }
+
+    const result = endpointSchema.safeParse(req.body)
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid input',
+        details: result.error.issues
+      })
+    }
+
+    const endpoint = await prisma.skillEndpoint.create({
+      data: {
+        ...result.data,
+        skillId
+      }
+    })
+
+    res.status(201).json({
+      success: true,
+      endpoint
+    })
+  } catch (error) {
+    console.error('Endpoint creation error:', error)
+    res.status(500).json({
+      success: false,
+      error: 'Failed to create endpoint'
+    })
+  }
+})
+
 // List all skills
 router.get('/', async (req, res) => {
   try {
-    const category = req.query.category as SkillCategory | undefined
+    const category = req.query.category as string | undefined
     const search = req.query.search as string | undefined
-    const sort = (req.query.sort as string) || 'newest'
     const page = Number(req.query.page) || 1
     const limit = Math.min(Number(req.query.limit) || 20, 100)
 
@@ -158,7 +163,7 @@ router.get('/', async (req, res) => {
       isPublished: true
     }
 
-    if (category) {
+    if (category && category !== 'ALL') {
       where.category = category
     }
 
@@ -170,50 +175,17 @@ router.get('/', async (req, res) => {
       ]
     }
 
-    const orderBy: any = {}
-    switch (sort) {
-      case 'popular':
-        orderBy.downloadCount = 'desc'
-        break
-      case 'rating':
-        orderBy.rating = 'desc'
-        break
-      case 'price_asc':
-        orderBy.price = 'asc'
-        break
-      case 'price_desc':
-        orderBy.price = 'desc'
-        break
-      case 'newest':
-      default:
-        orderBy.createdAt = 'desc'
-    }
-
     const skills = await prisma.skill.findMany({
       where,
-      orderBy,
+      orderBy: { createdAt: 'desc' },
       skip: (page - 1) * limit,
       take: limit,
       include: {
         agent: {
-          select: {
-            id: true,
-            name: true,
-            reputation: true
-          }
+          select: { id: true, name: true, reputation: true, isOnline: true }
         },
         endpoints: {
-          select: {
-            id: true,
-            path: true,
-            method: true,
-            description: true
-          }
-        },
-        _count: {
-          select: {
-            reviews: true
-          }
+          select: { id: true, path: true, method: true }
         }
       }
     })
@@ -246,31 +218,9 @@ router.get('/:id', async (req, res) => {
       where: { id: req.params.id },
       include: {
         agent: {
-          select: {
-            id: true,
-            name: true,
-            description: true,
-            reputation: true,
-            totalSales: true,
-            avatar: true
-          }
+          select: { id: true, name: true, description: true, reputation: true, avatar: true }
         },
-        endpoints: true,
-        reviews: {
-          take: 10,
-          orderBy: { createdAt: 'desc' },
-          include: {
-            reviewer: {
-              select: {
-                name: true,
-                avatar: true
-              }
-            }
-          }
-        },
-        _count: {
-          select: { reviews: true }
-        }
+        endpoints: true
       }
     })
 
@@ -301,19 +251,7 @@ router.get('/me/list', authenticateAgent, async (req, res) => {
       where: { agentId: req.agent!.id },
       orderBy: { createdAt: 'desc' },
       include: {
-        endpoints: {
-          select: {
-            id: true,
-            path: true,
-            method: true
-          }
-        },
-        _count: {
-          select: {
-            purchases: true,
-            reviews: true
-          }
-        }
+        endpoints: true
       }
     })
 
@@ -351,25 +289,23 @@ router.patch('/:id', authenticateAgent, async (req, res) => {
     const updateSchema = z.object({
       description: z.string().min(10).max(2000).optional(),
       isPublished: z.boolean().optional(),
-      price: z.number().min(0).optional(),
-      documentation: z.string().optional()
+      version: z.string().optional(),
+      documentation: z.string().optional(),
+      apiEndpoint: z.string().url().optional()
     })
 
     const result = updateSchema.safeParse(req.body)
     if (!result.success) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid input',
-        details: result.error.issues
+        error: 'Invalid input'
       })
     }
 
     const skill = await prisma.skill.update({
       where: { id: skillId },
       data: result.data,
-      include: {
-        endpoints: true
-      }
+      include: { endpoints: true }
     })
 
     res.json({
@@ -403,8 +339,12 @@ router.delete('/:id', authenticateAgent, async (req, res) => {
       })
     }
 
-    await prisma.skill.delete({
-      where: { id: skillId }
+    await prisma.skill.delete({ where: { id: skillId } })
+
+    // Update agent skill count
+    await prisma.agent.update({
+      where: { id: agentId },
+      data: { skillCount: { decrement: 1 } }
     })
 
     res.json({
@@ -420,30 +360,18 @@ router.delete('/:id', authenticateAgent, async (req, res) => {
   }
 })
 
-// ============================================
-// REAL SKILL EXECUTION ENDPOINTS
-// ============================================
+// Increment use count (called when skill is used)
+router.post('/:id/use', async (req, res) => {
+  try {
+    await prisma.skill.update({
+      where: { id: req.params.id },
+      data: { useCount: { increment: 1 } }
+    })
 
-// 1. GPT-4 Text Analyzer
-router.post('/execute/gpt4-analyzer', analyzeText)
-
-// 2. Data Transformer
-router.post('/execute/data-transformer', transformData)
-
-// 3. Smart Web Scraper
-router.post('/execute/web-scraper', scrapeWeb)
-
-// 4. Slack Notifier
-router.post('/execute/slack-notify', sendSlackNotification)
-router.get('/execute/slack-notify/templates', getSlackTemplates)
-
-// 5. Transaction Analyzer
-router.post('/execute/tx-analyzer', analyzeTransaction)
-
-// 6. Time Series Forecaster
-router.post('/execute/forecaster', forecastTimeSeries)
-
-// 7. Bankr DeFi Trading (temp disabled)
-// router.post('/execute/bankr-trading', executeBankrSkill)
+    res.json({ success: true })
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Failed to update' })
+  }
+})
 
 export default router
