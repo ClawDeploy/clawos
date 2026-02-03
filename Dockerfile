@@ -22,8 +22,13 @@ COPY apps/api/src ./src
 # Generate Prisma client
 RUN pnpm db:generate
 
-# Build
-RUN pnpm build
+# Build with verbose output
+RUN echo "=== Starting TypeScript build ===" && \
+    pnpm build && \
+    echo "=== Build completed ===" && \
+    ls -la dist/ && \
+    echo "=== Routes folder ===" && \
+    ls -la dist/routes/ 2>/dev/null || echo "No dist/routes folder!"
 
 # Environment
 ENV NODE_ENV=production
