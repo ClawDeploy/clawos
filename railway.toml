@@ -1,11 +1,9 @@
 [build]
-builder = "nixpacks"
-
-[build.nixpacks]
-plan = { providers = ["node"] }
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.railway"
 
 [deploy]
-startCommand = "pnpm --filter @clawos/api start"
+startCommand = "node apps/api/dist/index.js"
 healthcheckPath = "/health"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
