@@ -1,41 +1,39 @@
-FROM node:22-slim
+# ============================================
+# ClawOS Platform - Dockerfile
+# ============================================
 
-# Install Python and build tools for native modules
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+FROM node:20-slim
 
-# Set working directory
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV NODE_ENV=production
+ENV PORT=3001
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
-
-# Copy package files
-COPY package.json pnpm-workspace.yaml ./
-COPY apps/api/package.json ./apps/api/
-COPY packages/database/package.json ./packages/database/
+# Package files
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
 COPY packages/shared/package.json ./packages/shared/
+COPY packages/database/package.json ./packages/database/
+COPY packages/database/prisma ./packages/database/prisma/
+COPY apps/api/package.json ./apps/api/
 
-# Install dependencies
-RUN pnpm install
+# Install deps
+RUN pnpm install --frozen-lockfile
 
-# Copy source code
+# Prisma generate
+RUN cd packages/database && pnpm prisma generate
+
+# Source code
 COPY . .
 
-# Build database package first
-RUN pnpm --filter @clawos/database build
+# Build in dependency order
+RUN pnpm --filter @clawos/shared build && \
+    pnpm --filter @clawos/database build && \
+    pnpm --filter @clawos/api build
 
-# Build shared package
-RUN pnpm --filter @clawos/shared build
-
-# Build API
-RUN pnpm --filter @clawos/api build
-
-# Expose port
 EXPOSE 3001
 
-# Start the API
-CMD ["pnpm", "--filter", "@clawos/api", "start"]
+CMD ["node", "apps/api/dist/index.js"]
