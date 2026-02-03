@@ -1,5 +1,5 @@
 import { MoltbookAdapter } from '@clawos/shared';
-import { prisma } from '../client';
+import { prisma } from './client';
 
 export class MoltbookSyncService {
   private adapter: MoltbookAdapter;
