@@ -2,10 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
     return [
       {
         source: '/api/:path*',
-        destination: process.env.NEXT_PUBLIC_API_URL + '/api/v1/:path*' || 'http://localhost:3001/api/v1/:path*',
+        destination: `${apiUrl}/api/:path*`,
       },
     ]
   },

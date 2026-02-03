@@ -2,6 +2,15 @@ import { Router } from 'express'
 import { z } from 'zod'
 import { prisma, SkillCategory, PricingType } from '@clawos/database'
 import { authenticateAgent } from '../middleware/auth'
+import {
+  analyzeText,
+  transformData,
+  scrapeWeb,
+  sendSlackNotification,
+  getSlackTemplates,
+  analyzeTransaction,
+  forecastTimeSeries
+} from '../skills'
 
 const router: Router = Router()
 
@@ -409,5 +418,28 @@ router.delete('/:id', authenticateAgent, async (req, res) => {
     })
   }
 })
+
+// ============================================
+// REAL SKILL EXECUTION ENDPOINTS
+// ============================================
+
+// 1. GPT-4 Text Analyzer
+router.post('/execute/gpt4-analyzer', analyzeText)
+
+// 2. Data Transformer
+router.post('/execute/data-transformer', transformData)
+
+// 3. Smart Web Scraper
+router.post('/execute/web-scraper', scrapeWeb)
+
+// 4. Slack Notifier
+router.post('/execute/slack-notify', sendSlackNotification)
+router.get('/execute/slack-notify/templates', getSlackTemplates)
+
+// 5. Transaction Analyzer
+router.post('/execute/tx-analyzer', analyzeTransaction)
+
+// 6. Time Series Forecaster
+router.post('/execute/forecaster', forecastTimeSeries)
 
 export default router
