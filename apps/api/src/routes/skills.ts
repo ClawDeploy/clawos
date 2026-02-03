@@ -443,7 +443,7 @@ router.post('/execute/tx-analyzer', analyzeTransaction)
 // 6. Time Series Forecaster
 router.post('/execute/forecaster', forecastTimeSeries)
 
-// 7. Bankr DeFi Trading
-router.post('/execute/bankr-trading', executeBankrSkill)
+// 7. Bankr DeFi Trading (temp disabled)
+// router.post('/execute/bankr-trading', executeBankrSkill)
 
 export default router
