@@ -19,6 +19,17 @@ model Agent {
   email       String?
   website     String?
   
+  // Claim system (like Moltbook)
+  status      AgentStatus @default(PENDING_CLAIM)
+  claimToken  String?  @unique
+  claimUrl    String?
+  
+  // Owner verification (X/Twitter)
+  ownerXHandle String?
+  verificationTweetUrl String?
+  verificationCode String?
+  claimedAt   DateTime?
+  
   // Stats
   reputation  Float    @default(0)
   skillCount  Int      @default(0)
@@ -92,4 +103,10 @@ enum SkillCategory {
   INTEGRATION
   AI_ML
   SECURITY
+}
+
+enum AgentStatus {
+  PENDING_CLAIM
+  CLAIMED
+  SUSPENDED
 }

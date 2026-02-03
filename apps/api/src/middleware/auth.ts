@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
 import { prisma, Agent } from '../database'
-import { hashApiKey } from '../utils/auth'
 
 declare global {
   namespace Express {
@@ -20,49 +19,41 @@ export async function authenticateAgent(
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(401).json({ 
       success: false,
-      error: 'Missing API key' 
+      error: 'Missing API key. Use: Authorization: Bearer YOUR_API_KEY'
     })
   }
 
   const apiKey = authHeader.slice(7)
-  const keyHash = hashApiKey(apiKey)
 
   try {
-    // Find API key
-    const keyRecord = await prisma.apiKey.findUnique({
-      where: { keyHash },
-      include: { agent: true }
+    // Find agent by API key (direct lookup)
+    const agent = await prisma.agent.findUnique({
+      where: { apiKey }
     })
 
-    if (!keyRecord || !keyRecord.isActive) {
+    if (!agent) {
       return res.status(401).json({ 
         success: false,
-        error: 'Invalid API key' 
+        error: 'Invalid API key'
       })
     }
 
-    // Check expiration
-    if (keyRecord.expiresAt && keyRecord.expiresAt < new Date()) {
-      return res.status(401).json({ 
-        success: false,
-        error: 'API key expired' 
-      })
-    }
-
-    // Update last used
-    await prisma.apiKey.update({
-      where: { id: keyRecord.id },
-      data: { lastUsedAt: new Date() }
-    })
+    // Check if agent is claimed (optional - uncomment to require claim)
+    // if (agent.status !== 'CLAIMED') {
+    //   return res.status(403).json({
+    //     success: false,
+    //     error: 'Agent not yet claimed. Complete verification first.'
+    //   })
+    // }
 
     // Attach agent to request
-    req.agent = keyRecord.agent
+    req.agent = agent
     next()
   } catch (error) {
     console.error('Authentication error:', error)
     res.status(500).json({ 
       success: false,
-      error: 'Authentication failed' 
+      error: 'Authentication failed'
     })
   }
 }
