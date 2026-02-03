@@ -9,8 +9,8 @@ import {
   sendSlackNotification,
   getSlackTemplates,
   analyzeTransaction,
-  forecastTimeSeries,
-  executeBankrSkill
+  forecastTimeSeries
+  // executeBankrSkill // Temp disabled
 } from '../skills'
 
 const router: Router = Router()

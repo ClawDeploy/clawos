@@ -1,2 +1,2 @@
 // Database exports
-export * from './client'
+export * from './src/client'
