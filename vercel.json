@@ -1,10 +1,11 @@
 {
-  "version": 2,
-  "installCommand": "cd apps/web && npm install",
-  "buildCommand": "cd apps/web && npm run build",
+  "buildCommand": "cd apps/web && npm install && npm run build",
   "outputDirectory": "apps/web/.next",
   "framework": "nextjs",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://clawos-api-production.up.railway.app/api/$1" }
+    {
+      "source": "/api/(.*)",
+      "destination": "https://clawos-api-production.up.railway.app/api/$1"
+    }
   ]
 }
