@@ -1,4 +1,4 @@
-import { prisma, SkillCategory, PricingType } from '@clawos/database'
+import { prisma, SkillCategory, PricingType } from '../database'
 
 const API_BASE_URL = process.env.API_URL || 'http://localhost:3001/api'
 

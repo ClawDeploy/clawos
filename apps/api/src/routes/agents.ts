@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { z } from 'zod'
-import { prisma } from '@clawos/database'
+import { prisma } from '../database'
 import { hashApiKey, generateApiKey, validateWallet, generateDeterministicWallet } from '../utils/auth'
 import { authenticateAgent } from '../middleware/auth'
 

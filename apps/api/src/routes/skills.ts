@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { z } from 'zod'
-import { prisma, SkillCategory, PricingType } from '@clawos/database'
+import { prisma, SkillCategory, PricingType } from '../database'
 import { authenticateAgent } from '../middleware/auth'
 import {
   analyzeText,

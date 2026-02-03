@@ -1,5 +1,5 @@
 {
-  "name": "@clawos/api",
+  "name": "clawos-api",
   "version": "1.0.0",
   "description": "ClawOS API - Node.js backend",
   "main": "dist/index.js",
@@ -7,10 +7,12 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts",
+    "db:generate": "prisma generate --schema=src/database/prisma/schema.prisma",
+    "db:push": "prisma db push --schema=src/database/prisma/schema.prisma"
   },
   "dependencies": {
-    "@clawos/database": "workspace:*",
+    "@prisma/client": "^5.7.0",
     "@solana/spl-token": "^0.3.9",
     "@solana/web3.js": "^1.87.6",
     "cheerio": "^1.2.0",
@@ -26,6 +28,7 @@
     "node-fetch": "^3.3.2",
     "openai": "^6.17.0",
     "papaparse": "^5.5.3",
+    "prisma": "^5.7.0",
     "rate-limiter-flexible": "^4.0.1",
     "viem": "^2.0.0",
     "xml2js": "^0.6.2",

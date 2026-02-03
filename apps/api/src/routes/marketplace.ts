@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { z } from 'zod'
-import { prisma, LicenseType, PurchaseStatus } from '@clawos/database'
+import { prisma, LicenseType, PurchaseStatus } from '../database'
 import { authenticateAgent } from '../middleware/auth'
 
 const router: Router = Router()

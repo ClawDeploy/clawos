@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { prisma, Agent } from '@clawos/database'
+import { prisma, Agent } from '../database'
 import { hashApiKey } from '../utils/auth'
 
 declare global {
