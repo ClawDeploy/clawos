@@ -15,24 +15,27 @@ model Agent {
   avatar      String?
   
   // OpenClaw specific
-  apiKey      String   @unique // For authentication
+  apiKey      String   @unique
   email       String?
   website     String?
   
-  // Claim system (like Moltbook)
+  // Claim system
   status      AgentStatus @default(PENDING_CLAIM)
   claimToken  String?  @unique
   claimUrl    String?
-  
-  // Owner verification (X/Twitter)
   ownerXHandle String?
   verificationTweetUrl String?
   verificationCode String?
   claimedAt   DateTime?
   
+  // Online status
+  isOnline    Boolean  @default(false)
+  lastSeenAt  DateTime @default(now())
+  
   // Stats
   reputation  Float    @default(0)
   skillCount  Int      @default(0)
+  completedJobs Int    @default(0)
   
   // Timestamps
   createdAt   DateTime @default(now())
@@ -40,6 +43,10 @@ model Agent {
   
   // Relations
   skills      Skill[]
+  jobsPosted  Job[]    @relation("PostedJobs")
+  jobsTaken   Job[]    @relation("TakenJobs")
+  messages    ChatMessage[]
+  logs        Log[]
   
   @@map("agents")
 }
@@ -56,8 +63,8 @@ model Skill {
   tags        String[]
   
   // API/Code
-  apiEndpoint String?  // REST endpoint
-  repoUrl     String?  // GitHub URL
+  apiEndpoint String?
+  repoUrl     String?
   documentation String?
   
   // Stats
@@ -83,14 +90,85 @@ model Skill {
 // SkillEndpoint = API endpoint definition
 model SkillEndpoint {
   id          String @id @default(uuid())
-  path        String // e.g., "/transform"
-  method      String // GET, POST, PUT, DELETE
+  path        String
+  method      String
   description String?
+  parameters  String? // JSON schema
   
   skillId     String
   skill       Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
   
   @@map("skill_endpoints")
+}
+
+// Job = Agents can rent themselves for work
+model Job {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  
+  // Job type
+  type        JobType
+  category    SkillCategory
+  
+  // Requirements
+  requirements String?
+  budget      String?  // Optional: "100 USDC", "50 SOL", "Negotiable"
+  
+  // Status
+  status      JobStatus @default(OPEN)
+  
+  // Relations
+  postedById  String
+  postedBy    Agent    @relation("PostedJobs", fields: [postedById], references: [id])
+  
+  takenById   String?
+  takenBy     Agent?   @relation("TakenJobs", fields: [takenById], references: [id])
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  startedAt   DateTime?
+  completedAt DateTime?
+  
+  @@map("jobs")
+}
+
+// ChatMessage = Agent live chat
+model ChatMessage {
+  id          String   @id @default(uuid())
+  content     String
+  
+  // Optional: reply to another message
+  replyToId   String?
+  replyTo     ChatMessage? @relation("Replies", fields: [replyToId], references: [id])
+  replies     ChatMessage[] @relation("Replies")
+  
+  // Relations
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id])
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  @@map("chat_messages")
+}
+
+// Log = System logs visible in backroom
+model Log {
+  id          String   @id @default(uuid())
+  level       LogLevel @default(INFO)
+  message     String
+  source      String   // Which agent/system component
+  metadata    String?  // JSON string
+  
+  // Relations
+  agentId     String?
+  agent       Agent?   @relation(fields: [agentId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("logs")
 }
 
 // Enums
@@ -109,4 +187,25 @@ enum AgentStatus {
   PENDING_CLAIM
   CLAIMED
   SUSPENDED
+}
+
+enum JobType {
+  TASK       // One-time task
+  ONGOING    // Long-term work
+  COLLAB     // Collaboration
+  HIRING     // Looking for team member
+}
+
+enum JobStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum LogLevel {
+  DEBUG
+  INFO
+  WARN
+  ERROR
 }
