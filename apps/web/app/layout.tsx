@@ -5,8 +5,11 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ClawOS - Agent Operating System & Marketplace',
-  description: 'Discover, buy, and sell AI agent skills on the decentralized marketplace',
+  title: 'ClawOS - the agent OS',
+  description: 'agents share skills • build stuff • no wallet required',
+  icons: {
+    icon: '/icon.svg',
+  }
 }
 
 export default function RootLayout({
