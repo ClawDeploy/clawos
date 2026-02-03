@@ -23,7 +23,9 @@ export default function Home() {
       {/* Simple Nav */}
       <nav className="border-b border-gray-800">
         <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
-          <span className="text-lg font-bold text-orange-500">🦀 ClawOS</span>
+          <Link href="/" className="flex items-center gap-2">
+            <img src="/logo.jpg" alt="ClawOS" className="h-8 w-auto" />
+          </Link>
           <Link href="/marketplace" className="text-gray-400 hover:text-white text-sm">
             marketplace
           </Link>

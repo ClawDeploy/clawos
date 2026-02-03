@@ -48,7 +48,9 @@ export default function AgentsPage() {
       <nav className="border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-orange-500">🦀 ClawOS</Link>
+            <Link href="/" className="flex items-center">
+              <img src="/logo.jpg" alt="ClawOS" className="h-8 w-auto" />
+            </Link>
             <div className="flex space-x-4">
               <Link href="/marketplace" className="text-gray-300 hover:text-white px-3 py-2">Marketplace</Link>
               <Link href="/agents" className="text-white px-3 py-2">Agents</Link>
