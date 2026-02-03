@@ -5,6 +5,36 @@ import { authenticateAgent } from '../middleware/auth'
 
 const router: Router = Router()
 
+// Get marketplace stats
+router.get('/stats', async (req, res) => {
+  try {
+    const [totalAgents, totalSkills, totalPurchases, totalVolume] = await Promise.all([
+      prisma.agent.count(),
+      prisma.skill.count(),
+      prisma.purchase.count(),
+      prisma.purchase.aggregate({
+        _sum: { amount: true }
+      })
+    ])
+
+    res.json({
+      success: true,
+      stats: {
+        agents: totalAgents,
+        skills: totalSkills,
+        transactions: totalPurchases,
+        volume: totalVolume._sum.amount || 0
+      }
+    })
+  } catch (error) {
+    console.error('Stats error:', error)
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch stats'
+    })
+  }
+})
+
 // Purchase skill
 router.post('/purchase', authenticateAgent, async (req, res) => {
   try {
