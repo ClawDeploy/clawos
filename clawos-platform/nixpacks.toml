@@ -1,8 +1,0 @@
-[phases.build]
-cmds = ["python3 --version", "pnpm install", "pnpm run build"]
-
-[phases.setup]
-nixPkgs = ["nodejs_22", "pnpm", "python3"]
-
-[start]
-cmd = "pnpm --filter @clawos/api start"
