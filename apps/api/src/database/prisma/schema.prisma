@@ -3,38 +3,40 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-// Agent = AI Agent that uses the platform
+// Agent = OpenClaw AI Agent
 model Agent {
   id          String   @id @default(uuid())
   name        String   @unique
   description String?
-  avatar      String?  // IPFS hash or URL
+  avatar      String?
   
-  // Owner information - now optional for walletless registration
-  ownerWallet String   @unique // Solana wallet address (auto-generated for guests)
-  ownerEmail  String?
-  isGuest     Boolean @default(false) // Flag for walletless/guest agents
+  // OpenClaw specific
+  apiKey      String   @unique
+  email       String?
+  website     String?
   
-  // BASE (Ethereum L2) wallet information
-  walletAddress String? @unique // Base/Ethereum wallet address for payments
-  walletChainId Int?    @default(8453) // Base mainnet = 8453, Base Sepolia = 84532
+  // Claim system
+  status      AgentStatus @default(PENDING_CLAIM)
+  claimToken  String?  @unique
+  claimUrl    String?
+  ownerXHandle String?
+  verificationTweetUrl String?
+  verificationCode String?
+  claimedAt   DateTime?
   
-  // Balances
-  balance     Decimal  @default(0) @db.Decimal(16, 6) // Available balance in USDC
-  totalEarned Decimal  @default(0) @db.Decimal(16, 6) // Total earnings
+  // Online status
+  isOnline    Boolean  @default(false)
+  lastSeenAt  DateTime @default(now())
   
-  // Reputation system
+  // Stats
   reputation  Float    @default(0)
-  totalSales  Int      @default(0)
-  totalPurchases Int  @default(0)
-  
-  // Moltbook integration
-  moltbookKarma    Int    @default(0)
-  moltbookFollowers Int   @default(0)
+  skillCount  Int      @default(0)
+  completedJobs Int    @default(0)
   
   // Timestamps
   createdAt   DateTime @default(now())
@@ -42,17 +44,15 @@ model Agent {
   
   // Relations
   skills      Skill[]
-  purchases   Purchase[]
-  sales       Sale[] // Sales made by this agent
-  transactionsAsBuyer Transaction[] @relation("BuyerTransactions")
-  transactionsAsSeller Transaction[] @relation("SellerTransactions")
-  reviews     Review[]
-  apiKeys     ApiKey[]
+  jobsPosted  Job[]    @relation("PostedJobs")
+  jobsTaken   Job[]    @relation("TakenJobs")
+  messages    ChatMessage[]
+  logs        Log[]
   
   @@map("agents")
 }
 
-// Skill = Capability sold on marketplace
+// Skill = Agent capability
 model Skill {
   id          String   @id @default(uuid())
   name        String
@@ -61,233 +61,115 @@ model Skill {
   
   // Categorization
   category    SkillCategory
-  tags        String[] // Array of tags
+  tags        String[]
   
-  // Code repository
-  repoUrl     String   // GitHub repository URL
-  repoBranch  String   @default("main")
-  entryPoint  String   // Main file/function
-  documentation String? // IPFS hash
-  
-  // Pricing
-  pricingType PricingType
-  price       Decimal  @db.Decimal(10, 6)
-  currency    String   @default("USDC")
-  
-  // Blockchain integration
-  chainId     Int?     @default(8453) // Base mainnet
-  skillIdOnChain String? // bytes32 skill ID on Base
-  isOnChain   Boolean  @default(false)
-  
-  // Subscription/usage details
-  interval    String?  // For subscriptions: daily, weekly, monthly
-  unitName    String?  // For usage-based: "call", "1000_calls"
+  // API/Code
+  apiEndpoint String?
+  repoUrl     String?
+  documentation String?
   
   // Stats
   rating      Float    @default(0)
   reviewCount Int      @default(0)
-  downloadCount Int    @default(0)
-  
-  // Moltbook integration
-  moltbookPostUrl String?
+  useCount    Int      @default(0)
   
   // Status
-  isPublished Boolean @default(false)
-  isVerified  Boolean @default(false)
+  isPublished Boolean @default(true)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   
   // Relations
   agentId     String
-  agent       Agent    @relation(fields: [agentId], references: [id])
-  
-  purchases   Purchase[]
-  sales       Sale[]
-  reviews     Review[]
-  endpoints   Endpoint[]
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  endpoints   SkillEndpoint[]
   
   @@map("skills")
 }
 
-// API Endpoints for a skill
-model Endpoint {
-  id          String   @id @default(uuid())
-  skillId     String
-  skill       Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+// SkillEndpoint = API endpoint definition
+model SkillEndpoint {
+  id          String @id @default(uuid())
+  path        String
+  method      String
+  description String?
+  parameters  String? // JSON schema
   
-  path        String   // e.g., "/send"
-  method      String   // GET, POST, etc.
+  skillId     String
+  skill       Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  
+  @@map("skill_endpoints")
+}
+
+// Job = Agents can rent themselves for work
+model Job {
+  id          String   @id @default(uuid())
+  title       String
   description String
   
-  // Request/Response schema (JSON)
-  requestSchema  String? @db.Text
-  responseSchema String? @db.Text
+  // Job type
+  type        JobType
+  category    SkillCategory
   
-  createdAt   DateTime @default(now())
+  // Requirements
+  requirements String?
+  budget      String?  // Optional: "100 USDC", "50 SOL", "Negotiable"
   
-  @@map("endpoints")
-}
-
-// Purchase record
-model Purchase {
-  id          String   @id @default(uuid())
+  // Status
+  status      JobStatus @default(OPEN)
   
   // Relations
-  buyerId     String
-  buyer       Agent    @relation(fields: [buyerId], references: [id])
-  skillId     String
-  skill       Skill    @relation(fields: [skillId], references: [id])
+  postedById  String
+  postedBy    Agent    @relation("PostedJobs", fields: [postedById], references: [id])
   
-  // License details
-  licenseType LicenseType
-  
-  // Payment
-  amount      Decimal  @db.Decimal(10, 6)
-  currency    String
-  txHash      String?   @unique // Blockchain transaction hash (Base or Solana)
-  
-  // Blockchain details for Base
-  chainId     Int?     @default(8453)
-  paymentIdOnChain String? // bytes32 payment ID on Base
-  
-  // Usage tracking
-  usageLimit  Int?     // For usage-based
-  currentUsage Int     @default(0)
-  expiresAt   DateTime? // For subscriptions
-  
-  // Status
-  status      PurchaseStatus @default(ACTIVE)
-  
-  createdAt   DateTime @default(now())
-  
-  @@map("purchases")
-}
-
-// Sales record for tracking earnings
-model Sale {
-  id          String   @id @default(uuid())
-  
-  // Seller (agent)
-  agentId     String
-  agent       Agent    @relation(fields: [agentId], references: [id])
-  
-  // Skill sold
-  skillId     String
-  skill       Skill    @relation(fields: [skillId], references: [id])
-  
-  // Buyer
-  buyerId     String?  // Can be null for direct sales
-  buyerWallet String?  // Buyer's wallet address
-  
-  // Payment details
-  amount      Decimal  @db.Decimal(10, 6)
-  currency    String   @default("USDC")
-  platformFee Decimal  @db.Decimal(10, 6) // 2.5% platform fee
-  netAmount   Decimal  @db.Decimal(10, 6) // Amount after fee
-  
-  // Blockchain
-  chainId     Int?     @default(8453)
-  txHash      String?
-  
-  // Status
-  status      SaleStatus @default(COMPLETED)
-  withdrawn   Boolean    @default(false)
-  withdrawnAt DateTime?
-  
-  createdAt   DateTime @default(now())
-  
-  @@map("sales")
-}
-
-// Transactions for tracking all payments
-model Transaction {
-  id          String   @id @default(uuid())
-  
-  // Participants
-  buyerId     String
-  buyer       Agent    @relation("BuyerTransactions", fields: [buyerId], references: [id])
-  sellerId    String
-  seller      Agent    @relation("SellerTransactions", fields: [sellerId], references: [id])
-  
-  // Skill
-  skillId     String?
-  
-  // Payment details
-  amount      Decimal  @db.Decimal(16, 6)
-  currency    String   @default("USDC")
-  platformFee Decimal  @db.Decimal(16, 6)
-  
-  // Blockchain
-  chainId     Int?     @default(8453)
-  txHash      String?  @unique
-  
-  // Status
-  status      TransactionStatus @default(PENDING)
+  takenById   String?
+  takenBy     Agent?   @relation("TakenJobs", fields: [takenById], references: [id])
   
   // Timestamps
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  startedAt   DateTime?
   completedAt DateTime?
   
-  @@map("transactions")
+  @@map("jobs")
 }
 
-// Reviews and ratings
-model Review {
+// ChatMessage = Agent live chat
+model ChatMessage {
   id          String   @id @default(uuid())
+  content     String
   
-  reviewerId  String
-  reviewer    Agent    @relation(fields: [reviewerId], references: [id])
-  skillId     String
-  skill       Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  // Optional: reply to another message
+  replyToId   String?
+  replyTo     ChatMessage? @relation("Replies", fields: [replyToId], references: [id])
+  replies     ChatMessage[] @relation("Replies")
   
-  rating      Int      // 1-5 stars
-  comment     String?
+  // Relations
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id])
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  @@map("chat_messages")
+}
+
+// Log = System logs visible in backroom
+model Log {
+  id          String   @id @default(uuid())
+  level       LogLevel @default(INFO)
+  message     String
+  source      String   // Which agent/system component
+  metadata    String?  // JSON string
+  
+  // Relations
+  agentId     String?
+  agent       Agent?   @relation(fields: [agentId], references: [id])
   
   createdAt   DateTime @default(now())
   
-  @@map("reviews")
-}
-
-// API Keys for authentication
-model ApiKey {
-  id          String   @id @default(uuid())
-  agentId     String
-  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
-  
-  keyHash     String   @unique // Hashed API key
-  name        String   // e.g., "Production", "Development"
-  
-  // Rate limiting
-  rateLimit   Int      @default(1000) // requests per hour
-  
-  // Status
-  isActive    Boolean  @default(true)
-  lastUsedAt  DateTime?
-  expiresAt   DateTime?
-  
-  createdAt   DateTime @default(now())
-  
-  @@map("api_keys")
-}
-
-// Usage logs for billing
-model UsageLog {
-  id          String   @id @default(uuid())
-  
-  purchaseId  String
-  skillId     String
-  agentId     String
-  
-  endpoint    String
-  requestSize Int
-  responseSize Int
-  duration    Int      // milliseconds
-  cost        Decimal  @db.Decimal(10, 6)
-  
-  timestamp   DateTime @default(now())
-  
-  @@map("usage_logs")
+  @@map("logs")
 }
 
 // Enums
@@ -298,39 +180,33 @@ enum SkillCategory {
   CREATIVE
   UTILITY
   INTEGRATION
+  AI_ML
+  SECURITY
 }
 
-enum PricingType {
-  FREE
-  ONE_TIME
-  SUBSCRIPTION
-  USAGE
+enum AgentStatus {
+  PENDING_CLAIM
+  CLAIMED
+  SUSPENDED
 }
 
-enum LicenseType {
-  PERSONAL
-  COMMERCIAL
-  ENTERPRISE
+enum JobType {
+  TASK       // One-time task
+  ONGOING    // Long-term work
+  COLLAB     // Collaboration
+  HIRING     // Looking for team member
 }
 
-enum PurchaseStatus {
-  ACTIVE
-  EXPIRED
+enum JobStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
   CANCELLED
-  REFUNDED
 }
 
-enum SaleStatus {
-  PENDING
-  COMPLETED
-  REFUNDED
-  DISPUTED
-}
-
-enum TransactionStatus {
-  PENDING
-  COMPLETED
-  FAILED
-  REFUNDED
-  DISPUTED
+enum LogLevel {
+  DEBUG
+  INFO
+  WARN
+  ERROR
 }
