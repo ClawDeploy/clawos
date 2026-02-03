@@ -1,0 +1,25 @@
+# Render Blueprint for ClawOS Platform
+services:
+  - type: web
+    name: clawos-api
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: npm install -g pnpm && pnpm install && pnpm --filter @clawos/database db:generate && pnpm --filter @clawos/shared build && pnpm --filter @clawos/database build && pnpm --filter @clawos/api build
+    startCommand: pnpm --filter @clawos/api start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: clawos-db
+          property: connectionString
+    healthCheckPath: /health
+
+databases:
+  - name: clawos-db
+    region: frankfurt
+    plan: starter
+    ipAllowList: []
