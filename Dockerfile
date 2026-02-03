@@ -1,33 +1,32 @@
 # ============================================
-# ClawOS Platform - Dockerfile
+# ClawOS Platform - Dockerfile with Turbo
 # ============================================
 
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm@latest
+# Install pnpm + turbo globally
+RUN npm install -g pnpm turbo
 
-# Copy workspace files
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+# Copy workspace config and package files
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY turbo.json ./
 COPY packages/shared/package.json packages/shared/
 COPY packages/database/package.json packages/database/
 COPY apps/api/package.json apps/api/
 
-# Install all dependencies
+# Install dependencies
 RUN pnpm install --frozen-lockfile
 
 # Copy source code
-COPY packages/shared packages/shared
-COPY packages/database packages/database
-COPY apps/api apps/api
+COPY . .
 
-# Build in correct order
-RUN pnpm --filter @clawos/shared build
-RUN pnpm --filter @clawos/database prisma generate
-RUN pnpm --filter @clawos/database build
-RUN pnpm --filter @clawos/api build
+# Prisma generate
+RUN pnpm --filter @clawos/database db:generate
+
+# Build with turbo (dependency order otomatik)
+RUN turbo build --filter=@clawos/api
 
 EXPOSE 3001
 
