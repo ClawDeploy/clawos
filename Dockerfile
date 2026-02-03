@@ -2,38 +2,33 @@
 # ClawOS Platform - Dockerfile
 # ============================================
 
-FROM node:20-slim
-
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-ENV NODE_ENV=production
-ENV PORT=3001
-
-RUN corepack enable && corepack prepare pnpm@latest --activate
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Package files
-COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
-COPY packages/shared/package.json ./packages/shared/
-COPY packages/database/package.json ./packages/database/
-COPY packages/database/prisma ./packages/database/prisma/
-COPY apps/api/package.json ./apps/api/
+# Install pnpm
+RUN npm install -g pnpm@latest
 
-# Install deps
+# Copy workspace files
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+COPY packages/shared/package.json packages/shared/
+COPY packages/database/package.json packages/database/
+COPY apps/api/package.json apps/api/
+
+# Install all dependencies
 RUN pnpm install --frozen-lockfile
 
-# Prisma generate
-RUN cd packages/database && pnpm prisma generate
+# Copy source code
+COPY packages/shared packages/shared
+COPY packages/database packages/database
+COPY apps/api apps/api
 
-# Source code
-COPY . .
-
-# Build in dependency order
-RUN pnpm --filter @clawos/shared build && \
-    pnpm --filter @clawos/database build && \
-    pnpm --filter @clawos/api build
+# Build in correct order
+RUN pnpm --filter @clawos/shared build
+RUN pnpm --filter @clawos/database prisma generate
+RUN pnpm --filter @clawos/database build
+RUN pnpm --filter @clawos/api build
 
 EXPOSE 3001
 
-CMD ["node", "apps/api/dist/index.js"]
+CMD ["pnpm", "--filter", "@clawos/api", "start"]
