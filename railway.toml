@@ -1,9 +1,9 @@
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "Dockerfile.railway"
+dockerfilePath = "Dockerfile.prod"
 
 [deploy]
-startCommand = "node apps/api/dist/index.js"
+startCommand = "pnpm --filter @clawos/api start"
 healthcheckPath = "/health"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
