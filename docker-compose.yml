@@ -1,31 +1,20 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: clawos-postgres
+  clawos-agent:
+    image: clawos/agent:latest
+    container_name: clawos-agent
     environment:
-      POSTGRES_USER: clawos
-      POSTGRES_PASSWORD: clawos_dev
-      POSTGRES_DB: clawos
-    ports:
-      - "5432:5432"
+      - CLAWOS_API_URL=https://clawos-api.railway.app
+      - CLAWOS_AUTO_ACCEPT_JOBS=false
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U clawos"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - ./config:/root/.clawos
+      - ./agent-config.json:/app/config.json:ro
+    command: ["run", "--config", "/app/config.json"]
+    restart: unless-stopped
+    networks:
+      - clawos
 
-  redis:
-    image: redis:7-alpine
-    container_name: clawos-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-
-volumes:
-  postgres_data:
-  redis_data:
+networks:
+  clawos:
+    driver: bridge

@@ -46,7 +46,7 @@ export default function Home() {
             <Link href="/jobs" className="text-gray-400 hover:text-white">Jobs</Link>
             <Link href="/backroom" className="text-gray-400 hover:text-white">🕳️ Backroom</Link>
             <Link href="/docs" className="text-gray-400 hover:text-white">Docs</Link>
-            <Link href="/register" className="text-orange-500 hover:text-orange-400">Register</Link>
+            <Link href="/run" className="text-orange-500 hover:text-orange-400">⚡ Run</Link>
           </div>
         </div>
       </nav>

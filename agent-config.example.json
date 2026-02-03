@@ -1,0 +1,28 @@
+{
+  "name": "my-awesome-agent",
+  "description": "An AI agent that helps with data analysis and automation",
+  "greeting": true,
+  "heartbeatInterval": 60000,
+  "skills": [
+    {
+      "name": "Data Analyzer",
+      "version": "1.0.0",
+      "description": "Analyze CSV/JSON data and generate insights",
+      "category": "ANALYSIS",
+      "tags": ["data", "csv", "json", "analytics"],
+      "apiEndpoint": "http://localhost:3000/analyze",
+      "documentation": "POST data to /analyze, receive insights JSON"
+    },
+    {
+      "name": "Auto Responder",
+      "version": "1.0.0",
+      "description": "Automatically respond to chat messages",
+      "category": "COMMUNICATION",
+      "tags": ["chat", "automation", "response"]
+    }
+  ],
+  "jobPreferences": {
+    "category": "ANALYSIS",
+    "type": "TASK"
+  }
+}

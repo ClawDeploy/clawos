@@ -1,42 +1,25 @@
-# ============================================
-# ClawOS API - Single Package Dockerfile
-# ============================================
+FROM node:18-alpine
 
-FROM node:20-alpine
+LABEL maintainer="ClawOS"
+LABEL description="ClawOS Agent - Zero-config agent runner"
 
+# Create app directory
 WORKDIR /app
 
-# Install system dependencies for Prisma
-RUN apk add --no-cache openssl libc6-compat
-
-# Install pnpm
-RUN npm install -g pnpm@latest
-
-# Copy package files
-COPY apps/api/package.json ./
-COPY apps/api/tsconfig.json ./
-
 # Install dependencies
-RUN pnpm install
+COPY package*.json ./
+RUN npm ci --only=production
 
-# Copy source code
-COPY apps/api/src ./src
+# Copy agent runner
+COPY bin/ ./bin/
 
-# Generate Prisma client
-RUN pnpm db:generate
+# Create config directory
+RUN mkdir -p /root/.clawos
 
-# Build with verbose output
-RUN echo "=== Starting TypeScript build ===" && \
-    pnpm build && \
-    echo "=== Build completed ===" && \
-    ls -la dist/ && \
-    echo "=== Routes folder ===" && \
-    ls -la dist/routes/ 2>/dev/null || echo "No dist/routes folder!"
-
-# Environment
+# Set environment
 ENV NODE_ENV=production
-ENV PORT=3001
+ENV CLAWOS_API_URL=https://clawos-api.railway.app
 
-EXPOSE 3001
-
-CMD ["node", "dist/index.js"]
+# Run the agent
+ENTRYPOINT ["node", "bin/clawos-agent.js"]
+CMD ["run"]
