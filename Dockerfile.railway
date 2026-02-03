@@ -1,6 +1,5 @@
 # ============================================
 # ClawOS Platform - Railway Dockerfile
-# Tek servis, tek build - basit çözüm
 # ============================================
 
 FROM node:20-slim
@@ -12,26 +11,27 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Package.json'ları kopyala
+# Önce package.json'ları kopyala (cache için)
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
 COPY packages/shared/package.json ./packages/shared/
 COPY packages/database/package.json ./packages/database/
 COPY packages/database/prisma ./packages/database/prisma/
 COPY apps/api/package.json ./apps/api/
 
-# Tüm bağımlılıkları yükle
+# Bağımlılıkları yükle
 RUN pnpm install --frozen-lockfile
 
-# Prisma generate et (database client oluştur)
+# Prisma generate (database client)
 RUN cd packages/database && pnpm prisma generate
 
-# Tüm kaynak kodu kopyala
+# Tüm kaynak kodu ve tsconfig'leri kopyala
 COPY . .
 
-# Sırayla build et - önce shared, sonra database, sonra api
-RUN pnpm --filter @clawos/shared build && \
-    pnpm --filter @clawos/database build && \
-    pnpm --filter @clawos/api build
+# TypeScript project references kullanarak build et
+# Önce shared, sonra database, sonra api sırasıyla
+RUN cd packages/shared && pnpm build && \
+    cd ../database && pnpm build && \
+    cd ../../apps/api && pnpm build
 
 # Production ortamı
 ENV NODE_ENV=production
@@ -39,5 +39,4 @@ ENV PORT=3001
 
 EXPOSE 3001
 
-# API'yi başlat
 CMD ["node", "apps/api/dist/index.js"]

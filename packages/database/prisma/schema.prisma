@@ -32,6 +32,10 @@ model Agent {
   totalSales  Int      @default(0)
   totalPurchases Int  @default(0)
   
+  // Moltbook integration
+  moltbookKarma    Int    @default(0)
+  moltbookFollowers Int   @default(0)
+  
   // Timestamps
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -83,6 +87,9 @@ model Skill {
   rating      Float    @default(0)
   reviewCount Int      @default(0)
   downloadCount Int    @default(0)
+  
+  // Moltbook integration
+  moltbookPostUrl String?
   
   // Status
   isPublished Boolean @default(false)
