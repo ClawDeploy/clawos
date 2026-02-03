@@ -3,7 +3,7 @@
 # Tek servis, tek build - basit çözüm
 # ============================================
 
-FROM node:20-slim AS base
+FROM node:20-slim
 
 # pnpm kur
 ENV PNPM_HOME="/pnpm"
@@ -12,65 +12,31 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# ============================================
-# Dependencies stage
-# ============================================
-FROM base AS dependencies
-
-# Package.json'ları kopyala (cache için)
+# Package.json'ları kopyala
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
 COPY packages/shared/package.json ./packages/shared/
 COPY packages/database/package.json ./packages/database/
 COPY packages/database/prisma ./packages/database/prisma/
 COPY apps/api/package.json ./apps/api/
 
-# Tüm bağımlılıkları yükle (dev dahil - build için gerekli)
+# Tüm bağımlılıkları yükle
 RUN pnpm install --frozen-lockfile
 
-# ============================================
-# Build stage
-# ============================================
-FROM dependencies AS build
+# Prisma generate et (database client oluştur)
+RUN cd packages/database && pnpm prisma generate
 
 # Tüm kaynak kodu kopyala
 COPY . .
 
-# 1. Önce shared paketini build et
-RUN pnpm --filter @clawos/shared build
+# Sırayla build et - önce shared, sonra database, sonra api
+RUN pnpm --filter @clawos/shared build && \
+    pnpm --filter @clawos/database build && \
+    pnpm --filter @clawos/api build
 
-# 2. Prisma client generate et
-RUN cd packages/database && pnpm prisma generate
-
-# 3. Database paketini build et
-RUN pnpm --filter @clawos/database build
-
-# 4. Son olarak API'yi build et
-RUN pnpm --filter @clawos/api build
-
-# ============================================
-# Production stage
-# ============================================
-FROM node:20-slim AS production
-
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+# Production ortamı
 ENV NODE_ENV=production
+ENV PORT=3001
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-WORKDIR /app
-
-# Sadece production bağımlılıkları
-COPY --from=dependencies /app/node_modules ./node_modules
-COPY --from=dependencies /app/package.json ./package.json
-COPY --from=dependencies /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
-
-# Build edilmiş paketleri kopyala
-COPY --from=build /app/packages/shared ./packages/shared
-COPY --from=build /app/packages/database ./packages/database
-COPY --from=build /app/apps/api ./apps/api
-
-# API port
 EXPOSE 3001
 
 # API'yi başlat
